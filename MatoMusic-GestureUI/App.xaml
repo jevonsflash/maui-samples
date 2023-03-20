@@ -1,0 +1,78 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MatoMusic"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:converter="clr-namespace:MatoMusic.Converter;assembly=MatoMusic-GestureUI"
+             x:Class="MatoMusic.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <system:Double x:Key="HeaderFontSize">57.5</system:Double>
+            <system:String x:Key="Version">1.0</system:String>
+
+
+            <system:Double x:Key="SubtitleFontSize">38</system:Double>
+            <system:Double x:Key="StandOutBodyFontSize">28</system:Double>
+            <system:Double x:Key="BodyFontSize">18</system:Double>
+            <system:String x:Key="Bound">0</system:String>
+            <Color x:Key="PhoneBackgroundBrush">#EAEDEF</Color>
+            <Color x:Key="PhoneForegroundBrush">#434343</Color>
+            <Color x:Key="PhoneContrastBackgroundBrush">DeepSkyBlue</Color>
+            <Color x:Key="PhoneWeakenBackgroundBrush">#D2D9DE</Color>
+            <Color x:Key="PhoneContrastForegroundBrush">#EAEDEF</Color>
+            <Color x:Key="PhoneAccentBrush">DeepSkyBlue</Color>
+            <Color x:Key="PhoneChromeBrush">#C5C5C5</Color>
+
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{StaticResource PhoneForegroundBrush}">
+                </Setter>
+                <Setter Property="VerticalOptions"
+                              Value="Center">
+                </Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="TextColor"
+                        Value="{StaticResource PhoneForegroundBrush}">
+                </Setter>
+                <Setter Property="BackgroundColor"
+                              Value="Transparent"></Setter>
+                <Setter Property="BorderWidth"
+                              Value="0"></Setter>
+                <Setter Property="BorderColor"
+                              Value="Transparent"></Setter>
+
+
+            </Style>
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource PhoneBackgroundBrush}">
+                </Setter>
+            </Style>
+            <Thickness x:Key="DefaultContentPadding"
+                       Left="12"
+                       Top="18"
+                       Right="12"
+                       Bottom="5" />
+            <converter:True2FalseConverter x:Key="True2FalseConverter">
+            </converter:True2FalseConverter>
+            <converter:SliderMaxValueConverter x:Key="SliderMaxValueConverter">
+            </converter:SliderMaxValueConverter>
+            <converter:SecondsToTimeSpanConverter x:Key="SecondsToTimeSpanConverter">
+            </converter:SecondsToTimeSpanConverter>
+            <converter:IsValid2BoolConverter x:Key="IsNotEmpty2BoolConverter">
+            </converter:IsValid2BoolConverter>
+            <converter:AlbumArtConverter x:Key="AlbumArtConverter">
+            </converter:AlbumArtConverter>
+            <converter:Bool2StringConverter x:Key="Bool2StringConverter"></converter:Bool2StringConverter>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
