@@ -251,7 +251,7 @@ namespace MatoMusic.Core.ViewModel
 
                 while (_isFastSeeking)
                 {
-                    var currentTime = this.MusicControlService.CurrentTime();
+                    var currentTime = MusicRelatedService.GetPlatformSpecificTime(MusicControlService.CurrentTime());
 
                     var seekingSpan = 0;
 

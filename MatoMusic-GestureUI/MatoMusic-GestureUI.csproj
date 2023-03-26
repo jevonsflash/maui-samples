@@ -50,10 +50,22 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\FontAwesome.ttf" />
+	  <None Remove="Resources\Raw\AlbumArtPlaceholder.png" />
+	  <None Remove="Resources\Raw\Chrysanthemum.jpg" />
+	  <None Remove="Resources\Raw\Desert.jpg" />
+	  <None Remove="Resources\Raw\Hydrangeas.jpg" />
+	  <None Remove="Resources\Raw\Jellyfish.jpg" />
 	  <None Remove="Resources\Raw\No No.mp3" />
 	  <None Remove="Resources\Raw\Puzzle of My Heart.mp3" />
 	  <None Remove="Resources\Raw\Safe.mp3" />
 	  <None Remove="Resources\Raw\What About Now.mp3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Include="Resources\Images\p1.png" />
+	  <MauiAsset Include="Resources\Images\p2.jpg" />
+	  <MauiAsset Include="Resources\Images\p3.jpg" />
+	  <MauiAsset Include="Resources\Images\p4.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>

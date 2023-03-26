@@ -25,7 +25,7 @@ namespace MatoMusic.Controls
 
         private void RefreshMainRectPadding()
         {
-            this._mainRectPadding = 15 - this.BorderWidth / 2;
+            this._mainRectPadding =  this.BorderWidth / 2;
         }
 
         private void CircleSlider_PropertyChanged(object sender, PropertyChangedEventArgs e)

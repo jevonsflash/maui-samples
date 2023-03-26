@@ -24,10 +24,6 @@ namespace MatoMusic.View
         {
             InitializeComponent();
             this.BindingContext=Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
-            this.FavouriteButton.Text = FaIcons.IconHeart;
-            //this.RepeatOneButton.Text = FaIcons.IconRepeat;
-            this.LrcCloseButton.Text = FaIcons.IconReply;
-            //this.ShuffleButton.Text = FaIcons.IconRandom;
             this.RewLabel.Text = FaIcons.IconBackward;
             this.FfLabel.Text = FaIcons.IconForward;
             this.LibLabel.Text = FaIcons.IconSquareO;
@@ -35,7 +31,7 @@ namespace MatoMusic.View
             this.RepeatOneLabel.Text = FaIcons.IconRepeat;
             this.SettingLabel.Text = FaIcons.IconCog;
             this.QueueLabel.Text = FaIcons.IconBars;
-            this.LyricLabel.Text = FaIcons.IconFileO;
+            this.FavouriteLabel.Text = FaIcons.IconHeart;
             this.PauseLabel.Text = FaIcons.IconPlay;
             this.PitTipLayout.Children.Clear();
             Appearing += NowPlayingPage_Appearing;
@@ -58,19 +54,16 @@ namespace MatoMusic.View
 
             Animation scaleUpAnimation1;
             Animation scaleUpAnimation2;
-            Animation scaleUpAnimation3;
             await Console.Out.WriteLineAsync(args.PanType.ToString());
             switch (args.PanType)
             {
                 case PanType.Over:
 
                     scaleUpAnimation1 = new Animation(v => this.PitContentLayout.Opacity = v, PitContentLayout.Opacity, 0, Easing.CubicOut);
-                    scaleUpAnimation2 = new Animation(v => this.ModeControlLayout.Opacity = v, ModeControlLayout.Opacity, 1, Easing.CubicOut);
-                    scaleUpAnimation3 = new Animation(v => this.TitleLayout.Opacity = v, TitleLayout.Opacity, 1, Easing.CubicOut);
+                    scaleUpAnimation2 = new Animation(v => this.TitleLayout.Opacity = v, TitleLayout.Opacity, 1, Easing.CubicOut);
 
                     parentAnimation.Add(0, 1, scaleUpAnimation1);
                     parentAnimation.Add(0, 1, scaleUpAnimation2);
-                    parentAnimation.Add(0, 1, scaleUpAnimation3);
 
                     parentAnimation.Commit(this, "RestoreAnimation", 16, 250);
                     MusicRelatedViewModel.EndFastSeeking();
@@ -92,12 +85,10 @@ namespace MatoMusic.View
                 case PanType.Start:
 
                     scaleUpAnimation1 = new Animation(v => this.PitContentLayout.Opacity = v, PitContentLayout.Opacity, 1, Easing.CubicOut);
-                    scaleUpAnimation2 = new Animation(v => this.ModeControlLayout.Opacity = v, ModeControlLayout.Opacity, 0.2, Easing.CubicOut);
-                    scaleUpAnimation3 = new Animation(v => this.TitleLayout.Opacity = v, TitleLayout.Opacity, 0.2, Easing.CubicOut);
+                    scaleUpAnimation2 = new Animation(v => this.TitleLayout.Opacity = v, TitleLayout.Opacity, 0.2, Easing.CubicOut);
 
                     parentAnimation.Add(0, 1, scaleUpAnimation1);
                     parentAnimation.Add(0, 1, scaleUpAnimation2);
-                    parentAnimation.Add(0, 1, scaleUpAnimation3);
 
                     parentAnimation.Commit(this, "RestoreAnimation", 16, 250);
 
@@ -110,7 +101,7 @@ namespace MatoMusic.View
                     break;
                 case PanType.In:
 
-                    var child = args.CurrentPit.Children[0];
+                    var child = args.CurrentPit?.Children[0];
                     if (child != null && child is Label)
                     {
                         var origin = (child as Label);
@@ -119,7 +110,7 @@ namespace MatoMusic.View
 
                     this.PitTipLayout.Children.Add(this.TipLabel);
 
-                    switch (args.CurrentPit.PitName)
+                    switch (args.CurrentPit?.PitName)
                     {
                         case "LeftPit":
 
@@ -130,8 +121,8 @@ namespace MatoMusic.View
                             {
                                 this.TipLabel.Text = FaIcons.IconFastBackward;
                                 this.TipTextLabel.Text = "快退";
-                                await MusicRelatedViewModel.StartFastSeeking(-2);
                                 _runCount++;
+                                await MusicRelatedViewModel.StartFastSeeking(-2);
 
 
                             };
@@ -162,8 +153,8 @@ namespace MatoMusic.View
                             {
                                 this.TipLabel.Text = FaIcons.IconFastForward;
                                 this.TipTextLabel.Text = "快进";
-                                await MusicRelatedViewModel.StartFastSeeking(2);
                                 _runCount++;
+                                await MusicRelatedViewModel.StartFastSeeking(2);
 
                             };
                             _dispatcherTimer.Start();
@@ -175,7 +166,7 @@ namespace MatoMusic.View
 
                             break;
                         case "LeftBottomPit":
-                            this.TipTextLabel.Text = "歌词";
+                            this.TipTextLabel.Text = "收藏";
 
                             break;
                         case "RightBottomPit":
@@ -194,7 +185,11 @@ namespace MatoMusic.View
                     {
                         MusicRelatedViewModel.EndFastSeeking();
                     }
-                    _dispatcherTimer.Stop();
+                    if (_dispatcherTimer!=null)
+                    {
+                        _dispatcherTimer.Stop();
+
+                    }
                     _runCount = 0;
                     this.TipTextLabel.Text = string.Empty;
 
@@ -216,7 +211,6 @@ namespace MatoMusic.View
 
                 this.MainCircleSlider.BorderWidth = 3;
                 this.TitleLayout.FadeTo(0);
-                this.ModeControlLayout.FadeTo(0);
 
             };
 
@@ -227,7 +221,6 @@ namespace MatoMusic.View
         {
             this.MainCircleSlider.BorderWidth = 15;
             this.TitleLayout.FadeTo(1);
-            this.ModeControlLayout.FadeTo(1);
         }
 
         private void OnValueChanged(object sender, ValueChangedEventArgs e)
@@ -238,10 +231,6 @@ namespace MatoMusic.View
             }
         }
 
-        private void LyricView_OnOnClosed(object sender, EventArgs e)
-        {
-
-        }
 
 
         private void DefaultPanContainer_OnOnfinishedChoise(object sender, PitGrid e)
@@ -254,7 +243,11 @@ namespace MatoMusic.View
                     if (this._runCount > 0)
                     {
                         MusicRelatedViewModel.EndFastSeeking();
-                        _dispatcherTimer.Stop();
+                        if (_dispatcherTimer!=null)
+                        {
+                            _dispatcherTimer.Stop();
+
+                        }
                         _runCount = 0;
 
                     }
@@ -284,7 +277,11 @@ namespace MatoMusic.View
                     if (this._runCount > 0)
                     {
                         MusicRelatedViewModel.EndFastSeeking();
-                        _dispatcherTimer.Stop();
+                        if (_dispatcherTimer!=null)
+                        {
+                            _dispatcherTimer.Stop();
+
+                        }
                         _runCount = 0;
 
                     }

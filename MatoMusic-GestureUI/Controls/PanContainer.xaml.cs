@@ -19,6 +19,8 @@ namespace MatoMusic.Controls
         private bool isInPitPre = false;
         private bool isSwitch = false;
 
+        private bool IsRuningTranslateToTask;
+
         public PanContainer()
         {
             InitializeComponent();
@@ -39,6 +41,21 @@ namespace MatoMusic.Controls
         {
             get { return _currentView; }
             set { _currentView = value; }
+        }
+
+
+        public static readonly BindableProperty AutoAdsorptionProperty =
+BindableProperty.Create("AutoAdsorption", typeof(bool), typeof(PanContainer), default(bool));
+
+        public bool AutoAdsorption
+        {
+            get { return (bool)GetValue(AutoAdsorptionProperty); }
+            set
+            {
+                SetValue(AutoAdsorptionProperty, value);
+                OnPropertyChanged();
+
+            }
         }
 
 
@@ -99,6 +116,7 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
         private async void PanGestureRecognizer_OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
             var isInPit = false;
+            var isAdsorbInPit = false;
 
             switch (e.StatusType)
             {
@@ -110,7 +128,7 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
 
                     scaleAnimation.Commit(this, "ReshapeAnimations", 16, 100);
 
-                    WeakReferenceMessenger.Default.Send<PanActionArgs,string>(new PanActionArgs(PanType.Start, this.CurrentView), TokenHelper.PanAction);
+                    WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Start, this.CurrentView), TokenHelper.PanAction);
 
                     break;
                 case GestureStatus.Running:
@@ -130,6 +148,12 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                             if (isYin && isXin)
                             {
                                 isInPit = true;
+                                if (AutoAdsorption)
+                                {
+                                    isAdsorbInPit=true;
+                                    translationX = (pitRegion.EndX + pitRegion.StartX - Content.Width) / 2;
+                                    translationY = (pitRegion.EndY + pitRegion.StartY - Content.Height) / 2;
+                                }
                                 if (this.CurrentView == item)
                                 {
                                     isSwitch = false;
@@ -143,8 +167,7 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                                     this.CurrentView = item;
 
                                 }
-                                //translationX = (pitRegion.EndX + pitRegion.StartX - Content.Width) / 2;
-                                //translationY = (pitRegion.EndY + pitRegion.StartY - Content.Height) / 2;
+
                             }
                         }
 
@@ -153,16 +176,6 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                     {
                         WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.InPit, this.CurrentView), TokenHelper.PanAction);
 
-
-                        //ios有严重的性能问题，顾先舍去过度动画
-                        //var translationAnimation = new Animation();
-                        //var translationUpAnimation0 = new Animation(v => Content.TranslationY = v, Content.TranslationY, translationY, Easing.CubicOut);
-                        //var translationUpAnimation1 = new Animation(v => Content.TranslationX = v, Content.TranslationX, translationX, Easing.CubicOut);
-                        //translationAnimation.Add(0, 1, translationUpAnimation0);
-                        //translationAnimation.Add(0, 1, translationUpAnimation1);
-
-                        //translationAnimation.Commit(this, "ToPitAnimation", 16, 500);
-                        //await Content.TranslateTo(translationX, translationY, 200, Easing.CubicOut);
                         if (isSwitch)
                         {
                             WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Out, this.CurrentView), TokenHelper.PanAction);
@@ -185,15 +198,34 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                         if (isInPitPre)
                         {
                             WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Out, this.CurrentView), TokenHelper.PanAction);
-                            //await Content.TranslateTo(translationX, translationY, 200, Easing.CubicIn);
                             isInPitPre = false;
                         }
                         this.CurrentView = null;
 
                     }
-                    Content.TranslationX = translationX;
-                    Content.TranslationY = translationY;
+                    if (AutoAdsorption)
+                    {
+                        if (isAdsorbInPit)
+                        {
+                            if (!IsRuningTranslateToTask)
+                            {
+                                IsRuningTranslateToTask=true;
+                                await Content.TranslateTo(translationX, translationY, 200, Easing.CubicOut).ContinueWith(c => IsRuningTranslateToTask=false); ;
+                            }
 
+                            isAdsorbInPit=false;
+                        }
+                        else
+                        {
+                            Content.TranslationX = translationX;
+                            Content.TranslationY = translationY;
+                        }
+                    }
+                    else
+                    {
+                        Content.TranslationX = translationX;
+                        Content.TranslationY = translationY;
+                    }
                     break;
 
                 case GestureStatus.Completed:

@@ -80,10 +80,8 @@ namespace MatoMusic.Core
 
 
         public partial void SeekTo(double position)
-
         {
             CurrentAndroidPlayer.SeekTo((int)position * 1000);
-
         }
 
         public partial MusicInfo GetNextMusic(MusicInfo current, bool isShuffle)

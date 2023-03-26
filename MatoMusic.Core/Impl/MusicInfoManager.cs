@@ -182,7 +182,7 @@ namespace MatoMusic.Core
 
                     AlbumTitle = "测试专辑",
                     Artist ="测试艺术家",
-                    AlbumArt = "",
+                    AlbumArt = "p1.jpg",
                     GroupHeader = GetGroupHeader("No No"),
                     IsFavourite = GetIsMyFavouriteContains("No No").Result,
                     IsInitFinished = true
@@ -196,7 +196,7 @@ namespace MatoMusic.Core
 
                     AlbumTitle = "测试专辑",
                     Artist ="测试艺术家",
-                    AlbumArt = "",
+                    AlbumArt = "p2.jpg",
                     GroupHeader = GetGroupHeader("Puzzle of My Heart"),
                     IsFavourite = GetIsMyFavouriteContains("Puzzle of My Heart").Result,
                     IsInitFinished = true
@@ -210,7 +210,7 @@ namespace MatoMusic.Core
 
                     AlbumTitle = "测试专辑",
                     Artist ="测试艺术家",
-                    AlbumArt = "",
+                    AlbumArt = "p3.jpg",
                     GroupHeader = GetGroupHeader("Safe"),
                     IsFavourite = GetIsMyFavouriteContains("Safe").Result,
                     IsInitFinished = true
@@ -224,7 +224,7 @@ namespace MatoMusic.Core
 
                     AlbumTitle = "测试专辑",
                     Artist ="测试艺术家",
-                    AlbumArt = "",
+                    AlbumArt = "p4.jpg",
                     GroupHeader = GetGroupHeader("What About Now"),
                     IsFavourite = GetIsMyFavouriteContains("What About Now").Result,
                     IsInitFinished = true
