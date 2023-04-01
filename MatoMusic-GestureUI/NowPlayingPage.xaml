@@ -7,109 +7,112 @@
              BackgroundColor="{StaticResource PhoneBackgroundBrush}">
 
 
-	<ContentPage.Content>
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="60" />
-				<RowDefinition Height="33" />
-				<RowDefinition Height="1*" />
-				<RowDefinition Height="33" />
-				<RowDefinition Height="66" />
-			</Grid.RowDefinitions>
-			<!--标题区域-->
-			<Grid Grid.Row="0" Grid.RowSpan="2" 
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="33" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="33" />
+                <RowDefinition Height="66" />
+            </Grid.RowDefinitions>
+            <!--标题区域-->
+            <Grid Grid.Row="0" Grid.RowSpan="2" 
                   Margin="0,28,0,0"
 				  x:Name="TitleLayout"
                   VerticalOptions="CenterAndExpand">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto">
-					</RowDefinition>
-					<RowDefinition Height="Auto">
-					</RowDefinition>
-				</Grid.RowDefinitions>
-				<Label Grid.Row="0"
-                           HorizontalTextAlignment="Center"
-                           FontSize="{StaticResource  SubtitleFontSize}"
-                           VerticalTextAlignment="Center"
-                           Text="{Binding CurrentMusic.Title}"
-                           LineBreakMode="TailTruncation"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto">
+                    </RowDefinition>
+                    <RowDefinition Height="Auto">
+                    </RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       HorizontalTextAlignment="Center"
+                       FontSize="{StaticResource  SubtitleFontSize}"
+                       VerticalTextAlignment="Center"
+                       Text="{Binding CurrentMusic.Title}"
+                       LineBreakMode="TailTruncation"
                            >
-				</Label>
-				<Label Grid.Row="1"
-                           HorizontalTextAlignment="Center"
-                           VerticalTextAlignment="Center"
-                           Text="{Binding CurrentMusic.Artist}"
-                           FontSize="{StaticResource  BodyFontSize}"                       
-                           LineBreakMode="TailTruncation"
+                </Label>
+                <Label Grid.Row="1"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       Text="{Binding CurrentMusic.Artist}"
+                       FontSize="{StaticResource  BodyFontSize}"                       
+                       LineBreakMode="TailTruncation"
                            >
-				</Label>
-			</Grid>
+                </Label>
+            </Grid>
 
-			<StackLayout Orientation="Vertical"  Grid.Row="0" Grid.RowSpan="2" 
-			       Margin="0,38,0,0"
-				   VerticalOptions="CenterAndExpand"
-				IsVisible="{Binding Canplay,Converter={StaticResource True2FalseConverter}}">
+            <StackLayout Orientation="Vertical"
+                         Grid.Row="0" 
+                         Grid.RowSpan="2" 
+                         Margin="0,38,0,0"
+                         VerticalOptions="CenterAndExpand"
+                         IsVisible="{Binding Canplay,Converter={StaticResource True2FalseConverter}}">
 
 
-				<Label 
+                <Label 
 					HorizontalOptions="CenterAndExpand"
-				       VerticalOptions="CenterAndExpand"
-				       Text="轻按,开始一首歌"
-				       FontSize="{StaticResource StandOutBodyFontSize}"  >
-				</Label>
+				    VerticalOptions="CenterAndExpand"
+				    Text="轻按,开始一首歌"
+				    FontSize="{StaticResource StandOutBodyFontSize}"  >
+                </Label>
 
-			</StackLayout>
+            </StackLayout>
 
 
-			<!--播放控制区域-->
-			<Grid Grid.Row="2"				 
-                      BindingContext="{Binding CurrentMusicRelatedViewModel}"
-                      x:Name="PlayControlLayout">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="1*"></RowDefinition>
-					<RowDefinition Height="1*"></RowDefinition>
-					<RowDefinition Height="1*"></RowDefinition>
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition></ColumnDefinition>
-					<ColumnDefinition></ColumnDefinition>
-					<ColumnDefinition></ColumnDefinition>
-				</Grid.ColumnDefinitions>
+            <!--播放控制区域-->
+            <Grid Grid.Row="2"				 
+                  BindingContext="{Binding CurrentMusicRelatedViewModel}"
+                  x:Name="PlayControlLayout">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-				<Grid Grid.Column="1"
-                          Grid.Row="1" x:Name="PitTipLayout">
-					<Label  x:Name="TipLabel" 
+                <Grid Grid.Column="1"
+                      Grid.Row="1"
+                      x:Name="PitTipLayout">
+                    <Label  x:Name="TipLabel" 
 							HorizontalOptions="CenterAndExpand"
 							VerticalOptions="CenterAndExpand"
 							TextColor="Gray"
-                                FontSize="58"  
-                                FontFamily="FontAwesome"
-                                Margin="0">
+                            FontSize="58"  
+                            FontFamily="FontAwesome"
+                            Margin="0">
 
-					</Label>
-				</Grid>
-				<Grid Grid.Column="1"
-                          Grid.Row="1">
-					<Label  
-							HorizontalOptions="CenterAndExpand"
-							VerticalOptions="End"
-							x:Name="TipTextLabel"
-							TextColor="Gray"
-                                FontSize="{StaticResource  BodyFontSize}"  
-                                Margin="0">
+                    </Label>
+                </Grid>
+                <Grid Grid.Column="1"
+                      Grid.Row="1">
+                    <Label  
+						HorizontalOptions="CenterAndExpand"
+						VerticalOptions="End"
+						x:Name="TipTextLabel"
+						TextColor="Gray"
+                        FontSize="{StaticResource  BodyFontSize}"  
+                        Margin="0">
 
-					</Label>
-				</Grid>
-			</Grid>
+                    </Label>
+                </Grid>
+            </Grid>
             <Grid Grid.Row="2" >
                 <AbsoluteLayout x:Name="PitContentLayout"
-                                    Opacity="0"
-                                    BindingContext="{Binding CurrentMusicRelatedViewModel}">
+                                Opacity="0"
+                                BindingContext="{Binding CurrentMusicRelatedViewModel}">
                     <controls1:PitGrid x:Name="LeftPit"
-                                           PitName="LeftPit"
+                                       PitName="LeftPit"
 									   IsEnable="{Binding Canplay}"
-                                           AbsoluteLayout.LayoutBounds="0,.5,0.25,0.5"
-                                           AbsoluteLayout.LayoutFlags="All">
+                                       AbsoluteLayout.LayoutBounds="0,.5,0.25,0.5"
+                                       AbsoluteLayout.LayoutFlags="All">
 
                         <Label  x:Name="RewLabel"
                                 FontSize="58"  
@@ -120,9 +123,9 @@
 
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="TopPit"
-                                           PitName="TopPit"
-                                           AbsoluteLayout.LayoutBounds=".5,0,0.5,0.25"
-                                           AbsoluteLayout.LayoutFlags="All">
+                                       PitName="TopPit"
+                                       AbsoluteLayout.LayoutBounds=".5,0,0.5,0.25"
+                                       AbsoluteLayout.LayoutFlags="All">
 
 
                         <Label  x:Name="LibLabel"
@@ -133,9 +136,9 @@
 
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="LeftTopPit"
-                                           PitName="LeftTopPit"
-                                           AbsoluteLayout.LayoutBounds="0,0,0.25,0.25"
-                                           AbsoluteLayout.LayoutFlags="All">
+                                       PitName="LeftTopPit"
+                                       AbsoluteLayout.LayoutBounds="0,0,0.25,0.25"
+                                       AbsoluteLayout.LayoutFlags="All">
 
 
                         <Label  x:Name="ShuffleLabel"
@@ -147,9 +150,9 @@
 
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="RightTopPit"
-                                           PitName="RightTopPit"
-                                           AbsoluteLayout.LayoutBounds="1,0,0.25,0.25"
-                                           AbsoluteLayout.LayoutFlags="All">
+                                       PitName="RightTopPit"
+                                       AbsoluteLayout.LayoutBounds="1,0,0.25,0.25"
+                                       AbsoluteLayout.LayoutFlags="All">
 
 
                         <Label  x:Name="RepeatOneLabel"
@@ -161,11 +164,10 @@
 
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="RightPit"
-                                           PitName="RightPit"
+                                       PitName="RightPit"
 					                   IsEnable="{Binding Canplay}"
-
-                                           AbsoluteLayout.LayoutBounds="1,.5,0.25,0.5"
-                                           AbsoluteLayout.LayoutFlags="All">
+                                       AbsoluteLayout.LayoutBounds="1,.5,0.25,0.5"
+                                       AbsoluteLayout.LayoutFlags="All">
 
 
                         <Label  x:Name="FfLabel"                                
@@ -206,7 +208,6 @@
 
                         <Label  x:Name="SettingLabel"                                
                                 HorizontalOptions="CenterAndExpand"
-
                                 FontSize="38"  
                                 FontFamily="FontAwesome"
                                 Margin="0"></Label>
@@ -215,19 +216,20 @@
 
                 </AbsoluteLayout>
                 <controls1:PanContainer BackgroundColor="Transparent"
-                                            x:Name="DefaultPanContainer"
-                                            OnTapped="DefaultPanContainer_OnOnTapped"
-                                            OnfinishedChoise="DefaultPanContainer_OnOnfinishedChoise">
+                                        x:Name="DefaultPanContainer"
+                                        OnTapped="DefaultPanContainer_OnOnTapped"
+                                        AutoAdsorption="True"
+                                        OnfinishedChoise="DefaultPanContainer_OnOnfinishedChoise">
 
                     <Grid PropertyChanged="BindableObject_OnPropertyChanged"
-                              VerticalOptions="Start"
-                              HorizontalOptions="Start">
+                          VerticalOptions="Start"
+                          HorizontalOptions="Start">
                         <Image HeightRequest="250"
-                                   WidthRequest="250"
-                                   Margin="7.5"
-                                   Source="{Binding  CurrentMusic.AlbumArt}"
-                                   VerticalOptions="CenterAndExpand"
-                                   HorizontalOptions="CenterAndExpand"
+                               WidthRequest="250"
+                               Margin="7.5"
+                               Source="{Binding  CurrentMusic.AlbumArt}"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"
                                Aspect="AspectFill"
                                      >
 
@@ -236,9 +238,9 @@
                             </Image.Clip>
                         </Image>
                         <controls1:CircleSlider 
-                             HeightRequest="250"
-                                   WidthRequest="250"
-							x:Name="MainCircleSlider"
+                            HeightRequest="250"
+                            WidthRequest="250"
+                            x:Name="MainCircleSlider"
 							Maximum="{Binding Duration,Converter={StaticResource SliderMaxValueConverter}}"
                                                     Minimum="0.0"
                                                     TintColor="#FFFFFF"
@@ -269,5 +271,5 @@
 
             </Grid>
         </Grid>
-	</ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

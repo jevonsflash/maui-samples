@@ -17,7 +17,7 @@ public partial class App : Application
                   //ViewModels
                   .AddSingleton<MusicRelatedService>()
                   .AddSingleton<NowPlayingPageViewModel>()
-                  .AddSingleton<IMusicInfoManager, MusicInfoManager>()
+                  .AddSingleton<IMusicInfoManager, MockMusicInfoManager>()
                   .AddSingleton<IMusicControlService, MusicControlService>()
                   .BuildServiceProvider());
         MainPage = new NowPlayingPage();
