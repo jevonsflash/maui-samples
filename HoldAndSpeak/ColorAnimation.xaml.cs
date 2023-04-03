@@ -10,8 +10,8 @@ public partial class ColorAnimation : ContentPage
     private void OnSliderValueChanged(object sender, ValueChangedEventArgs e)
     {
 
-        var toColor = (Color)Application.Current.Resources["PhoneAccentBrush"];
-        var fromColor = (Color)Application.Current.Resources["PhoneChromeBrush"];
+        var toColor = (Color)Application.Current.Resources["PhoneChromeBrush"];
+        var fromColor = (Color)Application.Current.Resources["PhoneAccentBrush"];
 
         double value = e.NewValue;
         var t = value / 100;
