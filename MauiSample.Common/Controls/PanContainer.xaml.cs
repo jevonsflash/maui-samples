@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
-using MatoMusic.Helper;
+using MauiSample.Common.Helper;
 using Microsoft.Maui.Controls.Compatibility;
-using Region = MatoMusic.Common.Region;
-namespace MatoMusic.Controls
+using Region = MauiSample.Common.Common.Region;
+namespace MauiSample.Common.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PanContainer : ContentView
@@ -24,6 +25,8 @@ namespace MatoMusic.Controls
         public PanContainer()
         {
             InitializeComponent();
+            this.PanScale = 0.5;
+            this.PanScaleAnimationLength = 100;
             this.PropertyChanged += PanContainer_PropertyChanged1;
         }
 
@@ -43,6 +46,21 @@ namespace MatoMusic.Controls
             set { _currentView = value; }
         }
 
+        private double _panScale;
+
+        public double PanScale
+        {
+            get { return _panScale; }
+            set { _panScale = value; }
+        }
+
+        private int _panScaleAnimationLength;
+
+        public int PanScaleAnimationLength
+        {
+            get { return _panScaleAnimationLength; }
+            set { _panScaleAnimationLength = value; }
+        }
 
         public static readonly BindableProperty AutoAdsorptionProperty =
 BindableProperty.Create("AutoAdsorption", typeof(bool), typeof(PanContainer), default(bool));
@@ -123,11 +141,10 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                 case GestureStatus.Started:
 
                     var scaleAnimation = new Animation();
-                    var scaleUpAnimation0 = new Animation(v => Content.Scale = v, 1.0, 0.5);
+                    var scaleUpAnimation0 = new Animation(v => Content.Scale = v, Content.Scale, PanScale);
                     scaleAnimation.Add(0, 1, scaleUpAnimation0);
 
-                    scaleAnimation.Commit(this, "ReshapeAnimations", 16, 100);
-
+                    scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)PanScaleAnimationLength);
                     WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Start, this.CurrentView), TokenHelper.PanAction);
 
                     break;
@@ -136,6 +153,7 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                         Math.Max(0 - Content.Width / 2, Math.Min(PositionX + e.TotalX, this.Width - Content.Width / 2));
                     var translationY =
                         Math.Max(0 - Content.Height / 2, Math.Min(PositionY + e.TotalY, this.Height - Content.Height / 2));
+                    PitGrid lastView = null;
                     if (PitLayout != null)
                     {
 
@@ -150,7 +168,7 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                                 isInPit = true;
                                 if (AutoAdsorption)
                                 {
-                                    isAdsorbInPit=true;
+                                    isAdsorbInPit = true;
                                     translationX = (pitRegion.EndX + pitRegion.StartX - Content.Width) / 2;
                                     translationY = (pitRegion.EndY + pitRegion.StartY - Content.Height) / 2;
                                 }
@@ -163,7 +181,10 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                                     if (this.CurrentView != null)
                                     {
                                         isSwitch = true;
+                                        lastView = this.CurrentView;
+
                                     }
+
                                     this.CurrentView = item;
 
                                 }
@@ -174,11 +195,10 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                     }
                     if (isInPit)
                     {
-                        WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.InPit, this.CurrentView), TokenHelper.PanAction);
 
                         if (isSwitch)
                         {
-                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Out, this.CurrentView), TokenHelper.PanAction);
+                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Out, lastView), TokenHelper.PanAction);
                             WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.In, this.CurrentView), TokenHelper.PanAction);
                             isSwitch = false;
                         }
@@ -193,7 +213,6 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                     else
                     {
 
-                        WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.OutSide, this.CurrentView), TokenHelper.PanAction);
 
                         if (isInPitPre)
                         {
@@ -209,11 +228,11 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                         {
                             if (!IsRuningTranslateToTask)
                             {
-                                IsRuningTranslateToTask=true;
-                                await Content.TranslateTo(translationX, translationY, 200, Easing.CubicOut).ContinueWith(c => IsRuningTranslateToTask=false); ;
+                                IsRuningTranslateToTask = true;
+                                await Content.TranslateTo(translationX, translationY, 200, Easing.CubicOut).ContinueWith(c => IsRuningTranslateToTask = false); ;
                             }
 
-                            isAdsorbInPit=false;
+                            isAdsorbInPit = false;
                         }
                         else
                         {
@@ -236,7 +255,7 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                     var scaleUpAnimation2 = new Animation(v => Content.TranslationY = v, Content.TranslationY, PositionY, Easing.CubicOut);
                     var scaleUpAnimation3 = new Animation(v => Content.TranslationX = v, Content.TranslationX, PositionX, Easing.SpringOut);
                     var scaleUpAnimation4 = new Animation(v => Content.TranslationY = v, Content.TranslationY, PositionY, Easing.SpringOut);
-                    var scaleUpAnimation5 = new Animation(v => Content.Scale = v, 0.5);
+                    var scaleUpAnimation5 = new Animation(v => Content.Scale = v, Content.Scale, 1.0);
 
                     parentAnimation.Add(0, 1, scaleUpAnimation1);
                     parentAnimation.Add(0, 1, scaleUpAnimation2);
@@ -244,7 +263,7 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                     parentAnimation.Add(0, 1, scaleUpAnimation4);
                     parentAnimation.Add(0, 1, scaleUpAnimation5);
 
-                    parentAnimation.Commit(this, "RestoreAnimation", 16, 100);
+                    parentAnimation.Commit(this, "RestoreAnimation", 16, (uint)PanScaleAnimationLength);
 
                     if (isInPitPre)
                     {
@@ -293,7 +312,7 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
 
     public enum PanType
     {
-        InPit, OutSide, Out, In, Over, Start
+        Out, In, Over, Start
     }
 
 }

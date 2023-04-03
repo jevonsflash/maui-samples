@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls1="clr-namespace:MatoMusic.Controls;assembly=MatoMusic-GestureUI"
+             xmlns:controls="clr-namespace:MatoMusic.Controls;assembly=MatoMusic-GestureUI"
+             xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
              xmlns:view="clr-namespace:MatoMusic.View;assembly=MatoMusic-GestureUI"
              x:Class="MatoMusic.View.NowPlayingPage"
              BackgroundColor="{StaticResource PhoneBackgroundBrush}">
@@ -237,7 +238,7 @@
                                 <RoundRectangleGeometry  CornerRadius="125" Rect="0,0,250,250" />
                             </Image.Clip>
                         </Image>
-                        <controls1:CircleSlider 
+                        <controls:CircleSlider 
                             HeightRequest="250"
                             WidthRequest="250"
                             x:Name="MainCircleSlider"
@@ -248,7 +249,7 @@
                                                     IsEnabled="{Binding Canplay}"
                                                     ValueChanged="OnValueChanged"
                                                     Value="{Binding CurrentTime,Mode=TwoWay} ">
-                        </controls1:CircleSlider>
+                        </controls:CircleSlider>
                         <Grid IsVisible="{Binding IsPlaying, Converter={StaticResource True2FalseConverter}}">
                             <BoxView HeightRequest="250"
 						         WidthRequest="250"

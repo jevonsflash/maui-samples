@@ -5,8 +5,10 @@ using MatoMusic.Common;
 using MatoMusic.Controls;
 using MatoMusic.Core.Helper;
 using MatoMusic.Core.Interfaces;
-using MatoMusic.Helper;
 using MatoMusic.ViewModels;
+using MauiSample.Common.Common;
+using MauiSample.Common.Controls;
+using MauiSample.Common.Helper;
 
 namespace MatoMusic.View
 {
@@ -54,7 +56,6 @@ namespace MatoMusic.View
 
             Animation scaleUpAnimation1;
             Animation scaleUpAnimation2;
-            await Console.Out.WriteLineAsync(args.PanType.ToString());
             switch (args.PanType)
             {
                 case PanType.Over:

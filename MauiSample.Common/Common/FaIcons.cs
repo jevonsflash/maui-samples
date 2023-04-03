@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MatoMusic.Common
+namespace MauiSample.Common.Common
 {
     public class FaIcons
     {

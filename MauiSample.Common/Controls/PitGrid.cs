@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatoMusic.Controls
+namespace MauiSample.Common.Controls
 {
     public class PitGrid : Grid
     {
@@ -15,7 +15,7 @@ namespace MatoMusic.Controls
         }
 
         public static readonly BindableProperty IsEnableProperty =
-            BindableProperty.Create("IsEnable", typeof(bool), typeof(CircleSlider), true, propertyChanged: (bindable, oldValue, newValue) =>
+            BindableProperty.Create("IsEnable", typeof(bool), typeof(VisualElement), true, propertyChanged: (bindable, oldValue, newValue) =>
             {
                 var obj = (PitGrid)bindable;
                 obj.Opacity = obj.IsEnable ? 1 : 0.8;

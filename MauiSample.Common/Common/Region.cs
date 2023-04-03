@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatoMusic.Common
+namespace MauiSample.Common.Common
 {
     public class Region
     {
         public Region()
         {
-            
+
         }
         public Region(double sx, double ex, double sy, double ey, string name = "") : this()
         {

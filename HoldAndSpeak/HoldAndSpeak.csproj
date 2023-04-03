@@ -6,16 +6,16 @@
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
-		<RootNamespace>MatoMusic</RootNamespace>
+		<RootNamespace>HoldAndSpeak</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>MatoMusic-GestureUI</ApplicationTitle>
+		<ApplicationTitle>HoldAndSpeak</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.matomusic_gestureui</ApplicationId>
+		<ApplicationId>com.companyname.holdandspeak</ApplicationId>
 		<ApplicationIdGuid>d48d6150-de85-4569-8749-2dff31109556</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -50,47 +50,14 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\FontAwesome.ttf" />
-	  <None Remove="Resources\Images\p1.jpg" />
-	  <None Remove="Resources\Images\p5.jpg" />
-	  <None Remove="Resources\Raw\AlbumArtPlaceholder.png" />
-	  <None Remove="Resources\Raw\Chrysanthemum.jpg" />
-	  <None Remove="Resources\Raw\Desert.jpg" />
-	  <None Remove="Resources\Raw\Hydrangeas.jpg" />
-	  <None Remove="Resources\Raw\Jellyfish.jpg" />
-	  <None Remove="Resources\Raw\music1.mp3" />
-	  <None Remove="Resources\Raw\music2.mp3" />
-	  <None Remove="Resources\Raw\music3.mp3" />
-	  <None Remove="Resources\Raw\music4.mp3" />
-	  <None Remove="Resources\Raw\music5.mp3" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiAsset Include="Resources\Images\p2.jpg" />
-	  <MauiAsset Include="Resources\Images\p3.jpg" />
-	  <MauiAsset Include="Resources\Images\p4.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.59" />
-		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
-		<PackageReference Include="Microsoft.PinYinConverter" Version="1.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MatoMusic.Core\MatoMusic.Core.csproj" />
 	  <ProjectReference Include="..\MauiSample.Common\MauiSample.Common.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Controls\CircleSlider.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="NowPlayingPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
