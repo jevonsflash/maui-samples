@@ -60,4 +60,10 @@
 	  <ProjectReference Include="..\MauiSample.Common\MauiSample.Common.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="ColorAnimation.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

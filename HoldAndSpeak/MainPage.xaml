@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
-            BackgroundColor="{StaticResource PhoneBackgroundBrush}"
-             WidthRequest="500"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
              x:Class="HoldAndSpeak.MainPage">
 
     <ContentPage.Content >
@@ -26,6 +25,7 @@
 				    Text="WeChat Hold And Speak Sample By Linxiao"
 				    FontSize="{StaticResource StandOutBodyFontSize}"  >
                 </Label>
+                <Button Clicked="Button_Clicked" Text="ColorAnimation"></Button>
 
             </StackLayout>
 
@@ -170,7 +170,7 @@
                               
 							        HorizontalOptions="CenterAndExpand"
 							        FontSize="28"  
-							        TextColor="White"
+							        TextColor="{StaticResource PhoneForegroundBrush}"
 							        Text="按住 说话"
 							        Margin="0"></Label>
 

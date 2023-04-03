@@ -12,6 +12,6 @@ public partial class App : Application
                   new ServiceCollection()
                   //ViewModels
                   .BuildServiceProvider());
-        MainPage = new MainPage();
+        MainPage = new NavigationPage(new MainPage()) ;
     }
 }

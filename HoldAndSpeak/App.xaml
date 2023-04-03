@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:HoldAndSpeak"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             xmlns:converter="clr-namespace:HoldAndSpeak.Converter;assembly=HoldAndSpeak"
              x:Class="HoldAndSpeak.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -22,7 +21,7 @@
             <system:Double x:Key="BodyFontSize">18</system:Double>
             <system:String x:Key="Bound">0</system:String>
             <Color x:Key="PhoneBackgroundBrush">#080808</Color>
-            <Color x:Key="PhoneForegroundBrush">#8E8E8E</Color>
+            <Color x:Key="PhoneForegroundBrush">White</Color>
             <Color x:Key="PhoneContrastBackgroundBrush">#212121</Color>
             <Color x:Key="PhoneWeakenBackgroundBrush">#D2D9DE</Color>
             <Color x:Key="PhoneContrastForegroundBrush">#8E8E8E</Color>

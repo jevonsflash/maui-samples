@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HoldAndSpeak.ColorAnimation"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             Title="ColorAnimation">
+    <VerticalStackLayout>
+
+
+        <StackLayout>
+            <BoxView
+                x:Name="TalkBox"
+                HeightRequest="500"
+			    WidthRequest="500"               
+					Margin="7.5"
+					Color="#63B279"
+					VerticalOptions="CenterAndExpand"
+					HorizontalOptions="CenterAndExpand"></BoxView>
+            <Slider Maximum="100" Margin="12"
+                ValueChanged="OnSliderValueChanged" />
+            <Label x:Name="displayLabel"
+               Margin="12"
+               Text="(uninitialized)"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentPage>
