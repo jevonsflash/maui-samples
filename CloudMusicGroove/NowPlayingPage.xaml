@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
+             xmlns:view="clr-namespace:MatoMusic.View;assembly=CloudMusicGroove"
+             x:Class="MatoMusic.View.NowPlayingPage"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}">
+
+
+    <ContentPage.Content>
+
+        <Grid VerticalOptions="FillAndExpand" x:Name="Mainlayout">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="130"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            
+            <StackLayout InputTransparent="false"
+                    HorizontalOptions="FillAndExpand" VerticalOptions="Fill" BackgroundColor="Black" Opacity="0.3"  Grid.Row="0" Grid.RowSpan="4" />
+            <StackLayout Grid.Row="1">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeViewCommand}"></TapGestureRecognizer>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="{OnPlatform '0',iOS='0,15,0,0'}">
+                <ImageButton BackgroundColor="Transparent" Source="back.png" WidthRequest="30" Margin="20,20,0,0" Command="{Binding GoBackCommand}"></ImageButton>
+                <StackLayout  Margin="20,25,0,0" Spacing="0">
+                    <Label  Text="{Binding NowSongInfo.name}" FontSize="18" TextColor="White" VerticalOptions="Center" LineBreakMode="TailTruncation"></Label>
+                    <Label  Text="{Binding NowSongInfo.arstr}" FontSize="14" TextColor="#e1e1e1" VerticalOptions="Center"></Label>
+                </StackLayout>
+                <ImageButton Grid.Row="0" Grid.Column="0" Source="playshare.png" WidthRequest="25" HorizontalOptions="EndAndExpand" Margin="0,20,20,0" BackgroundColor="Transparent" Command="{Binding ShareTappedCommand}"></ImageButton>
+            </StackLayout>
+            <Image Grid.Row="1" Source="ic_disc_blackground.png" WidthRequest="{OnPlatform 273,Android=273,iOS=333}" HeightRequest="{OnPlatform 273,Android=273,iOS=333}" HorizontalOptions="Center" Margin="0,90,0,0" VerticalOptions="Start" IsVisible="{Binding IsShowDisc}"/>
+
+
+            <Grid Grid.Row="2" >
+                <AbsoluteLayout x:Name="PitContentLayout"
+                                Opacity="0"
+                                BindingContext="{Binding CurrentMusicRelatedViewModel}">
+                    <controls1:PitGrid x:Name="LeftPit"
+                                       PitName="LeftPit"
+									   IsEnable="{Binding Canplay}"
+                                       AbsoluteLayout.LayoutBounds="0,.5,0.25,0.5"
+                                       AbsoluteLayout.LayoutFlags="All">
+
+                        <Label  x:Name="RewLabel"
+                                FontSize="58"  
+                                FontFamily="FontAwesome"
+                                HorizontalOptions="CenterAndExpand"
+                                Margin="0"></Label>
+
+
+                    </controls1:PitGrid>
+                    <controls1:PitGrid x:Name="TopPit"
+                                       PitName="TopPit"
+                                       AbsoluteLayout.LayoutBounds=".5,0,0.5,0.25"
+                                       AbsoluteLayout.LayoutFlags="All">
+
+
+                        <Label  x:Name="LibLabel"
+                                FontSize="58"                                  
+                                HorizontalOptions="CenterAndExpand"
+                                FontFamily="FontAwesome"
+                                Margin="0"></Label>
+
+                    </controls1:PitGrid>
+                    <controls1:PitGrid x:Name="RightPit"
+                                       PitName="RightPit"
+					                   IsEnable="{Binding Canplay}"
+                                       AbsoluteLayout.LayoutBounds="1,.5,0.25,0.5"
+                                       AbsoluteLayout.LayoutFlags="All">
+
+
+                        <Label  x:Name="FfLabel"                                
+                                HorizontalOptions="CenterAndExpand"
+                                FontSize="58"  
+                                FontFamily="FontAwesome"
+                                Margin="0"></Label>
+                    </controls1:PitGrid>
+                    <controls1:PitGrid x:Name="BottomPit"
+                                           PitName="BottomPit"
+                                           AbsoluteLayout.LayoutBounds=".5,1,0.5,0.25"
+                                           AbsoluteLayout.LayoutFlags="All">
+
+                        <Label  x:Name="QueueLabel"                               
+                                HorizontalOptions="CenterAndExpand"
+                                FontSize="58"  
+                                FontFamily="FontAwesome"
+                                Margin="0"></Label>
+
+                    </controls1:PitGrid>
+                    <controls1:PitGrid x:Name="LeftBottomPit"
+                                           PitName="LeftBottomPit"
+                                           AbsoluteLayout.LayoutBounds="0,1,0.25,0.25"
+                                           AbsoluteLayout.LayoutFlags="All">
+
+                        <Label  x:Name="FavouriteLabel"                                
+                                HorizontalOptions="CenterAndExpand"
+
+                                FontSize="38"  
+                                FontFamily="FontAwesome"
+                                Margin="0"></Label>
+
+                    </controls1:PitGrid>
+                    <controls1:PitGrid x:Name="RightBottomPit"
+                                           PitName="RightBottomPit"
+                                           AbsoluteLayout.LayoutBounds="1,1,0.25,0.25"
+                                           AbsoluteLayout.LayoutFlags="All">
+
+                        <Label  x:Name="SettingLabel"                                
+                                HorizontalOptions="CenterAndExpand"
+                                FontSize="38"  
+                                FontFamily="FontAwesome"
+                                Margin="0"></Label>
+
+                    </controls1:PitGrid>
+
+                </AbsoluteLayout>
+                <controls1:PanContainer BackgroundColor="Transparent"
+                                        x:Name="DefaultPanContainer"
+                                        OnTapped="DefaultPanContainer_OnOnTapped"
+                                        AutoAdsorption="True"
+                                        OnfinishedChoise="DefaultPanContainer_OnOnfinishedChoise">
+
+                    <Grid PropertyChanged="BindableObject_OnPropertyChanged"
+                          VerticalOptions="Start"
+                          HorizontalOptions="Start">
+                        <Image HeightRequest="250"
+                               WidthRequest="250"
+                               Margin="7.5"
+                               Source="{Binding  CurrentMusic.AlbumArt}"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"
+                               Aspect="AspectFill"
+                                     >
+
+                            <Image.Clip>
+                                <RoundRectangleGeometry  CornerRadius="125" Rect="0,0,250,250" />
+                            </Image.Clip>
+                        </Image>
+
+                    </Grid>
+
+
+                </controls1:PanContainer>
+
+            </Grid>
+
+
+
+
+
+            <Image Grid.Row="1" WidthRequest="100" HeightRequest="167" HorizontalOptions="Center" VerticalOptions="Start" Margin="70,-10,0,0" Source="ic_needle.png" x:Name="PlayNeedle"  AnchorX="0.18" AnchorY="0.059" IsVisible="{Binding IsShowDisc}"/>
+            <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center" IsVisible="{Binding IsShowDisc}">
+                <ImageButton WidthRequest="25" HeightRequest="25" Source="playheart.png" BackgroundColor="Transparent" VerticalOptions="Center" Margin="0,0,30,0" Scale="0.8"></ImageButton>
+                <ImageButton WidthRequest="25" HeightRequest="25" Source="playdownload.png" BackgroundColor="Transparent" VerticalOptions="Center"  Margin="0,0,35,0" Command="{Binding DownLoadBtnClickedCommand}"></ImageButton>
+                <ImageButton WidthRequest="25" HeightRequest="25" Source="playtree.png" BackgroundColor="Transparent"  VerticalOptions="Center"  Margin="0,0,35,0" Command="{Binding TestCommand}"></ImageButton>
+                
+                <ImageButton WidthRequest="25" HeightRequest="25" Source="playmenu.png" BackgroundColor="Transparent" VerticalOptions="Center"  Scale="0.85" Command="{Binding MoreBtnClickCommand}"></ImageButton>
+            </StackLayout>
+            <StackLayout IsVisible="{Binding IsShowLrc}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
+                <StackLayout Orientation="Horizontal" Spacing="0">
+                    <Image WidthRequest="20" HeightRequest="20" Source="playvolume.png" VerticalOptions="Center" HorizontalOptions="Center" Margin="20,0,0,0"></Image>
+                    <Slider  Minimum="0" Maximum="{Binding MaxVulome}" Value="{Binding NowVulome}" HorizontalOptions="FillAndExpand" ThumbColor="White" DragCompletedCommand="{Binding VulomeDragCompletedCommand}"></Slider>
+                </StackLayout>
+                <ListView  BackgroundColor="Transparent" ItemsSource="{Binding SongLyricsModels}"  HasUnevenRows="True" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" SeparatorVisibility="None" x:Name="LyricsView" SelectionMode="None">
+                   
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout  Padding="40,20" Spacing="0">
+                                    <Label Text="{Binding LyricsText}" TextColor="{Binding Color}"  HorizontalOptions="Center" LineBreakMode="WordWrap" HorizontalTextAlignment="Center"></Label>
+                                    <Label Text="{Binding cnText}" TextColor="{Binding Color}"  HorizontalOptions="Center" LineBreakMode="WordWrap" HorizontalTextAlignment="Center"></Label>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Grid  Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="110"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0"  Orientation="Horizontal" Spacing="0">
+                    <Label Text="{Binding NowDuration, StringFormat='\{0:mm\\:ss}'}" WidthRequest="30" HeightRequest="20" VerticalOptions="Center" FontSize="10" TextColor="White" Margin="10,0,0,0"></Label>
+                    <Slider Visual="Material" x:Name="Sliderx" Minimum="0" Maximum="{Binding MusicDuration.TotalMilliseconds}" Value="{Binding NowDurationNum}" HorizontalOptions="FillAndExpand" ThumbColor="White" DragCompletedCommand="{Binding SliderDragCompletedCommand}" ></Slider>
+                    <Label Text="{Binding MusicDuration, StringFormat='\{0:mm\\:ss}'}" WidthRequest="30" HeightRequest="20" VerticalOptions="Center" FontSize="10" TextColor="White" Margin="0,0,10,0"></Label>
+                </StackLayout>
+                <StackLayout  Grid.Row="1"  Orientation="Horizontal" HorizontalOptions="Center">
+                    <ImageButton WidthRequest="55" HeightRequest="55" Source="playramdan.png" BackgroundColor="Transparent" VerticalOptions="Center" Scale="0.5"></ImageButton>
+                    <ImageButton WidthRequest="55" HeightRequest="55" Source="playback.png" BackgroundColor="Transparent" x:Name="PlayBackBtn" VerticalOptions="Center" Scale="0.4" Command="{Binding BackClickedCommand}"></ImageButton>
+                    <ImageButton WidthRequest="80" HeightRequest="80" Source="ic_pause.png" BackgroundColor="Transparent" x:Name="PlayBtn" VerticalOptions="Center" Command="{Binding PlayClickedCommand}"></ImageButton>
+                    <ImageButton WidthRequest="55" HeightRequest="55" Source="playnext.png" BackgroundColor="Transparent" x:Name="PlayNextBtn" VerticalOptions="Center" Scale="0.4" Command="{Binding NextClickedCommand}"></ImageButton>
+                    <ImageButton WidthRequest="55" HeightRequest="55" Source="playlist.png" BackgroundColor="Transparent" VerticalOptions="Center" Scale="0.4"></ImageButton>
+                </StackLayout>
+            </Grid>
+        </Grid>
+
+
+    
+    </ContentPage.Content>
+</ContentPage>

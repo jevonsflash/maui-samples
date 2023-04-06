@@ -1,0 +1,230 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net7.0-android;net7.0-ios</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
+		<OutputType>Exe</OutputType>
+		<RootNamespace>MatoMusic</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<!-- Display name -->
+		<ApplicationTitle>CloudMusicGroove</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.matomusic_gestureui</ApplicationId>
+		<ApplicationIdGuid>d48d6150-de85-4569-8749-2dff31109556</ApplicationIdGuid>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Fonts\FontAwesome.ttf" />
+	  <None Remove="Resources\Images\Add_w.png" />
+	  <None Remove="Resources\Images\Back.png" />
+	  <None Remove="Resources\Images\Back_b.png" />
+	  <None Remove="Resources\Images\Back_w.png" />
+	  <None Remove="Resources\Images\BillGoods.png" />
+	  <None Remove="Resources\Images\BillPayType.png" />
+	  <None Remove="Resources\Images\BillRemark.png" />
+	  <None Remove="Resources\Images\BillReveicer.png" />
+	  <None Remove="Resources\Images\BillSender.png" />
+	  <None Remove="Resources\Images\BillWeight.png" />
+	  <None Remove="Resources\Images\Ble.png" />
+	  <None Remove="Resources\Images\Ble_w.png" />
+	  <None Remove="Resources\Images\BlueTooth.png" />
+	  <None Remove="Resources\Images\CacheBG.jpg" />
+	  <None Remove="Resources\Images\calendar.png" />
+	  <None Remove="Resources\Images\CloseIcon_b.png" />
+	  <None Remove="Resources\Images\CloseIcon_w.png" />
+	  <None Remove="Resources\Images\icon_likegood.png" />
+	  <None Remove="Resources\Images\icon_likegood_fill.png" />
+	  <None Remove="Resources\Images\ic_3bar.png" />
+	  <None Remove="Resources\Images\ic_addcomment.png" />
+	  <None Remove="Resources\Images\ic_addfriend.png" />
+	  <None Remove="Resources\Images\ic_addinfo.png" />
+	  <None Remove="Resources\Images\ic_addmoon_w.png" />
+	  <None Remove="Resources\Images\ic_add_b.png" />
+	  <None Remove="Resources\Images\ic_ball_w.png" />
+	  <None Remove="Resources\Images\ic_barheart_w.png" />
+	  <None Remove="Resources\Images\Ic_Black.jpg" />
+	  <None Remove="Resources\Images\ic_box_b.png" />
+	  <None Remove="Resources\Images\ic_brightness_1_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_brightness_2_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_brightness_3_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_brightness_4_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_brightness_5_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_brightness_6_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_brightness_7_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_calendar.png" />
+	  <None Remove="Resources\Images\ic_car_w.png" />
+	  <None Remove="Resources\Images\Ic_Check_out.png" />
+	  <None Remove="Resources\Images\ic_circlemuscib_b.png" />
+	  <None Remove="Resources\Images\ic_clock.png" />
+	  <None Remove="Resources\Images\ic_clock2.png" />
+	  <None Remove="Resources\Images\ic_cloud_w.png" />
+	  <None Remove="Resources\Images\ic_disc.png" />
+	  <None Remove="Resources\Images\ic_disc_blackground.png" />
+	  <None Remove="Resources\Images\ic_downloadcircle_b.png" />
+	  <None Remove="Resources\Images\ic_dv_w.png" />
+	  <None Remove="Resources\Images\ic_fast_forward_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_fast_rewind_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_fm_w.png" />
+	  <None Remove="Resources\Images\ic_fullscreen.xml" />
+	  <None Remove="Resources\Images\ic_fullscreen_exit.xml" />
+	  <None Remove="Resources\Images\ic_fullscreen_exit_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_fullscreen_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_ice_w.png" />
+	  <None Remove="Resources\Images\ic_jazz_w.png" />
+	  <None Remove="Resources\Images\ic_kidchannel_w.png" />
+	  <None Remove="Resources\Images\Ic_likefile.png" />
+	  <None Remove="Resources\Images\Ic_linke.png" />
+	  <None Remove="Resources\Images\ic_mainmusic.png" />
+	  <None Remove="Resources\Images\ic_mainradio.png" />
+	  <None Remove="Resources\Images\ic_mainrman.png" />
+	  <None Remove="Resources\Images\Ic_menu_b.png" />
+	  <None Remove="Resources\Images\ic_mic2_b.png" />
+	  <None Remove="Resources\Images\ic_mic_b.png" />
+	  <None Remove="Resources\Images\ic_moon.png" />
+	  <None Remove="Resources\Images\ic_more_b.png" />
+	  <None Remove="Resources\Images\Ic_more_g.png" />
+	  <None Remove="Resources\Images\Ic_more_l.png" />
+	  <None Remove="Resources\Images\ic_more_w.png" />
+	  <None Remove="Resources\Images\Ic_Musical.png" />
+	  <None Remove="Resources\Images\ic_musicb_b.png" />
+	  <None Remove="Resources\Images\ic_music_cb.png" />
+	  <None Remove="Resources\Images\ic_needle.png" />
+	  <None Remove="Resources\Images\ic_pause.png" />
+	  <None Remove="Resources\Images\ic_pause_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_piano_w.png" />
+	  <None Remove="Resources\Images\ic_play.png" />
+	  <None Remove="Resources\Images\ic_playcircle.png" />
+	  <None Remove="Resources\Images\ic_playwbar_b.png" />
+	  <None Remove="Resources\Images\ic_play_arrow_white_36dp.png" />
+	  <None Remove="Resources\Images\Ic_play_b.png" />
+	  <None Remove="Resources\Images\Ic_quart.png" />
+	  <None Remove="Resources\Images\ic_runman_w.png" />
+	  <None Remove="Resources\Images\Ic_Samesony.png" />
+	  <None Remove="Resources\Images\ic_scan_b.png" />
+	  <None Remove="Resources\Images\Ic_search.png" />
+	  <None Remove="Resources\Images\ic_search_b.png" />
+	  <None Remove="Resources\Images\Ic_search_w.png" />
+	  <None Remove="Resources\Images\ic_setting_b.png" />
+	  <None Remove="Resources\Images\Ic_singer.png" />
+	  <None Remove="Resources\Images\ic_skip_next_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_ticket.png" />
+	  <None Remove="Resources\Images\Ic_time.png" />
+	  <None Remove="Resources\Images\ic_userwstar_b.png" />
+	  <None Remove="Resources\Images\Ic_User_r.png" />
+	  <None Remove="Resources\Images\Ic_video.png" />
+	  <None Remove="Resources\Images\Ic_video_gr.png" />
+	  <None Remove="Resources\Images\ic_volume_down_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_volume_mute_white_36dp.png" />
+	  <None Remove="Resources\Images\ic_volume_up_white_36dp.png" />
+	  <None Remove="Resources\Images\lbxx.png" />
+	  <None Remove="Resources\Images\lbxx64.png" />
+	  <None Remove="Resources\Images\LIkefile_b.png" />
+	  <None Remove="Resources\Images\MenuBackground.png" />
+	  <None Remove="Resources\Images\Menu_w.png" />
+	  <None Remove="Resources\Images\pack.png" />
+	  <None Remove="Resources\Images\Packing.png" />
+	  <None Remove="Resources\Images\PlayBack.png" />
+	  <None Remove="Resources\Images\PlayDownLoad.png" />
+	  <None Remove="Resources\Images\PlayDownLoadOk.png" />
+	  <None Remove="Resources\Images\PlayHeart.png" />
+	  <None Remove="Resources\Images\PlayHeart_red.png" />
+	  <None Remove="Resources\Images\Playlike.png" />
+	  <None Remove="Resources\Images\PlayLike_b.png" />
+	  <None Remove="Resources\Images\Playlist.png" />
+	  <None Remove="Resources\Images\PlayMenu.png" />
+	  <None Remove="Resources\Images\PlayNext.png" />
+	  <None Remove="Resources\Images\PlayRamdan.png" />
+	  <None Remove="Resources\Images\PlayShare.png" />
+	  <None Remove="Resources\Images\playshare_b.png" />
+	  <None Remove="Resources\Images\PlayTalk.png" />
+	  <None Remove="Resources\Images\PlayTalk_b.png" />
+	  <None Remove="Resources\Images\PlayTree.png" />
+	  <None Remove="Resources\Images\PlayVolume.png" />
+	  <None Remove="Resources\Images\PowerBI.png" />
+	  <None Remove="Resources\Images\QueueSearch.png" />
+	  <None Remove="Resources\Images\Refresh.png" />
+	  <None Remove="Resources\Images\Refresh_w.png" />
+	  <None Remove="Resources\Images\ScanHistory.png" />
+	  <None Remove="Resources\Images\setting.png" />
+	  <None Remove="Resources\Images\Signle.png" />
+	  <None Remove="Resources\Images\single.png" />
+	  <None Remove="Resources\Images\tabicon_fe.PNG" />
+	  <None Remove="Resources\Images\tabicon_mb.PNG" />
+	  <None Remove="Resources\Images\tabicon_mc.PNG" />
+	  <None Remove="Resources\Images\tabicon_mv.PNG" />
+	  <None Remove="Resources\Images\tabicon_u.png" />
+	  <None Remove="Resources\Images\tab_about.png" />
+	  <None Remove="Resources\Images\tab_feed.png" />
+	  <None Remove="Resources\Images\UserIcon.png" />
+	  <None Remove="Resources\Images\vinyl.png" />
+	  <None Remove="Resources\Images\WayBill.png" />
+	  <None Remove="Resources\Images\WCS.png" />
+	  <None Remove="Resources\Images\xamarin_logo.png" />
+	  <None Remove="Resources\Raw\AlbumArtPlaceholder.png" />
+	  <None Remove="Resources\Raw\Chrysanthemum.jpg" />
+	  <None Remove="Resources\Raw\Desert.jpg" />
+	  <None Remove="Resources\Raw\Hydrangeas.jpg" />
+	  <None Remove="Resources\Raw\Jellyfish.jpg" />
+	  <None Remove="Resources\Raw\music1.mp3" />
+	  <None Remove="Resources\Raw\music2.mp3" />
+	  <None Remove="Resources\Raw\music3.mp3" />
+	  <None Remove="Resources\Raw\music4.mp3" />
+	  <None Remove="Resources\Raw\music5.mp3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.59" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
+		<PackageReference Include="Microsoft.PinYinConverter" Version="1.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\MatoMusic.Core\MatoMusic.Core.csproj" />
+	  <ProjectReference Include="..\MauiSample.Common\MauiSample.Common.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="NowPlayingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+</Project>

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoldAndSpeak", "HoldAndSpea
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{0C2B7A31-7B39-4CBE-9CDD-9888E570A249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiSample.Common", "MauiSample.Common\MauiSample.Common.csproj", "{D8D18218-866A-4B60-BD9E-AB7F2D1A60A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiSample.Common", "MauiSample.Common\MauiSample.Common.csproj", "{D8D18218-866A-4B60-BD9E-AB7F2D1A60A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudMusicGroove", "CloudMusicGroove\CloudMusicGroove.csproj", "{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,12 @@ Global
 		{D8D18218-866A-4B60-BD9E-AB7F2D1A60A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8D18218-866A-4B60-BD9E-AB7F2D1A60A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8D18218-866A-4B60-BD9E-AB7F2D1A60A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
