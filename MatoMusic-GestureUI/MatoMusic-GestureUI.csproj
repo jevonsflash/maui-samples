@@ -49,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Controls\CircleSlider.xaml.cs~RF24f712.TMP" />
 	  <None Remove="Resources\Fonts\FontAwesome.ttf" />
 	  <None Remove="Resources\Images\p1.jpg" />
 	  <None Remove="Resources\Images\p5.jpg" />

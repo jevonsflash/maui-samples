@@ -16,18 +16,12 @@
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition Height="130"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
 
-            
+
+
             <StackLayout InputTransparent="false"
                     HorizontalOptions="FillAndExpand" VerticalOptions="Fill" BackgroundColor="Black" Opacity="0.3"  Grid.Row="0" Grid.RowSpan="4" />
-            <StackLayout Grid.Row="1">
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChangeViewCommand}"></TapGestureRecognizer>
-                </StackLayout.GestureRecognizers>
-            </StackLayout>
+
             <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="{OnPlatform '0',iOS='0,15,0,0'}">
                 <ImageButton BackgroundColor="Transparent" Source="back.png" WidthRequest="30" Margin="20,20,0,0" Command="{Binding GoBackCommand}"></ImageButton>
                 <StackLayout  Margin="20,25,0,0" Spacing="0">
@@ -36,102 +30,44 @@
                 </StackLayout>
                 <ImageButton Grid.Row="0" Grid.Column="0" Source="playshare.png" WidthRequest="25" HorizontalOptions="EndAndExpand" Margin="0,20,20,0" BackgroundColor="Transparent" Command="{Binding ShareTappedCommand}"></ImageButton>
             </StackLayout>
-            <Image Grid.Row="1" Source="ic_disc_blackground.png" WidthRequest="{OnPlatform 273,Android=273,iOS=333}" HeightRequest="{OnPlatform 273,Android=273,iOS=333}" HorizontalOptions="Center" Margin="0,90,0,0" VerticalOptions="Start" IsVisible="{Binding IsShowDisc}"/>
 
 
-            <Grid Grid.Row="2" >
-                <AbsoluteLayout x:Name="PitContentLayout"
-                                Opacity="0"
-                                BindingContext="{Binding CurrentMusicRelatedViewModel}">
-                    <controls1:PitGrid x:Name="LeftPit"
-                                       PitName="LeftPit"
-									   IsEnable="{Binding Canplay}"
-                                       AbsoluteLayout.LayoutBounds="0,.5,0.25,0.5"
-                                       AbsoluteLayout.LayoutFlags="All">
-
-                        <Label  x:Name="RewLabel"
-                                FontSize="58"  
-                                FontFamily="FontAwesome"
-                                HorizontalOptions="CenterAndExpand"
-                                Margin="0"></Label>
-
-
+            <Grid Grid.Row="1">
+                <Grid  x:Name="PitContentLayout"
+                       Opacity="1"
+                       BindingContext="{Binding CurrentMusicRelatedViewModel}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <controls1:PitGrid 
+                        x:Name="LeftPit"
+                        PitName="LeftPit">
                     </controls1:PitGrid>
-                    <controls1:PitGrid x:Name="TopPit"
-                                       PitName="TopPit"
-                                       AbsoluteLayout.LayoutBounds=".5,0,0.5,0.25"
-                                       AbsoluteLayout.LayoutFlags="All">
-
-
-                        <Label  x:Name="LibLabel"
-                                FontSize="58"                                  
-                                HorizontalOptions="CenterAndExpand"
-                                FontFamily="FontAwesome"
-                                Margin="0"></Label>
-
+                    <controls1:PitGrid 
+                        Grid.Column="1"
+                        x:Name="MiddlePit"
+                        PitName="MiddlePit">
                     </controls1:PitGrid>
-                    <controls1:PitGrid x:Name="RightPit"
-                                       PitName="RightPit"
-					                   IsEnable="{Binding Canplay}"
-                                       AbsoluteLayout.LayoutBounds="1,.5,0.25,0.5"
-                                       AbsoluteLayout.LayoutFlags="All">
-
-
-                        <Label  x:Name="FfLabel"                                
-                                HorizontalOptions="CenterAndExpand"
-                                FontSize="58"  
-                                FontFamily="FontAwesome"
-                                Margin="0"></Label>
-                    </controls1:PitGrid>
-                    <controls1:PitGrid x:Name="BottomPit"
-                                           PitName="BottomPit"
-                                           AbsoluteLayout.LayoutBounds=".5,1,0.5,0.25"
-                                           AbsoluteLayout.LayoutFlags="All">
-
-                        <Label  x:Name="QueueLabel"                               
-                                HorizontalOptions="CenterAndExpand"
-                                FontSize="58"  
-                                FontFamily="FontAwesome"
-                                Margin="0"></Label>
-
-                    </controls1:PitGrid>
-                    <controls1:PitGrid x:Name="LeftBottomPit"
-                                           PitName="LeftBottomPit"
-                                           AbsoluteLayout.LayoutBounds="0,1,0.25,0.25"
-                                           AbsoluteLayout.LayoutFlags="All">
-
-                        <Label  x:Name="FavouriteLabel"                                
-                                HorizontalOptions="CenterAndExpand"
-
-                                FontSize="38"  
-                                FontFamily="FontAwesome"
-                                Margin="0"></Label>
-
-                    </controls1:PitGrid>
-                    <controls1:PitGrid x:Name="RightBottomPit"
-                                           PitName="RightBottomPit"
-                                           AbsoluteLayout.LayoutBounds="1,1,0.25,0.25"
-                                           AbsoluteLayout.LayoutFlags="All">
-
-                        <Label  x:Name="SettingLabel"                                
-                                HorizontalOptions="CenterAndExpand"
-                                FontSize="38"  
-                                FontFamily="FontAwesome"
-                                Margin="0"></Label>
+                    <controls1:PitGrid 
+                        Grid.Column="2"
+                        x:Name="RightPit"
+                        PitName="RightPit">
 
                     </controls1:PitGrid>
 
-                </AbsoluteLayout>
-                <controls1:PanContainer BackgroundColor="Transparent"
-                                        x:Name="DefaultPanContainer"
-                                        OnTapped="DefaultPanContainer_OnOnTapped"
-                                        AutoAdsorption="True"
-                                        OnfinishedChoise="DefaultPanContainer_OnOnfinishedChoise">
 
-                    <Grid PropertyChanged="BindableObject_OnPropertyChanged"
-                          VerticalOptions="Start"
-                          HorizontalOptions="Start">
-                        <Image HeightRequest="250"
+                </Grid>
+                <Grid  BackgroundColor="Yellow"
+  
+                    TranslationX="{Binding Source={x:Reference  DefaultPanContainer} ,Path=Content.TranslationX,Converter={StaticResource CalcValueConverter},ConverterParameter=-100}"
+                         >
+                    <Image Source="ic_disc.png"
+                               WidthRequest="300" 
+                               HeightRequest="300" />
+
+                    <Image HeightRequest="250"
                                WidthRequest="250"
                                Margin="7.5"
                                Source="{Binding  CurrentMusic.AlbumArt}"
@@ -140,48 +76,61 @@
                                Aspect="AspectFill"
                                      >
 
-                            <Image.Clip>
-                                <RoundRectangleGeometry  CornerRadius="125" Rect="0,0,250,250" />
-                            </Image.Clip>
-                        </Image>
+                        <Image.Clip>
+                            <RoundRectangleGeometry  CornerRadius="125" Rect="0,0,250,250" />
+                        </Image.Clip>
+                    </Image>
 
-                    </Grid>
+                </Grid>
 
+                
+                <controls1:PanContainer Background="Transparent"
+                                        x:Name="DefaultPanContainer"
+                                        OnTapped="DefaultPanContainer_OnOnTapped"
+                                        AutoAdsorption="False"
+                                        PanScale="1"
+                                        OnfinishedChoise="DefaultPanContainer_OnOnfinishedChoise">
+                    <controls1:PanContainer.Content>
+                        <Grid PropertyChanged="BindableObject_OnPropertyChanged"
+                          VerticalOptions="Start"
+                          HorizontalOptions="Start">
+                            <Image Source="ic_disc.png"
+                               WidthRequest="300" 
+                               HeightRequest="300" />
 
+                            <Image HeightRequest="250"
+                               WidthRequest="250"
+                               Margin="7.5"
+                               Source="{Binding  CurrentMusic.AlbumArt}"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"
+                               Aspect="AspectFill"
+                                     >
+
+                                <Image.Clip>
+                                    <RoundRectangleGeometry  CornerRadius="125" Rect="0,0,250,250" />
+                                </Image.Clip>
+                            </Image>
+
+                        </Grid>
+
+                    </controls1:PanContainer.Content>
                 </controls1:PanContainer>
+
+
+
+                <Image WidthRequest="100" HeightRequest="167" HorizontalOptions="Center" VerticalOptions="Start" Margin="70,-10,0,0" Source="ic_needle.png" x:Name="PlayNeedle"  AnchorX="0.18" AnchorY="0.059"/>
 
             </Grid>
 
 
 
-
-
-            <Image Grid.Row="1" WidthRequest="100" HeightRequest="167" HorizontalOptions="Center" VerticalOptions="Start" Margin="70,-10,0,0" Source="ic_needle.png" x:Name="PlayNeedle"  AnchorX="0.18" AnchorY="0.059" IsVisible="{Binding IsShowDisc}"/>
             <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center" IsVisible="{Binding IsShowDisc}">
                 <ImageButton WidthRequest="25" HeightRequest="25" Source="playheart.png" BackgroundColor="Transparent" VerticalOptions="Center" Margin="0,0,30,0" Scale="0.8"></ImageButton>
                 <ImageButton WidthRequest="25" HeightRequest="25" Source="playdownload.png" BackgroundColor="Transparent" VerticalOptions="Center"  Margin="0,0,35,0" Command="{Binding DownLoadBtnClickedCommand}"></ImageButton>
                 <ImageButton WidthRequest="25" HeightRequest="25" Source="playtree.png" BackgroundColor="Transparent"  VerticalOptions="Center"  Margin="0,0,35,0" Command="{Binding TestCommand}"></ImageButton>
-                
+
                 <ImageButton WidthRequest="25" HeightRequest="25" Source="playmenu.png" BackgroundColor="Transparent" VerticalOptions="Center"  Scale="0.85" Command="{Binding MoreBtnClickCommand}"></ImageButton>
-            </StackLayout>
-            <StackLayout IsVisible="{Binding IsShowLrc}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
-                <StackLayout Orientation="Horizontal" Spacing="0">
-                    <Image WidthRequest="20" HeightRequest="20" Source="playvolume.png" VerticalOptions="Center" HorizontalOptions="Center" Margin="20,0,0,0"></Image>
-                    <Slider  Minimum="0" Maximum="{Binding MaxVulome}" Value="{Binding NowVulome}" HorizontalOptions="FillAndExpand" ThumbColor="White" DragCompletedCommand="{Binding VulomeDragCompletedCommand}"></Slider>
-                </StackLayout>
-                <ListView  BackgroundColor="Transparent" ItemsSource="{Binding SongLyricsModels}"  HasUnevenRows="True" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" SeparatorVisibility="None" x:Name="LyricsView" SelectionMode="None">
-                   
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout  Padding="40,20" Spacing="0">
-                                    <Label Text="{Binding LyricsText}" TextColor="{Binding Color}"  HorizontalOptions="Center" LineBreakMode="WordWrap" HorizontalTextAlignment="Center"></Label>
-                                    <Label Text="{Binding cnText}" TextColor="{Binding Color}"  HorizontalOptions="Center" LineBreakMode="WordWrap" HorizontalTextAlignment="Center"></Label>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
             </StackLayout>
             <Grid  Grid.Row="3">
                 <Grid.RowDefinitions>
@@ -204,6 +153,6 @@
         </Grid>
 
 
-    
+
     </ContentPage.Content>
 </ContentPage>

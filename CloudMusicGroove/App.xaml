@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MatoMusic"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:converter="clr-namespace:MatoMusic.Converter;assembly=CloudMusicGroove"
              x:Class="MatoMusic.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -60,7 +61,8 @@
                        Top="18"
                        Right="12"
                        Bottom="5" />
-           
+            <converter:CalcValueConverter x:Key="CalcValueConverter"></converter:CalcValueConverter>
+
 
         </ResourceDictionary>
     </Application.Resources>

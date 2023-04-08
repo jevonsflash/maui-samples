@@ -15,8 +15,7 @@ namespace MatoMusic.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NowPlayingPage : ContentPage
     {
-        private IDispatcherTimer _dispatcherTimer;
-        private IDispatcherTimer _dispatcherTimer2;
+
         public IMusicInfoManager MusicInfoManager => Ioc.Default.GetRequiredService<IMusicInfoManager>();
         public NowPlayingPageViewModel MusicRelatedViewModel => this.BindingContext as NowPlayingPageViewModel;
         private int _runCount = 0;
@@ -25,12 +24,7 @@ namespace MatoMusic.View
         {
             InitializeComponent();
             this.BindingContext=Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
-            this.RewLabel.Text = FaIcons.IconBackward;
-            this.FfLabel.Text = FaIcons.IconForward;
-            this.LibLabel.Text = FaIcons.IconSquareO;
-            this.SettingLabel.Text = FaIcons.IconCog;
-            this.QueueLabel.Text = FaIcons.IconBars;
-            this.FavouriteLabel.Text = FaIcons.IconHeart;
+
             Appearing += NowPlayingPage_Appearing;
             WeakReferenceMessenger.Default.Register<PanActionArgs, string>(this, TokenHelper.PanAction, PanActionHandler);
         }
@@ -49,22 +43,12 @@ namespace MatoMusic.View
             {
                 case PanType.Over:
 
-                    MusicRelatedViewModel.EndFastSeeking();
-                    if (_dispatcherTimer!=null)
-                    {
-                        _dispatcherTimer.Stop();
 
-                    }
-                    _runCount = 0;
 
                     break;
                 case PanType.Start:
 
 
-                    if (_dispatcherTimer2.IsRunning)
-                    {
-                        _dispatcherTimer2.Stop();
-                    }
 
                     break;
                 case PanType.In:
@@ -85,16 +69,6 @@ namespace MatoMusic.View
                     break;
                 case PanType.Out:
 
-                    if (this._runCount > 0)
-                    {
-                        MusicRelatedViewModel.EndFastSeeking();
-                    }
-                    if (_dispatcherTimer!=null)
-                    {
-                        _dispatcherTimer.Stop();
-
-                    }
-                    _runCount = 0;
 
 
                     break;
@@ -122,21 +96,9 @@ namespace MatoMusic.View
             {
                 case "LeftPit":
 
-                    if (this._runCount > 0)
-                    {
-                        MusicRelatedViewModel.EndFastSeeking();
-                        if (_dispatcherTimer!=null)
-                        {
-                            _dispatcherTimer.Stop();
 
-                        }
-                        _runCount = 0;
+                    MusicRelatedViewModel.PreAction(null);
 
-                    }
-                    else
-                    {
-                        MusicRelatedViewModel.PreAction(null);
-                    }
 
                     break;
 
@@ -156,21 +118,9 @@ namespace MatoMusic.View
                     break;
 
                 case "RightPit":
-                    if (this._runCount > 0)
-                    {
-                        MusicRelatedViewModel.EndFastSeeking();
-                        if (_dispatcherTimer!=null)
-                        {
-                            _dispatcherTimer.Stop();
 
-                        }
-                        _runCount = 0;
+                    MusicRelatedViewModel.NextAction(null);
 
-                    }
-                    else
-                    {
-                        MusicRelatedViewModel.NextAction(null);
-                    }
 
                     break;
                 case "BottomPit":

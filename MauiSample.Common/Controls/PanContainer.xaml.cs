@@ -140,6 +140,7 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
             {
                 case GestureStatus.Started:
 
+                    Content.AbortAnimation("ReshapeAnimations");
                     var scaleAnimation = new Animation();
                     var scaleUpAnimation0 = new Animation(v => Content.Scale = v, Content.Scale, PanScale);
                     scaleAnimation.Add(0, 1, scaleUpAnimation0);
@@ -251,16 +252,14 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
 
                     Content.AbortAnimation("ReshapeAnimations");
                     var parentAnimation = new Animation();
-                    var scaleUpAnimation1 = new Animation(v => Content.TranslationX = v, Content.TranslationX, PositionX, Easing.CubicOut);
-                    var scaleUpAnimation2 = new Animation(v => Content.TranslationY = v, Content.TranslationY, PositionY, Easing.CubicOut);
-                    var scaleUpAnimation3 = new Animation(v => Content.TranslationX = v, Content.TranslationX, PositionX, Easing.SpringOut);
-                    var scaleUpAnimation4 = new Animation(v => Content.TranslationY = v, Content.TranslationY, PositionY, Easing.SpringOut);
+                    var mySpringOut =(double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
+
+                    var scaleUpAnimation1 = new Animation(v => Content.TranslationX = v, Content.TranslationX, PositionX, mySpringOut);
+                    var scaleUpAnimation2 = new Animation(v => Content.TranslationY = v, Content.TranslationY, PositionY, mySpringOut);
                     var scaleUpAnimation5 = new Animation(v => Content.Scale = v, Content.Scale, 1.0);
 
                     parentAnimation.Add(0, 1, scaleUpAnimation1);
                     parentAnimation.Add(0, 1, scaleUpAnimation2);
-                    parentAnimation.Add(0, 1, scaleUpAnimation3);
-                    parentAnimation.Add(0, 1, scaleUpAnimation4);
                     parentAnimation.Add(0, 1, scaleUpAnimation5);
 
                     parentAnimation.Commit(this, "RestoreAnimation", 16, (uint)PanScaleAnimationLength);
