@@ -9,13 +9,21 @@ namespace MatoMusic.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var d = (double)value;
-            return d+ double.Parse( (string)parameter);
+            double compensation;
+            if (double.Parse((string)parameter)>=0)
+            {
+                compensation=((App.Current as App).PanContainerWidth+300)/2;
+            }
+            else
+            {
+                compensation=-1.5*(App.Current as App).PanContainerWidth+300/2;
+            }
+            return d+compensation;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var d = (double)value;
-            return -(d+(double)parameter);
+            throw new NotImplementedException();
         }
 
     }

@@ -18,9 +18,10 @@
                 <RowDefinition Height="66" />
             </Grid.RowDefinitions>
             <!--标题区域-->
-            <Grid Grid.Row="0" Grid.RowSpan="2" 
+            <Grid Grid.Row="0"
+                  Grid.RowSpan="2"
                   Margin="0,28,0,0"
-				  x:Name="TitleLayout"
+                  x:Name="TitleLayout"
                   VerticalOptions="CenterAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto">
@@ -33,39 +34,36 @@
                        FontSize="{StaticResource  SubtitleFontSize}"
                        VerticalTextAlignment="Center"
                        Text="{Binding CurrentMusic.Title}"
-                       LineBreakMode="TailTruncation"
-                           >
+                       LineBreakMode="TailTruncation">
                 </Label>
                 <Label Grid.Row="1"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        Text="{Binding CurrentMusic.Artist}"
-                       FontSize="{StaticResource  BodyFontSize}"                       
-                       LineBreakMode="TailTruncation"
-                           >
+                       FontSize="{StaticResource  BodyFontSize}"
+                       LineBreakMode="TailTruncation">
                 </Label>
             </Grid>
 
             <StackLayout Orientation="Vertical"
-                         Grid.Row="0" 
-                         Grid.RowSpan="2" 
+                         Grid.Row="0"
+                         Grid.RowSpan="2"
                          Margin="0,38,0,0"
                          VerticalOptions="CenterAndExpand"
                          IsVisible="{Binding Canplay,Converter={StaticResource True2FalseConverter}}">
 
 
-                <Label 
-					HorizontalOptions="CenterAndExpand"
-				    VerticalOptions="CenterAndExpand"
-				    Text="轻按,开始一首歌"
-				    FontSize="{StaticResource StandOutBodyFontSize}"  >
+                <Label HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"
+                       Text="轻按,开始一首歌"
+                       FontSize="{StaticResource StandOutBodyFontSize}">
                 </Label>
 
             </StackLayout>
 
 
             <!--播放控制区域-->
-            <Grid Grid.Row="2"				 
+            <Grid Grid.Row="2"
                   BindingContext="{Binding CurrentMusicRelatedViewModel}"
                   x:Name="PlayControlLayout">
                 <Grid.RowDefinitions>
@@ -82,11 +80,11 @@
                 <Grid Grid.Column="1"
                       Grid.Row="1"
                       x:Name="PitTipLayout">
-                    <Label  x:Name="TipLabel" 
-							HorizontalOptions="CenterAndExpand"
-							VerticalOptions="CenterAndExpand"
-							TextColor="Gray"
-                            FontSize="58"  
+                    <Label  x:Name="TipLabel"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                            TextColor="Gray"
+                            FontSize="58"
                             FontFamily="FontAwesome"
                             Margin="0">
 
@@ -94,29 +92,28 @@
                 </Grid>
                 <Grid Grid.Column="1"
                       Grid.Row="1">
-                    <Label  
-						HorizontalOptions="CenterAndExpand"
-						VerticalOptions="End"
-						x:Name="TipTextLabel"
-						TextColor="Gray"
-                        FontSize="{StaticResource  BodyFontSize}"  
-                        Margin="0">
+                    <Label HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="End"
+                           x:Name="TipTextLabel"
+                           TextColor="Gray"
+                           FontSize="{StaticResource  BodyFontSize}"
+                           Margin="0">
 
                     </Label>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="2" >
+            <Grid Grid.Row="2">
                 <AbsoluteLayout x:Name="PitContentLayout"
                                 Opacity="0"
                                 BindingContext="{Binding CurrentMusicRelatedViewModel}">
                     <controls1:PitGrid x:Name="LeftPit"
                                        PitName="LeftPit"
-									   IsEnable="{Binding Canplay}"
+                                       IsEnable="{Binding Canplay}"
                                        AbsoluteLayout.LayoutBounds="0,.5,0.25,0.5"
                                        AbsoluteLayout.LayoutFlags="All">
 
                         <Label  x:Name="RewLabel"
-                                FontSize="58"  
+                                FontSize="58"
                                 FontFamily="FontAwesome"
                                 HorizontalOptions="CenterAndExpand"
                                 Margin="0"></Label>
@@ -130,7 +127,7 @@
 
 
                         <Label  x:Name="LibLabel"
-                                FontSize="58"                                  
+                                FontSize="58"
                                 HorizontalOptions="CenterAndExpand"
                                 FontFamily="FontAwesome"
                                 Margin="0"></Label>
@@ -143,7 +140,7 @@
 
 
                         <Label  x:Name="ShuffleLabel"
-                                FontSize="38"                                  
+                                FontSize="38"
                                 HorizontalOptions="CenterAndExpand"
                                 TextColor="{Binding IsShuffle,Converter={StaticResource Bool2StringConverter},ConverterParameter=#434343|#D2D9DE}"
                                 FontFamily="FontAwesome"
@@ -157,7 +154,7 @@
 
 
                         <Label  x:Name="RepeatOneLabel"
-                                FontSize="38"                                 
+                                FontSize="38"
                                 HorizontalOptions="CenterAndExpand"
                                 TextColor="{Binding IsRepeatOne,Converter={StaticResource Bool2StringConverter},ConverterParameter=#434343|#D2D9DE}"
                                 FontFamily="FontAwesome"
@@ -166,50 +163,49 @@
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="RightPit"
                                        PitName="RightPit"
-					                   IsEnable="{Binding Canplay}"
+                                       IsEnable="{Binding Canplay}"
                                        AbsoluteLayout.LayoutBounds="1,.5,0.25,0.5"
                                        AbsoluteLayout.LayoutFlags="All">
 
 
-                        <Label  x:Name="FfLabel"                                
+                        <Label  x:Name="FfLabel"
                                 HorizontalOptions="CenterAndExpand"
-                                FontSize="58"  
+                                FontSize="58"
                                 FontFamily="FontAwesome"
                                 Margin="0"></Label>
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="BottomPit"
-                                           PitName="BottomPit"
-                                           AbsoluteLayout.LayoutBounds=".5,1,0.5,0.25"
-                                           AbsoluteLayout.LayoutFlags="All">
+                                       PitName="BottomPit"
+                                       AbsoluteLayout.LayoutBounds=".5,1,0.5,0.25"
+                                       AbsoluteLayout.LayoutFlags="All">
 
-                        <Label  x:Name="QueueLabel"                               
+                        <Label  x:Name="QueueLabel"
                                 HorizontalOptions="CenterAndExpand"
-                                FontSize="58"  
+                                FontSize="58"
                                 FontFamily="FontAwesome"
                                 Margin="0"></Label>
 
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="LeftBottomPit"
-                                           PitName="LeftBottomPit"
-                                           AbsoluteLayout.LayoutBounds="0,1,0.25,0.25"
-                                           AbsoluteLayout.LayoutFlags="All">
+                                       PitName="LeftBottomPit"
+                                       AbsoluteLayout.LayoutBounds="0,1,0.25,0.25"
+                                       AbsoluteLayout.LayoutFlags="All">
 
-                        <Label  x:Name="FavouriteLabel"                                
+                        <Label  x:Name="FavouriteLabel"
                                 HorizontalOptions="CenterAndExpand"
-
-                                FontSize="38"  
+                                FontSize="38"
                                 FontFamily="FontAwesome"
                                 Margin="0"></Label>
 
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="RightBottomPit"
-                                           PitName="RightBottomPit"
-                                           AbsoluteLayout.LayoutBounds="1,1,0.25,0.25"
-                                           AbsoluteLayout.LayoutFlags="All">
+                                       PitName="RightBottomPit"
+                                       AbsoluteLayout.LayoutBounds="1,1,0.25,0.25"
+                                       AbsoluteLayout.LayoutFlags="All">
 
-                        <Label  x:Name="SettingLabel"                                
+                        <Label  x:Name="SettingLabel"
                                 HorizontalOptions="CenterAndExpand"
-                                FontSize="38"  
+                                FontSize="38"
                                 FontFamily="FontAwesome"
                                 Margin="0"></Label>
 
@@ -231,39 +227,38 @@
                                Source="{Binding  CurrentMusic.AlbumArt}"
                                VerticalOptions="CenterAndExpand"
                                HorizontalOptions="CenterAndExpand"
-                               Aspect="AspectFill"
-                                     >
+                               Aspect="AspectFill">
 
                             <Image.Clip>
-                                <RoundRectangleGeometry  CornerRadius="125" Rect="0,0,250,250" />
+                                <RoundRectangleGeometry  CornerRadius="125"
+                                                         Rect="0,0,250,250" />
                             </Image.Clip>
                         </Image>
-                        <controls:CircleSlider 
-                            HeightRequest="250"
-                            WidthRequest="250"
-                            x:Name="MainCircleSlider"
-							Maximum="{Binding Duration,Converter={StaticResource SliderMaxValueConverter}}"
-                                                    Minimum="0.0"
-                                                    TintColor="#FFFFFF"
-                                                    ContainerColor="#4CFFFFFF"
-                                                    IsEnabled="{Binding Canplay}"
-                                                    ValueChanged="OnValueChanged"
-                                                    Value="{Binding CurrentTime,Mode=TwoWay} ">
+                        <controls:CircleSlider HeightRequest="250"
+                                               WidthRequest="250"
+                                               x:Name="MainCircleSlider"
+                                               Maximum="{Binding Duration,Converter={StaticResource SliderMaxValueConverter}}"
+                                               Minimum="0.0"
+                                               TintColor="#FFFFFF"
+                                               ContainerColor="#4CFFFFFF"
+                                               IsEnabled="{Binding Canplay}"
+                                               ValueChanged="OnValueChanged"
+                                               Value="{Binding CurrentTime,Mode=TwoWay} ">
                         </controls:CircleSlider>
                         <Grid IsVisible="{Binding IsPlaying, Converter={StaticResource True2FalseConverter}}">
                             <BoxView HeightRequest="250"
-						         WidthRequest="250"
-						         Margin="7.5"
-							     Color="#60000000"
-						         VerticalOptions="CenterAndExpand"
-						         HorizontalOptions="CenterAndExpand"
-						         CornerRadius="250" ></BoxView>
-                            <Label  x:Name="PauseLabel"                               
-							        HorizontalOptions="CenterAndExpand"
-							        FontSize="58"  
-							        TextColor="{Binding Canplay,Converter={StaticResource Bool2StringConverter},ConverterParameter=White|#434343}"
-							        FontFamily="FontAwesome"
-							        Margin="0"></Label>
+                                     WidthRequest="250"
+                                     Margin="7.5"
+                                     Color="#60000000"
+                                     VerticalOptions="CenterAndExpand"
+                                     HorizontalOptions="CenterAndExpand"
+                                     CornerRadius="250"></BoxView>
+                            <Label  x:Name="PauseLabel"
+                                    HorizontalOptions="CenterAndExpand"
+                                    FontSize="58"
+                                    TextColor="{Binding Canplay,Converter={StaticResource Bool2StringConverter},ConverterParameter=White|#434343}"
+                                    FontFamily="FontAwesome"
+                                    Margin="0"></Label>
                         </Grid>
                     </Grid>
 

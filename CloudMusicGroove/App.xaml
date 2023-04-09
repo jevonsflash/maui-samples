@@ -63,6 +63,11 @@
                        Bottom="5" />
             <converter:CalcValueConverter x:Key="CalcValueConverter"></converter:CalcValueConverter>
 
+            <converter:SliderMaxValueConverter x:Key="SliderMaxValueConverter">
+            </converter:SliderMaxValueConverter>
+            <converter:SecondsToTimeSpanConverter x:Key="SecondsToTimeSpanConverter">
+            </converter:SecondsToTimeSpanConverter>
+            <converter:Bool2StringConverter x:Key="Bool2StringConverter"></converter:Bool2StringConverter>
 
         </ResourceDictionary>
     </Application.Resources>

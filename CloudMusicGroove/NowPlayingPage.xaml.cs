@@ -5,9 +5,9 @@ using MatoMusic.Common;
 using MatoMusic.Core.Helper;
 using MatoMusic.Core.Interfaces;
 using MatoMusic.ViewModels;
-using MauiSample.Common.Common;
 using MauiSample.Common.Controls;
 using MauiSample.Common.Helper;
+using MauiSample.Controls;
 
 namespace MatoMusic.View
 {
@@ -18,7 +18,7 @@ namespace MatoMusic.View
 
         public IMusicInfoManager MusicInfoManager => Ioc.Default.GetRequiredService<IMusicInfoManager>();
         public NowPlayingPageViewModel MusicRelatedViewModel => this.BindingContext as NowPlayingPageViewModel;
-        private int _runCount = 0;
+        private Animation rotateAnimation;
 
         public NowPlayingPage()
         {
@@ -26,7 +26,7 @@ namespace MatoMusic.View
             this.BindingContext=Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
 
             Appearing += NowPlayingPage_Appearing;
-            WeakReferenceMessenger.Default.Register<PanActionArgs, string>(this, TokenHelper.PanAction, PanActionHandler);
+            WeakReferenceMessenger.Default.Register<HorizontalPanActionArgs, string>(this, TokenHelper.PanAction, PanActionHandler);
         }
 
 
@@ -34,24 +34,37 @@ namespace MatoMusic.View
         {
             //DispatcherTimer.ClearCallBackFunction();
             await this.MusicRelatedViewModel.MusicRelatedService.InitAll();
+            this.MusicRelatedViewModel.PropertyChanged+=MusicRelatedViewModel_PropertyChanged;
             this.DefaultPanContainer.PitLayout=this.PitContentLayout.Children.Select(c => c as PitGrid).ToList();
+
+
         }
 
-        private async void PanActionHandler(object recipient, PanActionArgs args)
+        private void MusicRelatedViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName==nameof(MusicRelatedViewModel.IsPlaying))
+            {
+                
+
+            }
+        }
+
+        private async void PanActionHandler(object recipient, HorizontalPanActionArgs args)
         {
             switch (args.PanType)
             {
-                case PanType.Over:
+                case HorizontalPanType.Over:
 
-
-
-                    break;
-                case PanType.Start:
-
+                    await this.AlbumNeedle.RotateTo(0, 300);
 
 
                     break;
-                case PanType.In:
+                case HorizontalPanType.Start:
+
+                    await this.AlbumNeedle.RotateTo(-30, 300);
+
+                    break;
+                case HorizontalPanType.In:
 
                     switch (args.CurrentPit?.PitName)
                     {
@@ -67,7 +80,7 @@ namespace MatoMusic.View
 
 
                     break;
-                case PanType.Out:
+                case HorizontalPanType.Out:
 
 
 
@@ -95,47 +108,33 @@ namespace MatoMusic.View
             switch (CurrentPitView.PitName)
             {
                 case "LeftPit":
+                    MusicRelatedViewModel.NextAction(null);
+                    if (MusicRelatedViewModel.IsPlaying)
+                    {
+                        StartAlbumArtAnimation();
 
-
-                    MusicRelatedViewModel.PreAction(null);
-
-
+                    }
                     break;
 
-                case "TopPit":
+                case "MiddlePit":
                     // CommonHelper.GoNavigate("LibraryPage");
 
                     break;
 
-                case "LeftTopPit":
-                    MusicRelatedViewModel.ShuffleAction(null);
 
-                    break;
-
-                case "RightTopPit":
-                    MusicRelatedViewModel.RepeatOneAction(null);
-
-                    break;
 
                 case "RightPit":
 
-                    MusicRelatedViewModel.NextAction(null);
+                    MusicRelatedViewModel.PreAction(null);
+                    if (MusicRelatedViewModel.IsPlaying)
+                    {
+                        StartAlbumArtAnimation();
+
+                    }
 
 
                     break;
-                case "BottomPit":
-                    // CommonHelper.GoNavigate("QueuePage");
 
-                    break;
-                case "LeftBottomPit":
-
-
-
-                    break;
-                case "RightBottomPit":
-                    // CommonHelper.GoNavigate("AboutPage");
-
-                    break;
                 default:
                     break;
             }
@@ -148,6 +147,15 @@ namespace MatoMusic.View
             if (MusicRelatedViewModel.CurrentMusic != null)
             {
                 MusicRelatedViewModel.PlayAction(null);
+                if (MusicRelatedViewModel.IsPlaying)
+                {
+                    StartAlbumArtAnimation();
+
+                }
+                else
+                {
+                    StopAlbumArtAnimation();
+                }
 
             }
             else
@@ -169,6 +177,8 @@ namespace MatoMusic.View
                     if (result)
                     {
                         MusicRelatedViewModel.ChangeMusic(musicInfos[0]);
+                        rotateAnimation = new Animation(v => this.AlbumArtImage.Rotation = v, this.AlbumArtImage.Rotation, 360);
+                        rotateAnimation.Commit(this, "AlbumArtImageAnimation", 16, 20*1000, repeat: () => true);
                     }
 
                 }
@@ -181,15 +191,51 @@ namespace MatoMusic.View
             }
         }
 
+        private void StopAlbumArtAnimation()
+        {
+            if (this.rotateAnimation==null)
+            {
+                return;
+            }
+            this.rotateAnimation.Dispose();
+            this.rotateAnimation=null;
+        }
+
+        private void StartAlbumArtAnimation()
+        {
+            this.AlbumArtImage.AbortAnimation("AlbumArtImageAnimation");
+            rotateAnimation = new Animation(v => this.AlbumArtImage.Rotation = v, this.AlbumArtImage.Rotation, 360);
+
+            double calcLenght = (double)((360f-this.AlbumArtImage.Rotation)/360)*20*1000;
+            rotateAnimation.Commit(this, "AlbumArtImageAnimation", 16, (uint)calcLenght, finished: (d, b) =>
+            {
+
+                this.AlbumArtImage.AbortAnimation("AlbumArtImageAnimation");
+                rotateAnimation = new Animation(v => this.AlbumArtImage.Rotation = v, 0, 360);
+                rotateAnimation.Commit(this, "AlbumArtImageAnimation", 16, 20*1000, repeat: () => true);
+
+            });
+        }
+
         private void BindableObject_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Width))
             {
                 this.DefaultPanContainer.PositionX = (this.PitContentLayout.Width - (sender as Grid).Width) / 2;
+                (App.Current as App).PanContainerWidth=  this.DefaultPanContainer.Width;
+
             }
             else if (e.PropertyName == nameof(Height))
             {
                 this.DefaultPanContainer.PositionY = (this.PitContentLayout.Height - (sender as Grid).Height) / 2;
+
+            }
+        }
+
+        private void DefaultPanContainer_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName=="TranslationX")
+            {
 
             }
         }

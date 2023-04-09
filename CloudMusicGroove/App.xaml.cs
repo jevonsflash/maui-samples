@@ -22,4 +22,7 @@ public partial class App : Application
                   .BuildServiceProvider());
         MainPage = new NowPlayingPage();
     }
+
+    public double PanContainerWidth { get; set; }
+
 }

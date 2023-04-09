@@ -5,7 +5,7 @@
              BackgroundColor="{StaticResource PhoneBackgroundBrush}"
              x:Class="HoldAndSpeak.MainPage">
 
-    <ContentPage.Content >
+    <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
@@ -14,104 +14,96 @@
             <!--标题区域-->
 
             <StackLayout Orientation="Vertical"
-                         Grid.Row="0" 
+                         Grid.Row="0"
                          Margin="0,38,0,0"
                          VerticalOptions="CenterAndExpand">
 
 
-                <Label 
-					HorizontalOptions="CenterAndExpand"
-				    VerticalOptions="CenterAndExpand"
-				    Text="WeChat Hold And Speak Sample By Linxiao"
-				    FontSize="{StaticResource StandOutBodyFontSize}"  >
+                <Label HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"
+                       Text="WeChat Hold And Speak Sample By Linxiao"
+                       FontSize="{StaticResource StandOutBodyFontSize}">
                 </Label>
-                <Button Clicked="Button_Clicked" Text="ColorAnimation"></Button>
+                <Button Clicked="Button_Clicked"
+                        Text="ColorAnimation"></Button>
 
             </StackLayout>
 
 
             <!--播放控制区域-->
-            <Grid Grid.Row="0"				 
+            <Grid Grid.Row="0"
                   x:Name="PlayControlLayout">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="1"  
-                       Opacity="1"
+                <Grid Grid.Row="1"
+                      Opacity="1"
                       x:Name="TalkBoxLayout">
-                    <BoxView
-                             x:Name="TalkBox"
-                            HeightRequest="100"
-						    WidthRequest="200"
-                            CornerRadius="20"
-						         Margin="7.5"
-							     Color="{StaticResource PhoneAccentBrush}"
-						         VerticalOptions="CenterAndExpand"
-						         HorizontalOptions="CenterAndExpand"></BoxView>
-                    <Label  
-                             
-                                FontSize="28"  
-                                TextColor="{StaticResource PhoneContrastForegroundBrush}"
-                                Text="松开 发送"
-                                HorizontalOptions="CenterAndExpand"
-                                Margin="0"></Label>
+                    <BoxView x:Name="TalkBox"
+                             HeightRequest="100"
+                             WidthRequest="200"
+                             CornerRadius="20"
+                             Margin="7.5"
+                             Color="{StaticResource PhoneAccentBrush}"
+                             VerticalOptions="CenterAndExpand"
+                             HorizontalOptions="CenterAndExpand"></BoxView>
+                    <Label FontSize="28"
+                           TextColor="{StaticResource PhoneContrastForegroundBrush}"
+                           Text="松开 发送"
+                           HorizontalOptions="CenterAndExpand"
+                           Margin="0"></Label>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1" >
+            <Grid Grid.Row="1">
                 <Grid x:Name="PitContentLayout"
-                                Opacity="1"
-                               >
+                      Opacity="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <controls1:PitGrid x:Name="CancelPit"
                                        PitName="CancelPit">
 
-                        <BoxView 
-                            x:Name="CancelBox"
-                            HeightRequest="100"
-						         WidthRequest="100"
+                        <BoxView x:Name="CancelBox"
+                                 HeightRequest="100"
+                                 WidthRequest="100"
                                  CornerRadius="50"
-						         Margin="7.5"
-							     Color="{StaticResource PhoneContrastBackgroundBrush}"
-						         VerticalOptions="CenterAndExpand"
-						         HorizontalOptions="CenterAndExpand"></BoxView>
+                                 Margin="7.5"
+                                 Color="{StaticResource PhoneContrastBackgroundBrush}"
+                                 VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand"></BoxView>
                         <Label   x:Name="CancelLabel"
                                  TextColor="{StaticResource PhoneContrastForegroundBrush}"
-                                FontFamily="FontAwesome"
-                                FontSize="28"  
-                                Rotation="-10"
-                                HorizontalOptions="CenterAndExpand"
-                                Margin="0"></Label>
+                                 FontFamily="FontAwesome"
+                                 FontSize="28"
+                                 Rotation="-10"
+                                 HorizontalOptions="CenterAndExpand"
+                                 Margin="0"></Label>
 
 
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="TransliterationPit"
                                        PitName="TransliterationPit"
-                                       Grid.Column="1"                                       
-                                       >
+                                       Grid.Column="1">
 
-                        <BoxView
-                              x:Name="TransliterationBox"
-                            HeightRequest="100"
-						         WidthRequest="100"
+                        <BoxView x:Name="TransliterationBox"
+                                 HeightRequest="100"
+                                 WidthRequest="100"
                                  CornerRadius="50"
-						         Margin="7.5"
-							     Color="{StaticResource PhoneContrastBackgroundBrush}"
-						         VerticalOptions="CenterAndExpand"
-						         HorizontalOptions="CenterAndExpand"></BoxView>
+                                 Margin="7.5"
+                                 Color="{StaticResource PhoneContrastBackgroundBrush}"
+                                 VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand"></BoxView>
                         <Label  x:Name="TransliterationLabel"
                                 TextColor="{StaticResource PhoneContrastForegroundBrush}"
-                                FontSize="28" 
+                                FontSize="28"
                                 Text="文"
                                 Rotation="10"
-                                
                                 HorizontalOptions="CenterAndExpand"
                                 Margin="0"></Label>
 
@@ -120,29 +112,25 @@
                     <controls1:PitGrid x:Name="SendPit"
                                        PitName="SendPit"
                                        Grid.ColumnSpan="2"
-                                       Grid.Row="1"
-                                       
-                                       >
+                                       Grid.Row="1">
 
-                        <BoxView
-                            TranslationY="500"
-                             x:Name="SendBox"
-                            HeightRequest="1000"
-						    WidthRequest="1000"
-                            CornerRadius="500"
-						         Margin="7.5"
-							     Color="{StaticResource PhoneContrastBackgroundBrush}"
-						         VerticalOptions="CenterAndExpand"
-						         HorizontalOptions="CenterAndExpand"></BoxView>
-                        <Label  
-                             x:Name="SendLabel"
-                             TranslationY="30"
-                                FontSize="28" 
-                              Rotation="45"
-                                TextColor="{StaticResource PhoneContrastForegroundBrush}"
-                                FontFamily="FontAwesome"
-                                HorizontalOptions="CenterAndExpand"
-                                Margin="0"></Label>
+                        <BoxView TranslationY="500"
+                                 x:Name="SendBox"
+                                 HeightRequest="1000"
+                                 WidthRequest="1000"
+                                 CornerRadius="500"
+                                 Margin="7.5"
+                                 Color="{StaticResource PhoneContrastBackgroundBrush}"
+                                 VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand"></BoxView>
+                        <Label x:Name="SendLabel"
+                               TranslationY="30"
+                               FontSize="28"
+                               Rotation="45"
+                               TextColor="{StaticResource PhoneContrastForegroundBrush}"
+                               FontFamily="FontAwesome"
+                               HorizontalOptions="CenterAndExpand"
+                               Margin="0"></Label>
 
 
                     </controls1:PitGrid>
@@ -152,7 +140,7 @@
                                         x:Name="DefaultPanContainer"
                                         OnTapped="DefaultPanContainer_OnOnTapped"
                                         AutoAdsorption="False"
-                                        PanScale="0.0" 
+                                        PanScale="0.0"
                                         PanScaleAnimationLength="0"
                                         OnfinishedChoise="DefaultPanContainer_OnOnfinishedChoise">
 
@@ -160,19 +148,16 @@
                           VerticalOptions="Start"
                           HorizontalOptions="Start">
 
-                        <BoxView                              
-                                HeightRequest="80"
-						         WidthRequest="250"
-                                
-						         Margin="7.5"
-							     Color="{StaticResource PhoneContrastBackgroundBrush}"></BoxView>
-                        <Label  x:Name="PauseLabel"   
-                              
-							        HorizontalOptions="CenterAndExpand"
-							        FontSize="28"  
-							        TextColor="{StaticResource PhoneForegroundBrush}"
-							        Text="按住 说话"
-							        Margin="0"></Label>
+                        <BoxView HeightRequest="80"
+                                 WidthRequest="250"
+                                 Margin="7.5"
+                                 Color="{StaticResource PhoneContrastBackgroundBrush}"></BoxView>
+                        <Label  x:Name="PauseLabel"
+                                HorizontalOptions="CenterAndExpand"
+                                FontSize="28"
+                                TextColor="{StaticResource PhoneForegroundBrush}"
+                                Text="按住 说话"
+                                Margin="0"></Label>
 
                     </Grid>
 
