@@ -1,0 +1,50 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HoldAndSpeak.Controls.PlayingMotionView">
+    <ContentView.Content>
+        <StackLayout Orientation="Horizontal" Spacing="0">
+
+            <BoxView 
+              Margin="1,0"
+              x:Name="BoxView01"
+              HeightRequest="6"
+              WidthRequest="2" 
+              BackgroundColor="White" 
+              VerticalOptions="Center" 
+              HorizontalOptions="Start">
+
+            </BoxView>
+            <BoxView 
+              Margin="1,0"                   
+              x:Name="BoxView02"
+              HeightRequest="10"
+              WidthRequest="2" 
+              BackgroundColor="White" 
+              VerticalOptions="Center" 
+              HorizontalOptions="Start">
+
+            </BoxView>
+            <BoxView 
+              Margin="1,0"                   
+              x:Name="BoxView03"
+              HeightRequest="8"
+              WidthRequest="2" 
+              BackgroundColor="White" 
+              VerticalOptions="Center" 
+              HorizontalOptions="Start">
+
+            </BoxView>
+            <BoxView 
+              Margin="1,0"                   
+              x:Name="BoxView04"
+              HeightRequest="9"
+              WidthRequest="2" 
+              BackgroundColor="White" 
+              VerticalOptions="Center" 
+              HorizontalOptions="Start">
+
+            </BoxView>
+        </StackLayout>
+    </ContentView.Content>
+
+</ContentView>

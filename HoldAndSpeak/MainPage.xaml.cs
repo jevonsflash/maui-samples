@@ -26,6 +26,7 @@ public partial class MainPage : ContentPage
     private void MainPage_Appearing(object sender, EventArgs e)
     {
         this.DefaultPanContainer.PitLayout = this.PitContentLayout.Children.Select(c => c as PitGrid).ToList();
+        this.MotionView.Init();
         ShowLayout(0);
     }
 
@@ -68,7 +69,7 @@ public partial class MainPage : ContentPage
                         this.TalkBox.AbortAnimation("TalkBoxAnimations");
 
                         toColor = (Color)Application.Current.Resources["PhoneChromeBrush"];
-                        translationX = -175;
+                        translationX = -115;
                         width = 150;
                         break;
 
@@ -83,7 +84,7 @@ public partial class MainPage : ContentPage
                     case "TransliterationPit":
                         Active(this.TransliterationBox, this.TransliterationLabel, Colors.White, Colors.Black);
                         toColor = (Color)Application.Current.Resources["PhoneAccentBrush"];
-                        translationX = 100;
+                        translationX = 40;
                         width = 300;
 
                         break;
@@ -143,7 +144,7 @@ public partial class MainPage : ContentPage
         this.TalkBoxLayout.FadeTo(opacity);
     }
 
-    private void Active(BoxView currentContent, Label text, Color toColor, Color txtToColor, double scaleTo = 1.5)
+    private void Active(BoxView currentContent, Label text, Color toColor, Color txtToColor, double scaleTo = 1.2)
     {
         currentContent.AbortAnimation("ActivateFunctionAnimations");
         var parentAnimation = new Animation();
