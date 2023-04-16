@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiSample.Common", "MauiSa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudMusicGroove", "CloudMusicGroove\CloudMusicGroove.csproj", "{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StickyTab", "StickyTab\StickyTab.csproj", "{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,12 @@ Global
 		{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79D42C7E-7FB7-41FE-BD28-65BF81A79BF0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

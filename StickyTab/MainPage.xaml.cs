@@ -6,7 +6,7 @@ using MauiSample.Common.Helper;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace HoldAndSpeak;
+namespace StickyTab;
 
 public partial class MainPage : ContentPage
 {
@@ -26,7 +26,6 @@ public partial class MainPage : ContentPage
     private void MainPage_Appearing(object sender, EventArgs e)
     {
         this.DefaultPanContainer.PitLayout = this.PitContentLayout.Children.Select(c => c as PitGrid).ToList();
-        this.MotionView.Init();
         ShowLayout(0);
     }
 
@@ -88,20 +87,6 @@ public partial class MainPage : ContentPage
                     default:
                         break;
                 }
-                this.TalkBox.AbortAnimation("TalkBoxAnimations");
-
-                var fromColor = this.TalkBox.Color;
-
-                var animation2 = new Animation(t => this.TalkBox.Color = GetColor(t, fromColor, toColor), 0, 1, Easing.SpringOut);
-                var animation4 = new Animation(v => this.TalkBoxLayout.TranslationX = v, this.TalkBoxLayout.TranslationX, translationX);
-                var animation5 = new Animation(v => this.TalkBox.WidthRequest = v, this.TalkBox.Width, width);
-
-
-                parentAnimation.Add(0, 1, animation2);
-                parentAnimation.Add(0, 1, animation4);
-                parentAnimation.Add(0, 1, animation5);
-
-                parentAnimation.Commit(this, "TalkBoxAnimations", 16, 300);
 
                 break;
             case PanType.Over:
@@ -138,7 +123,6 @@ public partial class MainPage : ContentPage
     private void ShowLayout(double opacity = 1)
     {
         this.PitContentLayout.FadeTo(opacity);
-        this.TalkBoxLayout.FadeTo(opacity);
     }
 
     private void Active(BoxView currentContent, Label text, Color toColor, Color txtToColor, double scaleTo = 1.2)
@@ -229,7 +213,7 @@ public partial class MainPage : ContentPage
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
-        await App.Current.MainPage.Navigation.PushAsync(new ColorAnimation());
+        //await App.Current.MainPage.Navigation.PushAsync(new ColorAnimation());
     }
 }
 
