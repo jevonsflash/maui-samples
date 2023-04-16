@@ -137,24 +137,35 @@ BindableProperty.Create("PanHeight", typeof(double), typeof(StickyPan), default(
 
         var dx = _offsetX*0.8+_offsetY*0.4;
         var dy = _offsetX*0.4+_offsetY*0.8;
-        if (dx>0)
+        if (OffsetX!=0)
         {
-            p1= p1.Offset(dx, 0);
+            if (dx>0)
+            {
+                p1= p1.Offset(dx, 0);
+               
+            }
+            else
+            {
+                p3= p3.Offset(dx, 0);           
+            }
             p0= p0.Offset(0, Math.Abs(dy));
             p2 = p2.Offset(0, -Math.Abs(dy));
         }
-        else if (dx<0)
-        {
-            p3= p3.Offset(dx, 0);
-            p0= p0.Offset(0, Math.Abs(dy));
-            p2 = p2.Offset(0, -Math.Abs(dy));
-        }
-        else
+
+        else if (OffsetY!=0)
         {
             if (dy>0)
             {
-                //p2= p2.Offset(0, dy);
+                p2= p2.Offset(0, dy);
             }
+
+            else
+            {
+                p0= p0.Offset(0, dy);
+            }
+            p1= p1.Offset(-Math.Abs(dx), 0);
+            p3 = p3.Offset(Math.Abs(dx), 0);
+
         }
 
 
