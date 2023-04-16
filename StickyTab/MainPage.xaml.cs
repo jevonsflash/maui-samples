@@ -16,8 +16,6 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
-        this.SendLabel.Text = FaIcons.IconRss;
-        this.CancelLabel.Text = FaIcons.IconTimes;
         Appearing += MainPage_Appearing;
         WeakReferenceMessenger.Default.Register<PanActionArgs, string>(this, TokenHelper.PanAction, PanActionHandler);
 
@@ -39,15 +37,12 @@ public partial class MainPage : ContentPage
                 switch (args.CurrentPit?.PitName)
                 {
                     case "CancelPit":
-                        DeActive(this.CancelBox, this.CancelLabel);
                         break;
 
                     case "SendPit":
-                        DeActive(this.SendBox, this.SendLabel);
                         break;
 
                     case "TransliterationPit":
-                        DeActive(this.TransliterationBox, this.TransliterationLabel);
                         break;
 
                     default:
@@ -63,24 +58,12 @@ public partial class MainPage : ContentPage
                 switch (args.CurrentPit?.PitName)
                 {
                     case "CancelPit":
-                        Active(this.CancelBox, this.CancelLabel, Colors.White, Colors.Black);
-                        toColor = (Color)Application.Current.Resources["PhoneChromeBrush"];
-                        translationX = -115;
-                        width = 150;
                         break;
 
                     case "SendPit":
-                        Active(this.SendBox, this.SendLabel, Colors.Gray, Colors.Black, 1.0);
-                        toColor = (Color)Application.Current.Resources["PhoneAccentBrush"];
-                        translationX = 0;
-                        width = 200;
                         break;
 
                     case "TransliterationPit":
-                        Active(this.TransliterationBox, this.TransliterationLabel, Colors.White, Colors.Black);
-                        toColor = (Color)Application.Current.Resources["PhoneAccentBrush"];
-                        translationX = 40;
-                        width = 300;
 
                         break;
 
@@ -93,15 +76,12 @@ public partial class MainPage : ContentPage
                 switch (args.CurrentPit?.PitName)
                 {
                     case "CancelPit":
-                        DeActive(this.CancelBox, this.CancelLabel);
                         break;
 
                     case "SendPit":
-                        DeActive(this.SendBox, this.SendLabel);
                         break;
 
                     case "TransliterationPit":
-                        DeActive(this.TransliterationBox, this.TransliterationLabel);
                         break;
 
                     default:
@@ -125,59 +105,9 @@ public partial class MainPage : ContentPage
         this.PitContentLayout.FadeTo(opacity);
     }
 
-    private void Active(BoxView currentContent, Label text, Color toColor, Color txtToColor, double scaleTo = 1.2)
-    {
-        currentContent.AbortAnimation("ActivateFunctionAnimations");
-        var parentAnimation = new Animation();
-
-
-        var txtFromColor = text.TextColor;
-
-        var animation2 = new Animation(t => text.TextColor = GetColor(t, txtFromColor, txtToColor), 0, 1, Easing.SpringOut);
 
 
 
-        var fromColor = currentContent.Color;
-
-        var animation4 = new Animation(t => currentContent.Color = GetColor(t, fromColor, toColor), 0, 1, Easing.SpringOut);
-        var animation5 = new Animation(v => currentContent.Scale = v, currentContent.Scale, scaleTo);
-
-
-        parentAnimation.Add(0, 1, animation2);
-        parentAnimation.Add(0, 1, animation4);
-        parentAnimation.Add(0, 1, animation5);
-
-        parentAnimation.Commit(this, "ActivateFunctionAnimations", 16, 300);
-    }
-
-
-
-    private void DeActive(BoxView currentContent, Label text)
-    {
-        currentContent.AbortAnimation("DeactivateFunctionAnimations");
-        var parentAnimation = new Animation();
-
-
-        var txtFromColor = text.TextColor;
-        var txtToColor = (Color)Application.Current.Resources["PhoneContrastForegroundBrush"];
-
-        var animation2 = new Animation(t => text.TextColor = GetColor(t, txtFromColor, txtToColor), 0, 1, Easing.SpringOut);
-
-
-
-        var fromColor = currentContent.Color;
-        var toColor = (Color)Application.Current.Resources["PhoneContrastBackgroundBrush"];
-
-        var animation4 = new Animation(t => currentContent.Color = GetColor(t, fromColor, toColor), 0, 1, Easing.SpringOut);
-        var animation5 = new Animation(v => currentContent.Scale = v, currentContent.Scale, 1.0);
-
-
-        parentAnimation.Add(0, 1, animation2);
-        parentAnimation.Add(0, 1, animation4);
-        parentAnimation.Add(0, 1, animation5);
-
-        parentAnimation.Commit(this, "DeactivateFunctionAnimations", 16, 300);
-    }
 
     private Color GetColor(double t, Color fromColor, Color toColor)
     {
@@ -214,6 +144,34 @@ public partial class MainPage : ContentPage
     private async void Button_Clicked(object sender, EventArgs e)
     {
         //await App.Current.MainPage.Navigation.PushAsync(new ColorAnimation());
+    }
+
+    private void OnSliderValueChanged(object sender, ValueChangedEventArgs e)
+    {
+        this.MainStickyPan.OffsetX = e.NewValue;
+        OffsetXPositiveLabel.Text = String.Format("Current OffsetX is {0}", e.NewValue.ToString("f2"));
+
+    }
+
+    private void OnSliderValueChanged2(object sender, ValueChangedEventArgs e)
+    {
+        this.MainStickyPan.OffsetX = -e.NewValue;
+        OffsetXNegativeLabel.Text = String.Format("Current OffsetX is -{0}", e.NewValue.ToString("f2"));
+
+    }
+
+    private void OnSliderValueChanged3(object sender, ValueChangedEventArgs e)
+    {
+        this.MainStickyPan.OffsetY = e.NewValue;
+        OffsetYPositiveLabel.Text = String.Format("Current OffsetY is {0}", e.NewValue.ToString("f2"));
+
+    }
+
+    private void OnSliderValueChanged4(object sender, ValueChangedEventArgs e)
+    {
+        this.MainStickyPan.OffsetY =-e.NewValue;
+        OffsetYPositiveLabel.Text = String.Format("Current OffsetY is -{0}", e.NewValue.ToString("f2"));
+
     }
 }
 

@@ -2,15 +2,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              SizeChanged="ContentView_SizeChanged"
-             Background="white"
-            
+             Background="white"            
              x:Class="StickyTab.Controls.StickyPan">
-    <Grid Margin="-100,0,-100,0">
+    <Grid>
     <Path Stroke="red">
         <Path.Data>
             <PathGeometry>
-                <PathFigure x:Name="figure1"
-                            >
+                <PathFigure x:Name="figure1">
                     <PathFigure.Segments>
                         <PathSegmentCollection>
                             <BezierSegment x:Name="arc1" />
@@ -18,11 +16,6 @@
                             <BezierSegment x:Name="arc3" />
                             <BezierSegment x:Name="arc4" />
                         </PathSegmentCollection>
-                    </PathFigure.Segments>
-                </PathFigure>
-                <PathFigure x:Name="figure2" IsClosed="True">
-                    <PathFigure.Segments>
-                        <PolyLineSegment x:Name="poly1" />
                     </PathFigure.Segments>
                 </PathFigure>
             </PathGeometry>
