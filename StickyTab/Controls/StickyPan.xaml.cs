@@ -22,6 +22,7 @@ public partial class StickyPan : ContentView
     public double DifferenceY => RadiusY * C;
 
     private View _panContent;
+    private bool animateRequired;
 
     public View PanContent
     {
@@ -169,13 +170,92 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
         ReRender();
     }
 
+    private void Animate(double _offsetX, double _offsetY)
+    {
+        var PanScaleAnimationLength = 10000;
+        Content.AbortAnimation("ReshapeAnimations");
+        var scaleAnimation = new Animation();
+        Point p0 = this.figure1.StartPoint;
+        Point p1 = this.arc1.Point3;
+        Point p2 = this.arc2.Point3;
+        Point p3 = this.arc3.Point3;
+        var animateAction = (double v) =>
+        {
+ 
+
+            var dx = v * 0.8;
+            var dy = v * 0.4;
+
+            if (dx > 0)
+            {
+                p1 = p1.Offset(dx, 0);
+
+            }
+            else
+            {
+                p3 = p3.Offset(dx, 0);
+            }
+            p0 = p0.Offset(0, Math.Abs(dy));
+            p2 = p2.Offset(0, -Math.Abs(dy));
+
+            Point h1 = new Point(p0.X - DifferenceX, p0.Y);
+            Point h2 = new Point(p0.X + DifferenceX, p0.Y);
+            Point h3 = new Point(p1.X, p1.Y - DifferenceY);
+            Point h4 = new Point(p1.X, p1.Y + DifferenceY);
+            Point h5 = new Point(p2.X + DifferenceX, p2.Y);
+            Point h6 = new Point(p2.X - DifferenceX, p2.Y);
+            Point h7 = new Point(p3.X, p3.Y + DifferenceY);
+            Point h8 = new Point(p3.X, p3.Y - DifferenceY);
+
+
+            this.figure1.StartPoint = p0;
+            this.arc1.Point1 = h2;
+            this.arc1.Point2 = h3;
+            this.arc1.Point3 = p1;
+
+
+            this.arc2.Point1 = h4;
+            this.arc2.Point2 = h5;
+            this.arc2.Point3 = p2;
+
+            this.arc3.Point1 = h6;
+            this.arc3.Point2 = h7;
+            this.arc3.Point3 = p3;
+
+            this.arc4.Point1 = h8;
+            this.arc4.Point2 = h1;
+
+            this.arc4.Point3 = p0;
+        };
+
+        var scaleUpAnimation0 = new Animation(animateAction, 0, 0);
+        var scaleUpAnimation1 = new Animation(animateAction, 0, 0);
+
+        scaleAnimation.Add(0, 0.1, scaleUpAnimation0);
+        scaleAnimation.Add(0.1, 1, scaleUpAnimation1);
+
+        scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)PanScaleAnimationLength);
+
+    }
+
     private void ReRender()
     {
+     
         var _offsetX = OffsetX;
         //超过容忍度则将不黏连
         if (OffsetX <= -(this.Width - PanWidth) / 2 || OffsetX > (this.Width - PanWidth) / 2)
         {
             _offsetX = 0;
+            if (animateRequired)
+            {
+                this.Animate(10, 0);
+                animateRequired=false;
+            }
+        }
+        else
+        {
+            animateRequired=true;
+
         }
 
         var _offsetY = OffsetY;
