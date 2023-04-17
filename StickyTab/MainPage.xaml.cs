@@ -10,12 +10,16 @@ namespace StickyTab;
 
 public partial class MainPage : ContentPage
 {
+    private PitGrid _currentPit;
 
     public PitGrid CurrentPitView { get; set; }
 
     public MainPage()
     {
         InitializeComponent();
+        this.NewTabLabel.Text = FaIcons.IconPlus;
+        this.RefreshLabel.Text = FaIcons.IconRefresh;
+        this.CloseTabLabel.Text = FaIcons.IconTimes;
         Appearing += MainPage_Appearing;
         WeakReferenceMessenger.Default.Register<PanActionArgs, string>(this, TokenHelper.PanAction, PanActionHandler);
 
@@ -24,12 +28,13 @@ public partial class MainPage : ContentPage
     private void MainPage_Appearing(object sender, EventArgs e)
     {
         this.DefaultPanContainer.PitLayout = this.PitContentLayout.Children.Select(c => c as PitGrid).ToList();
-        ShowLayout(0);
+        ShowLayout(1);
     }
 
     private void PanActionHandler(object recipient, PanActionArgs args)
     {
         var child = args.CurrentPit?.Children[0];
+        _currentPit = args.CurrentPit;
         switch (args.PanType)
         {
 
@@ -50,11 +55,6 @@ public partial class MainPage : ContentPage
                 }
                 break;
             case PanType.In:
-                var parentAnimation = new Animation();
-
-                Color toColor = default;
-                double translationX = default;
-                double width = default;
                 switch (args.CurrentPit?.PitName)
                 {
                     case "CancelPit":
@@ -87,7 +87,7 @@ public partial class MainPage : ContentPage
                     default:
                         break;
                 }
-                ShowLayout(0);
+                ShowLayout(1);
 
                 break;
             case PanType.Start:
@@ -109,24 +109,11 @@ public partial class MainPage : ContentPage
 
 
 
-    private Color GetColor(double t, Color fromColor, Color toColor)
-    {
-        return Color.FromRgba(fromColor.Red + t * (toColor.Red - fromColor.Red),
-                           fromColor.Green + t * (toColor.Green - fromColor.Green),
-                           fromColor.Blue + t * (toColor.Blue - fromColor.Blue),
-                           fromColor.Alpha + t * (toColor.Alpha - fromColor.Alpha));
-    }
-
-
     private void DefaultPanContainer_OnOnTapped(object sender, EventArgs e)
     {
 
     }
 
-    private void DefaultPanContainer_OnOnfinishedChoise(object sender, PitGrid e)
-    {
-        CurrentPitView = e;
-    }
 
     private void BindableObject_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
@@ -139,6 +126,25 @@ public partial class MainPage : ContentPage
             this.DefaultPanContainer.PositionY = (this.PitContentLayout.Height - (sender as Grid).Height) / 2;
 
         }
+        else if (e.PropertyName == nameof(TranslationX))
+        {
+            var centerX = 0.0;
+            if (_currentPit != null)
+            {
+                centerX = _currentPit.X + _currentPit.Width / 2;
+            }
+            this.MainStickyPan.OffsetX = this.DefaultPanContainer.Content.TranslationX + this.DefaultPanContainer.Content.Width / 2 - centerX;
+        }
+        else if (e.PropertyName == nameof(TranslationY))
+        {
+            var centerY = 0.0;
+            if (_currentPit != null)
+            {
+                centerY = _currentPit.Y + _currentPit.Height / 2;
+            }
+            this.MainStickyPan.OffsetY = this.DefaultPanContainer.Content.TranslationY + this.DefaultPanContainer.Content.Height / 2 - centerY;
+        }
+
     }
 
     private async void Button_Clicked(object sender, EventArgs e)
@@ -146,36 +152,12 @@ public partial class MainPage : ContentPage
         //await App.Current.MainPage.Navigation.PushAsync(new ColorAnimation());
     }
 
-    private void OnSliderValueChanged(object sender, ValueChangedEventArgs e)
+    private void DefaultPanContainer_OnOnfinishedChoise(object sender, PitGrid e)
     {
-        this.MainStickyPan.OffsetX = e.NewValue;
-        this.MainStickyPan.TranslationX = e.NewValue;
-        OffsetXPositiveLabel.Text = String.Format("Current OffsetX is {0}", e.NewValue.ToString("f2"));
 
     }
 
-    private void OnSliderValueChanged2(object sender, ValueChangedEventArgs e)
-    {
-        this.MainStickyPan.OffsetX = -e.NewValue;
-        this.MainStickyPan.TranslationX = -e.NewValue;
-        OffsetXNegativeLabel.Text = String.Format("Current OffsetX is -{0}", e.NewValue.ToString("f2"));
 
-    }
 
-    private void OnSliderValueChanged3(object sender, ValueChangedEventArgs e)
-    {
-        this.MainStickyPan.OffsetY = e.NewValue;
-        this.MainStickyPan.TranslationY= e.NewValue;
-        OffsetYPositiveLabel.Text = String.Format("Current OffsetY is {0}", e.NewValue.ToString("f2"));
-
-    }
-
-    private void OnSliderValueChanged4(object sender, ValueChangedEventArgs e)
-    {
-        this.MainStickyPan.OffsetY =-e.NewValue;
-        this.MainStickyPan.TranslationY= -e.NewValue;
-        OffsetYPositiveLabel.Text = String.Format("Current OffsetY is -{0}", e.NewValue.ToString("f2"));
-
-    }
 }
 

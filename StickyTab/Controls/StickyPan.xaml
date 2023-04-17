@@ -5,21 +5,25 @@
              Background="white"            
              x:Class="StickyTab.Controls.StickyPan">
     <Grid>
-    <Path Stroke="red">
-        <Path.Data>
-            <PathGeometry>
-                <PathFigure x:Name="figure1">
-                    <PathFigure.Segments>
-                        <PathSegmentCollection>
-                            <BezierSegment x:Name="arc1" />
-                            <BezierSegment x:Name="arc2" />
-                            <BezierSegment x:Name="arc3" />
-                            <BezierSegment x:Name="arc4" />
-                        </PathSegmentCollection>
-                    </PathFigure.Segments>
-                </PathFigure>
-            </PathGeometry>
-        </Path.Data>
+        <ContentView x:Name="MainContent">
+            
+        </ContentView>
+        <Path x:Name="MainPath">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure x:Name="figure1">
+                        <PathFigure.Segments>
+                            <PathSegmentCollection>
+                                <BezierSegment x:Name="arc1" />
+                                <BezierSegment x:Name="arc2" />
+                                <BezierSegment x:Name="arc3" />
+                                <BezierSegment x:Name="arc4" />
+                            </PathSegmentCollection>
+                        </PathFigure.Segments>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+     
         </Path>
     </Grid>
 </ContentView>

@@ -64,18 +64,9 @@
 	  <MauiXaml Update="ColorAnimation.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Controls\HorizontalPanContainer.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Controls\StickyPan.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Controls\HorizontalPanContainer.xaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
 	</ItemGroup>
 
 </Project>

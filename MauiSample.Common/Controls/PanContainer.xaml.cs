@@ -43,8 +43,22 @@ namespace MauiSample.Common.Controls
         public PitGrid CurrentView
         {
             get { return _currentView; }
-            set { _currentView = value; }
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged();
+
+            }
         }
+
+        private ScrollOrientation _orientation;
+
+        public ScrollOrientation Orientation
+        {
+            get { return _orientation; }
+            set { _orientation = value; }
+        }
+
 
         private double _panScale;
 
@@ -82,7 +96,10 @@ BindableProperty.Create("AutoAdsorption", typeof(bool), typeof(PanContainer), de
  {
      var obj = (PanContainer)bindable;
      //obj.Content.TranslationX = obj.PositionX;
-     obj.Content.TranslateTo(obj.PositionX, obj.PositionY, 0);
+     if (obj.Content.TranslationX != obj.PositionX)
+     {
+         obj.Content.TranslateTo(obj.PositionX, obj.PositionY, 0);
+     }
 
  });
 
@@ -103,9 +120,11 @@ BindableProperty.Create("AutoAdsorption", typeof(bool), typeof(PanContainer), de
 BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), default(double), propertyChanged: (bindable, oldValue, newValue) =>
 {
     var obj = (PanContainer)bindable;
-    obj.Content.TranslateTo(obj.PositionX, obj.PositionY, 0);
     //obj.Content.TranslationY = obj.PositionY;
-
+    if (obj.Content.TranslationY != obj.PositionY)
+    {
+        obj.Content.TranslateTo(obj.PositionX, obj.PositionY, 0);
+    }
 });
 
         public double PositionY
@@ -119,6 +138,19 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
             }
         }
 
+
+        public static readonly BindableProperty SpringBackProperty =
+BindableProperty.Create("SpringBack", typeof(bool), typeof(PanContainer), true);
+
+        public bool SpringBack
+        {
+            get { return (bool)GetValue(SpringBackProperty); }
+            set
+            {
+                SetValue(SpringBackProperty, value);
+                OnPropertyChanged();
+            }
+        }
 
 
         private async void PanContainer_PropertyChanged1(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -150,10 +182,15 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
 
                     break;
                 case GestureStatus.Running:
-                    var translationX =
-                        Math.Max(0 - Content.Width / 2, Math.Min(PositionX + e.TotalX, this.Width - Content.Width / 2));
-                    var translationY =
-                        Math.Max(0 - Content.Height / 2, Math.Min(PositionY + e.TotalY, this.Height - Content.Height / 2));
+
+                    double translationX;
+                    double translationY;
+                    translationX = Orientation == ScrollOrientation.Both || Orientation == ScrollOrientation.Horizontal
+                        ? Math.Max(0 - Content.Width / 2, Math.Min(PositionX + e.TotalX, this.Width - Content.Width / 2))
+                        : PositionX;
+                    translationY = Orientation == ScrollOrientation.Both || Orientation == ScrollOrientation.Vertical
+                        ? Math.Max(0 - Content.Height / 2, Math.Min(PositionY + e.TotalY, this.Height - Content.Height / 2))
+                        : PositionY;
                     PitGrid lastView = null;
                     if (PitLayout != null)
                     {
@@ -164,7 +201,13 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
                             var pitRegion = new Region(item.X, item.X + item.Width, item.Y, item.Y + item.Height, item.PitName);
                             var isXin = translationX >= pitRegion.StartX - Content.Width / 2 && translationX <= pitRegion.EndX - Content.Width / 2;
                             var isYin = translationY >= pitRegion.StartY - Content.Height / 2 && translationY <= pitRegion.EndY - Content.Height / 2;
-                            if (isYin && isXin)
+
+                            if (Orientation switch
+                            {
+                                ScrollOrientation.Horizontal => isXin,
+                                ScrollOrientation.Vertical => isYin,
+                                ScrollOrientation.Both => isYin && isXin,
+                            })
                             {
                                 isInPit = true;
                                 if (AutoAdsorption)
@@ -252,17 +295,45 @@ BindableProperty.Create("PositionY", typeof(double), typeof(PanContainer), defau
 
                     Content.AbortAnimation("ReshapeAnimations");
                     var parentAnimation = new Animation();
-                    var mySpringOut =(double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
+                    var mySpringOut = (double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
 
-                    var scaleUpAnimation1 = new Animation(v => Content.TranslationX = v, Content.TranslationX, PositionX, mySpringOut);
-                    var scaleUpAnimation2 = new Animation(v => Content.TranslationY = v, Content.TranslationY, PositionY, mySpringOut);
+                    var destX = PositionX;
+                    var destY = PositionY;
+                    if (Orientation == ScrollOrientation.Both || Orientation == ScrollOrientation.Horizontal)
+                    {
+                        if (CurrentView != null && !SpringBack)
+                        {
+                            destX = CurrentView.X + (CurrentView.Width - this.Content.Width) / 2;
+                        }
+                        var scaleUpAnimation1 = new Animation(v => Content.TranslationX = v, Content.TranslationX, destX, mySpringOut);
+                        parentAnimation.Add(0, 1, scaleUpAnimation1);
+                    }
+                    if (Orientation == ScrollOrientation.Both || Orientation == ScrollOrientation.Vertical)
+                    {
+                        if (CurrentView != null && !SpringBack)
+                        {
+                            destY = CurrentView.Y + (CurrentView.Height - this.Content.Height) / 2;
+                        }
+                        var scaleUpAnimation2 = new Animation(v => Content.TranslationY = v, Content.TranslationY, destY, mySpringOut);
+                        parentAnimation.Add(0, 1, scaleUpAnimation2);
+
+                    }
+
                     var scaleUpAnimation5 = new Animation(v => Content.Scale = v, Content.Scale, 1.0);
 
-                    parentAnimation.Add(0, 1, scaleUpAnimation1);
-                    parentAnimation.Add(0, 1, scaleUpAnimation2);
                     parentAnimation.Add(0, 1, scaleUpAnimation5);
 
-                    parentAnimation.Commit(this, "RestoreAnimation", 16, (uint)PanScaleAnimationLength);
+                    parentAnimation.Commit(this, "RestoreAnimation", 16, (uint)PanScaleAnimationLength, finished: (d, b) =>
+                    {
+                        if (Orientation == ScrollOrientation.Both || Orientation == ScrollOrientation.Horizontal)
+                        {
+                            this.PositionX = destX;
+                        }
+                        if (Orientation == ScrollOrientation.Both || Orientation == ScrollOrientation.Vertical)
+                        {
+                            this.PositionY = destY;
+                        }
+                    });
 
                     if (isInPitPre)
                     {
