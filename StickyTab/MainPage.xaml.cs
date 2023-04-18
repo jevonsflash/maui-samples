@@ -131,13 +131,12 @@ public partial class MainPage : ContentPage
         }
         else if (e.PropertyName == nameof(TranslationX))
         {
-            var originCenterX = this.DefaultPanContainer.Content.TranslationX + this.DefaultPanContainer.Content.Width / 2;
             var centerX = 0.0;
             if (_currentPit != null)
             {
                 centerX = _currentPit.X + _currentPit.Width / 2;
             }
-            this.MainStickyPan.OffsetX = originCenterX - centerX;
+            this.MainStickyPan.OffsetX = this.DefaultPanContainer.Content.TranslationX + this.DefaultPanContainer.Content.Width / 2 - centerX;
 
         }
         else if (e.PropertyName == nameof(TranslationY))
@@ -154,7 +153,7 @@ public partial class MainPage : ContentPage
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
-        //await App.Current.MainPage.Navigation.PushAsync(new ColorAnimation());
+        await App.Current.MainPage.Navigation.PushAsync(new StickPanSamplePage());
     }
 
     private void DefaultPanContainer_OnOnfinishedChoise(object sender, PitGrid e)

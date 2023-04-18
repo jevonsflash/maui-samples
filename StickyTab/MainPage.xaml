@@ -14,7 +14,10 @@
             </Grid.RowDefinitions>
             <!--标题区域-->
 
-
+            <Grid>
+                <Button Clicked="Button_Clicked"
+                        Text="StickPanSample"></Button>
+            </Grid>
 
             <!--播放控制区域-->
             <Grid Grid.Row="1">
@@ -82,7 +85,7 @@
                                         PanScale="1.0"
                                         SpringBack="False"
                                         PanScaleAnimationLength="1000"
-                                        Orientation="Horizontal"
+                                        Orientation="Both"
                                         OnfinishedChoise="DefaultPanContainer_OnOnfinishedChoise">
 
                     <Grid PropertyChanged="BindableObject_OnPropertyChanged"

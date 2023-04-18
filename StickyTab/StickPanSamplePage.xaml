@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StickyTab.StickPanSamplePage"
              xmlns:controls="clr-namespace:StickyTab.Controls;assembly=StickyTab"
+             BackgroundColor="Black"
              Title="StickPanSamplePage">
     <VerticalStackLayout>
         <Label 

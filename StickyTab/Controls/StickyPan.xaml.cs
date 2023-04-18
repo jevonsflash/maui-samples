@@ -230,8 +230,9 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
 
             this.arc4.Point3 = p0;
         };
+        var mySpringOut = (double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
 
-        var scaleUpAnimation0 = new Animation(animateAction, 0, 1);
+        var scaleUpAnimation0 = new Animation(animateAction, 0, 1, mySpringOut);
 
         scaleAnimation.Add(0, 1, scaleUpAnimation0);
         scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)PanScaleAnimationLength, finished: finished);
@@ -250,21 +251,6 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
         if (OffsetX <= -(this.Width - PanWidth) / 2 || OffsetX > (this.Width - PanWidth) / 2)
         {
             _offsetX = 0;
-            if (SpringbackAnimationRequired)
-            {
-                IsSpringbackAnimationRunning = true;
-                this.Animate( (d, b) =>
-                {
-                    SpringbackAnimationRequired = false;
-                    IsSpringbackAnimationRunning = false;
-                });
-                return;
-            }
-        }
-        else
-        {
-            SpringbackAnimationRequired = true;
-            Debug.WriteLine("SpringbackAnimationRequired set to true!");
         }
 
         var _offsetY = OffsetY;
@@ -272,10 +258,14 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
         if (OffsetY <= -(this.Height - PanHeight) / 2 || OffsetY > (this.Height - PanHeight) / 2)
         {
             _offsetY = 0;
+        }
+        if (_offsetX==0&&_offsetY==0)
+        {
+
             if (SpringbackAnimationRequired)
             {
                 IsSpringbackAnimationRunning = true;
-                this.Animate( (d, b) =>
+                this.Animate((d, b) =>
                 {
                     SpringbackAnimationRequired = false;
                     IsSpringbackAnimationRunning = false;
@@ -286,8 +276,8 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
         else
         {
             SpringbackAnimationRequired = true;
-            Debug.WriteLine("SpringbackAnimationRequired set to true!");
         }
+
 
         var adjustX = (this.Width - PanWidth) / 2 - _offsetX;
         var adjustY = (this.Height - PanHeight) / 2 - _offsetY;
@@ -300,7 +290,7 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
 
         var dx = _offsetX * 0.8 + _offsetY * 0.4;
         var dy = _offsetX * 0.4 + _offsetY * 0.8;
-        if (OffsetX != 0)
+        if (_offsetX != 0)
         {
             if (dx > 0)
             {
@@ -315,7 +305,7 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
             p2 = p2.Offset(0, -Math.Abs(dy));
         }
 
-        else if (OffsetY != 0)
+        if (_offsetY != 0)
         {
             if (dy > 0)
             {
