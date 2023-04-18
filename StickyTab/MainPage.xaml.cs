@@ -34,7 +34,10 @@ public partial class MainPage : ContentPage
     private void PanActionHandler(object recipient, PanActionArgs args)
     {
         var child = args.CurrentPit?.Children[0];
+
         _currentPit = args.CurrentPit;
+
+
         switch (args.PanType)
         {
 
@@ -128,12 +131,14 @@ public partial class MainPage : ContentPage
         }
         else if (e.PropertyName == nameof(TranslationX))
         {
+            var originCenterX = this.DefaultPanContainer.Content.TranslationX + this.DefaultPanContainer.Content.Width / 2;
             var centerX = 0.0;
             if (_currentPit != null)
             {
                 centerX = _currentPit.X + _currentPit.Width / 2;
             }
-            this.MainStickyPan.OffsetX = this.DefaultPanContainer.Content.TranslationX + this.DefaultPanContainer.Content.Width / 2 - centerX;
+            this.MainStickyPan.OffsetX = originCenterX - centerX;
+
         }
         else if (e.PropertyName == nameof(TranslationY))
         {

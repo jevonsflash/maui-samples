@@ -1,4 +1,5 @@
 using Microsoft.Maui;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace StickyTab.Controls;
@@ -22,7 +23,8 @@ public partial class StickyPan : ContentView
     public double DifferenceY => RadiusY * C;
 
     private View _panContent;
-    private bool animateRequired;
+    private bool SpringbackAnimationRequired;
+    private bool IsSpringbackAnimationRunning;
 
     public View PanContent
     {
@@ -170,33 +172,34 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
         ReRender();
     }
 
-    private void Animate(double _offsetX, double _offsetY)
+    private void Animate( Action<double, bool> finished = null)
     {
-        var PanScaleAnimationLength = 10000;
+        var PanScaleAnimationLength = 1000;
         Content.AbortAnimation("ReshapeAnimations");
         var scaleAnimation = new Animation();
-        Point p0 = this.figure1.StartPoint;
-        Point p1 = this.arc1.Point3;
-        Point p2 = this.arc2.Point3;
-        Point p3 = this.arc3.Point3;
-        var animateAction = (double v) =>
+
+
+        var adjustX = (this.Width - PanWidth) / 2;
+        var adjustY = (this.Height - PanHeight) / 2;
+
+        Point p0Target = new Point(PanWidth / 2 + adjustX, adjustY);
+        Point p1Target = new Point(this.PanWidth + adjustX, this.PanHeight / 2 + adjustY);
+        Point p2Target = new Point(this.PanWidth / 2 + adjustX, this.PanHeight + adjustY);
+        Point p3Target = new Point(adjustX, this.PanHeight / 2 + adjustY);
+
+        Point p0Origin = this.figure1.StartPoint;
+        Point p1Origin = this.arc1.Point3;
+        Point p2Origin = this.arc2.Point3;
+        Point p3Origin = this.arc3.Point3;
+
+
+        var animateAction = (double r) =>
         {
- 
 
-            var dx = v * 0.8;
-            var dy = v * 0.4;
-
-            if (dx > 0)
-            {
-                p1 = p1.Offset(dx, 0);
-
-            }
-            else
-            {
-                p3 = p3.Offset(dx, 0);
-            }
-            p0 = p0.Offset(0, Math.Abs(dy));
-            p2 = p2.Offset(0, -Math.Abs(dy));
+            Point p0 = new Point((p0Target.X - p0Origin.X) * r + p0Origin.X, (p0Target.Y - p0Origin.Y) * r + p0Origin.Y);
+            Point p1 = new Point((p1Target.X - p1Origin.X) * r + p1Origin.X, (p1Target.Y - p1Origin.Y) * r + p1Origin.Y);
+            Point p2 = new Point((p2Target.X - p2Origin.X) * r + p2Origin.X, (p2Target.Y - p2Origin.Y) * r + p2Origin.Y);
+            Point p3 = new Point((p3Target.X - p3Origin.X) * r + p3Origin.X, (p3Target.Y - p3Origin.Y) * r + p3Origin.Y);
 
             Point h1 = new Point(p0.X - DifferenceX, p0.Y);
             Point h2 = new Point(p0.X + DifferenceX, p0.Y);
@@ -228,34 +231,40 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
             this.arc4.Point3 = p0;
         };
 
-        var scaleUpAnimation0 = new Animation(animateAction, 0, 0);
-        var scaleUpAnimation1 = new Animation(animateAction, 0, 0);
+        var scaleUpAnimation0 = new Animation(animateAction, 0, 1);
 
-        scaleAnimation.Add(0, 0.1, scaleUpAnimation0);
-        scaleAnimation.Add(0.1, 1, scaleUpAnimation1);
-
-        scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)PanScaleAnimationLength);
+        scaleAnimation.Add(0, 1, scaleUpAnimation0);
+        scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)PanScaleAnimationLength, finished: finished);
 
     }
 
     private void ReRender()
     {
-     
+        if (IsSpringbackAnimationRunning)
+        {
+            return;
+        }
+
         var _offsetX = OffsetX;
         //超过容忍度则将不黏连
         if (OffsetX <= -(this.Width - PanWidth) / 2 || OffsetX > (this.Width - PanWidth) / 2)
         {
             _offsetX = 0;
-            if (animateRequired)
+            if (SpringbackAnimationRequired)
             {
-                this.Animate(10, 0);
-                animateRequired=false;
+                IsSpringbackAnimationRunning = true;
+                this.Animate( (d, b) =>
+                {
+                    SpringbackAnimationRequired = false;
+                    IsSpringbackAnimationRunning = false;
+                });
+                return;
             }
         }
         else
         {
-            animateRequired=true;
-
+            SpringbackAnimationRequired = true;
+            Debug.WriteLine("SpringbackAnimationRequired set to true!");
         }
 
         var _offsetY = OffsetY;
@@ -263,6 +272,21 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
         if (OffsetY <= -(this.Height - PanHeight) / 2 || OffsetY > (this.Height - PanHeight) / 2)
         {
             _offsetY = 0;
+            if (SpringbackAnimationRequired)
+            {
+                IsSpringbackAnimationRunning = true;
+                this.Animate( (d, b) =>
+                {
+                    SpringbackAnimationRequired = false;
+                    IsSpringbackAnimationRunning = false;
+                });
+                return;
+            }
+        }
+        else
+        {
+            SpringbackAnimationRequired = true;
+            Debug.WriteLine("SpringbackAnimationRequired set to true!");
         }
 
         var adjustX = (this.Width - PanWidth) / 2 - _offsetX;
