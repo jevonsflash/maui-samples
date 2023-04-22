@@ -40,11 +40,21 @@ namespace MatoMusic.View
 
         }
 
-        private void MusicRelatedViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async void MusicRelatedViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName==nameof(MusicRelatedViewModel.IsPlaying))
             {
-                
+                if (MusicRelatedViewModel.IsPlaying)
+                {
+                    await this.AlbumNeedle.RotateTo(0, 300);
+                    this.StartAlbumArtRotation();
+                }
+                else
+                {
+                    await this.AlbumNeedle.RotateTo(-30, 300);
+                    this.StopAlbumArtRotation();
+
+                }
 
             }
         }
@@ -55,14 +65,21 @@ namespace MatoMusic.View
             {
                 case HorizontalPanType.Over:
 
-                    await this.AlbumNeedle.RotateTo(0, 300);
+                    if (MusicRelatedViewModel.IsPlaying)
+                    {
+                        await this.AlbumNeedle.RotateTo(0, 300);
+                        this.StartAlbumArtRotation();
+                    }
 
 
                     break;
                 case HorizontalPanType.Start:
 
-                    await this.AlbumNeedle.RotateTo(-30, 300);
-
+                    if (MusicRelatedViewModel.IsPlaying)
+                    {
+                        await this.AlbumNeedle.RotateTo(-30, 300);
+                        this.StopAlbumArtRotation();
+                    }
                     break;
                 case HorizontalPanType.In:
 
@@ -111,7 +128,7 @@ namespace MatoMusic.View
                     MusicRelatedViewModel.NextAction(null);
                     if (MusicRelatedViewModel.IsPlaying)
                     {
-                        StartAlbumArtAnimation();
+                        StartAlbumArtRotation();
 
                     }
                     break;
@@ -128,7 +145,7 @@ namespace MatoMusic.View
                     MusicRelatedViewModel.PreAction(null);
                     if (MusicRelatedViewModel.IsPlaying)
                     {
-                        StartAlbumArtAnimation();
+                        StartAlbumArtRotation();
 
                     }
 
@@ -147,15 +164,6 @@ namespace MatoMusic.View
             if (MusicRelatedViewModel.CurrentMusic != null)
             {
                 MusicRelatedViewModel.PlayAction(null);
-                if (MusicRelatedViewModel.IsPlaying)
-                {
-                    StartAlbumArtAnimation();
-
-                }
-                else
-                {
-                    StopAlbumArtAnimation();
-                }
 
             }
             else
@@ -164,57 +172,36 @@ namespace MatoMusic.View
                 if (!isSucc.IsSucess)
                 {
                     CommonHelper.ShowNoAuthorized();
-
-
                 }
                 var musicInfos = isSucc.Result;
                 if (musicInfos.Count > 0)
                 {
-
-
                     var result = await MusicInfoManager.CreateQueueEntrys(musicInfos);
                     await this.MusicRelatedViewModel.RebuildMusicInfos();
                     if (result)
                     {
                         MusicRelatedViewModel.ChangeMusic(musicInfos[0]);
-                        rotateAnimation = new Animation(v => this.AlbumArtImage.Rotation = v, this.AlbumArtImage.Rotation, 360);
-                        rotateAnimation.Commit(this, "AlbumArtImageAnimation", 16, 20*1000, repeat: () => true);
                     }
 
                 }
-                else
-                {
-                    // CommonHelper.GoNavigate("LibraryPage");
-
-                }
-
             }
         }
 
-        private void StopAlbumArtAnimation()
+        private void StopAlbumArtRotation()
         {
-            if (this.rotateAnimation==null)
+            this.AlbumArtImage.CancelAnimations();
+            if (this.rotateAnimation!=null)
             {
-                return;
+                this.rotateAnimation.Dispose();
             }
-            this.rotateAnimation.Dispose();
-            this.rotateAnimation=null;
+
         }
 
-        private void StartAlbumArtAnimation()
+        private void StartAlbumArtRotation()
         {
             this.AlbumArtImage.AbortAnimation("AlbumArtImageAnimation");
-            rotateAnimation = new Animation(v => this.AlbumArtImage.Rotation = v, this.AlbumArtImage.Rotation, 360);
-
-            double calcLenght = (double)((360f-this.AlbumArtImage.Rotation)/360)*20*1000;
-            rotateAnimation.Commit(this, "AlbumArtImageAnimation", 16, (uint)calcLenght, finished: (d, b) =>
-            {
-
-                this.AlbumArtImage.AbortAnimation("AlbumArtImageAnimation");
-                rotateAnimation = new Animation(v => this.AlbumArtImage.Rotation = v, 0, 360);
-                rotateAnimation.Commit(this, "AlbumArtImageAnimation", 16, 20*1000, repeat: () => true);
-
-            });
+            rotateAnimation = new Animation(v => this.AlbumArtImage.Rotation = v, this.AlbumArtImage.Rotation, this.AlbumArtImage.Rotation+ 360);
+            rotateAnimation.Commit(this, "AlbumArtImageAnimation", 16, 20*1000, repeat: () => true);
         }
 
         private void BindableObject_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -228,14 +215,6 @@ namespace MatoMusic.View
             else if (e.PropertyName == nameof(Height))
             {
                 this.DefaultPanContainer.PositionY = (this.PitContentLayout.Height - (sender as Grid).Height) / 2;
-
-            }
-        }
-
-        private void DefaultPanContainer_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName=="TranslationX")
-            {
 
             }
         }

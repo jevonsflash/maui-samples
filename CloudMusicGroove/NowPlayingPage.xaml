@@ -31,8 +31,7 @@
 
             <StackLayout Orientation="Horizontal"
                          Grid.Row="0"
-                         Grid.Column="0"
-                         Margin="{OnPlatform '0',iOS='0,15,0,0'}">
+                         Grid.Column="0">
                 <ImageButton BackgroundColor="Transparent"
                              Source="back.png"
                              WidthRequest="30"
@@ -184,7 +183,7 @@
                        HeightRequest="167"
                        HorizontalOptions="Center"
                        VerticalOptions="Start"
-                       Margin="70,-30,0,0"
+                       Margin="70,-50,0,0"
                        Source="ic_needle.png"
                        x:Name="AlbumNeedle"
                        AnchorX="0.18"
@@ -217,6 +216,7 @@
                             ValueChanged="OnValueChanged"
                             HorizontalOptions="FillAndExpand"
                             ThumbColor="White"
+                            MinimumTrackColor="White"
                             DragCompletedCommand="{Binding SliderDragCompletedCommand}"></Slider>
                     <Label Text="{Binding Duration,Converter={StaticResource SecondsToTimeSpanConverter}}"
                            WidthRequest="30"

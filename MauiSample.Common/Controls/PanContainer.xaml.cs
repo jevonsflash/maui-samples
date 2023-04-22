@@ -27,6 +27,7 @@ namespace MauiSample.Common.Controls
             InitializeComponent();
             this.PanScale = 0.5;
             this.PanScaleAnimationLength = 100;
+            this.Orientation=ScrollOrientation.Both;
             this.PropertyChanged += PanContainer_PropertyChanged1;
         }
 

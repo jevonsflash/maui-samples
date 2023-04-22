@@ -21,7 +21,7 @@
             <system:Double x:Key="StandOutBodyFontSize">28</system:Double>
             <system:Double x:Key="BodyFontSize">18</system:Double>
             <system:String x:Key="Bound">0</system:String>
-            <Color x:Key="PhoneBackgroundBrush">#EAEDEF</Color>
+            <Color x:Key="PhoneBackgroundBrush">gray</Color>
             <Color x:Key="PhoneForegroundBrush">#434343</Color>
             <Color x:Key="PhoneContrastBackgroundBrush">DeepSkyBlue</Color>
             <Color x:Key="PhoneWeakenBackgroundBrush">#D2D9DE</Color>
