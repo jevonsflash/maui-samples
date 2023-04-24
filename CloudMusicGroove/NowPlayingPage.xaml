@@ -19,7 +19,11 @@
                 <RowDefinition Height="130"></RowDefinition>
             </Grid.RowDefinitions>
 
-
+            <Image  HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Fill"
+                    Grid.Row="0"
+                    Grid.RowSpan="4"
+                    Source="{Binding  CurrentMusic.AlbumArt}"></Image>
 
             <StackLayout InputTransparent="false"
                          HorizontalOptions="FillAndExpand"
