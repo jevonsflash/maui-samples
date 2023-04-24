@@ -23,13 +23,14 @@
                     VerticalOptions="Fill"
                     Grid.Row="0"
                     Grid.RowSpan="4"
+                    Aspect="AspectFill"
                     Source="{Binding  CurrentMusic.AlbumArt}"></Image>
 
             <StackLayout InputTransparent="false"
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="Fill"
                          BackgroundColor="Black"
-                         Opacity="0.3"
+                         Opacity="0.75"
                          Grid.Row="0"
                          Grid.RowSpan="4" />
 
