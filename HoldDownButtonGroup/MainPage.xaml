@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
              BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             SizeChanged="ContentPage_SizeChanged"
              x:Class="StickyTab.MainPage">
 
     <ContentPage.Content>
@@ -17,17 +18,18 @@
 
             <!--播放控制区域-->
             <Grid Grid.Row="0">
-                <Grid x:Name="PitContentLayout"
+                <Grid x:Name="PitContentLayout" BackgroundColor="Azure"
                       Opacity="1">
 
                     <BoxView
                         x:Name="TestCircle"
-                        HeightRequest="320"
-                         WidthRequest="320"
+                        HeightRequest="80"
+                         WidthRequest="80"
                          Color="Blue"
-                         VerticalOptions="Center"
-                         HorizontalOptions="Center"
-                         CornerRadius="320"></BoxView>
+                         VerticalOptions="Start"
+                         HorizontalOptions="Start"
+                        BackgroundColor="Red"
+                         CornerRadius="80"></BoxView>
 
                 </Grid>
 
