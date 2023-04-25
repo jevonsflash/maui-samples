@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             x:Class="StickyTab.MainPage">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+            <!--标题区域-->
+
+
+
+            <!--播放控制区域-->
+            <Grid Grid.Row="0">
+                <Grid x:Name="PitContentLayout"
+                      Opacity="1">
+
+                    <BoxView
+                        x:Name="TestCircle"
+                        HeightRequest="320"
+                         WidthRequest="320"
+                         Color="Blue"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         CornerRadius="320"></BoxView>
+
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Row="1">
+                <Button Text="Toggle" x:Name="ToggleAnimation" Clicked="ToggleAnimation_Clicked"></Button>
+
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

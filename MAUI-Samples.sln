@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudMusicGroove", "CloudMu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StickyTab", "StickyTab\StickyTab.csproj", "{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoldDownButtonGroup", "HoldDownButtonGroup\HoldDownButtonGroup.csproj", "{138FB5A3-2D70-485B-B962-537EE55380AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,12 @@ Global
 		{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9268DD79-F1D1-44CA-8BB0-ABEF91F512AF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{138FB5A3-2D70-485B-B962-537EE55380AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{138FB5A3-2D70-485B-B962-537EE55380AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{138FB5A3-2D70-485B-B962-537EE55380AD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{138FB5A3-2D70-485B-B962-537EE55380AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{138FB5A3-2D70-485B-B962-537EE55380AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{138FB5A3-2D70-485B-B962-537EE55380AD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
