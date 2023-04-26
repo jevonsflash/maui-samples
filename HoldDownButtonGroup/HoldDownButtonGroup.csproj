@@ -61,13 +61,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="ColorAnimation.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	  <Compile Update="FlexibleBoxSamplePage.xaml.cs">
+	    <DependentUpon>FlexibleBoxSamplePage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Controls\" />
+	  <MauiXaml Update="ColorAnimation.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\FlexibleBox.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\HoldDownButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="FlexibleBoxSamplePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

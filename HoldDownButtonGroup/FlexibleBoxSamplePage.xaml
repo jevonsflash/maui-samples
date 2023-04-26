@@ -4,9 +4,8 @@
              xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
              xmlns:controls="clr-namespace:StickyTab.Controls;assembly=HoldDownButtonGroup"
              BackgroundColor="{StaticResource PhoneBackgroundBrush}"
-             Loaded="ContentPage_Loaded"
              SizeChanged="ContentPage_SizeChanged"
-             x:Class="StickyTab.MainPage">
+             x:Class="StickyTab.FlexibleBoxSamplePage">
 
     <ContentPage.Content>
         <Grid>
@@ -23,10 +22,21 @@
                 <Grid x:Name="PitContentLayout" BackgroundColor="Azure"
                       Opacity="1">
 
-                  
+
+                    <BoxView
+                        Opacity="0"
+                        x:Name="TestCircle"
+                        HeightRequest="80"
+                         WidthRequest="80"
+                         Color="Blue"
+                        BackgroundColor="Red"
+                         VerticalOptions="Start"
+                         HorizontalOptions="Start"
+                         CornerRadius="80,80,0,0"></BoxView>
+
+                    <controls:FlexibleBox></controls:FlexibleBox>
 
                 </Grid>
-                <controls:HoldDownButton></controls:HoldDownButton>
 
             </Grid>
             <Grid Grid.Row="1">
