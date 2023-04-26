@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             Loaded="ContentPage_Loaded"
+             SizeChanged="ContentPage_SizeChanged"
+             x:Class="MultitaskingCardList.MainPage">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+            <!--标题区域-->
+
+
+
+            <!--播放控制区域-->
+            <Grid Grid.Row="0">
+                <Grid x:Name="PitContentLayout" BackgroundColor="Azure"
+                      Opacity="1">
+                    <Path Stroke="Black" x:Name="ModulatedPath" >
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathGeometry.Figures>
+                                    <PathFigureCollection>
+                                        <PathFigure StartPoint="0,100">
+                                            <PathFigure.Segments>
+                                                <PathSegmentCollection>
+                                                    <PolyQuadraticBezierSegment Points="10, 99.88
+                                                                                17.5,99.55
+                                                                                40, 99 
+                                                                                57.5,92
+                                                                                70, 88
+                                                                                77.5,71
+                                                                                90,40
+                                                                                100,0
+                                                                                " />
+                                                </PathSegmentCollection>
+                                            </PathFigure.Segments>
+                                        </PathFigure>
+                                    </PathFigureCollection>
+                                </PathGeometry.Figures>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Row="1">
+                <Button Text="Toggle" x:Name="ToggleAnimation" Clicked="ToggleAnimation_Clicked"></Button>
+
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>
