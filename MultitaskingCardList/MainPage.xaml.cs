@@ -5,7 +5,6 @@ using MauiSample.Common.Controls;
 using MauiSample.Common.Helper;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls.Shapes;
-using MultitaskingCardList.Controls;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Numerics;
@@ -23,7 +22,8 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
-
+        this.BindingContext=new MainPageViewModel();
+        
     }
 
 

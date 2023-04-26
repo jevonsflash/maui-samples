@@ -50,6 +50,41 @@
                 </Grid>
 
             </Grid>
+            <Grid>
+                <CollectionView Background="red " ItemsSource="{Binding AppTombStones}" ItemSizingStrategy="MeasureFirstItem">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="0" Orientation="Horizontal" ></LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+                    
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="0,0,-100,0"
+                                  TranslationX="{Binding TestOffset}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding AppName}"></Label>
+                                <Image Aspect="AspectFill" Grid.Row="1" HeightRequest="500" WidthRequest="250" Source="{Binding AppScreen}">
+                                    <Image.Clip>
+                                        <RoundRectangleGeometry   CornerRadius="20"
+                                                            Rect="0,20,250,480" >
+                                           
+                                        </RoundRectangleGeometry>
+                                    </Image.Clip>
+                                    <Image.Shadow>
+                                        <Shadow Brush="Black" 
+                                              
+                                                Radius="20"
+                                                Opacity="0.3" />
+                                    </Image.Shadow>
+                                </Image>
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
             <Grid Grid.Row="1">
                 <Button Text="Toggle" x:Name="ToggleAnimation" Clicked="ToggleAnimation_Clicked"></Button>
 
