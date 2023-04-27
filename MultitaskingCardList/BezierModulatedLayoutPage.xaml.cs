@@ -1,4 +1,5 @@
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using System.Diagnostics;
 using System.Text;
 
@@ -10,14 +11,8 @@ public partial class BezierModulatedLayoutPage : ContentPage
     {
         InitializeComponent();
         Loaded += BezierModulatedLayoutPage_Loaded;
-        SizeChanged += BezierModulatedLayoutPage_SizeChanged;
     }
-
-    private void BezierModulatedLayoutPage_SizeChanged(object sender, EventArgs e)
-    {
-        RenderTransform();
-    }
-
+  
     private void RenderTransform()
     {
         var layoutWidth = this.BoxLayout.DesiredSize.Width;
@@ -37,7 +32,6 @@ public partial class BezierModulatedLayoutPage : ContentPage
                 var modulatedX = Modulate(1 - GetMappingY(progress), new double[] { 0, 1 }, new double[] { 0, layoutWidth });
                 var offsetX = modulatedX - (item as VisualElement).X;
                 (item as VisualElement).TranslateTo(offsetX, 0, 0);
-                this.BoxViewsXList.ItemsSource = GetBoxViewsX();
                 sb.AppendLine($"{BoxLayout.Children.IndexOf(item)}:offsetX-{offsetX}");
             }
         }
@@ -129,13 +123,13 @@ public partial class BezierModulatedLayoutPage : ContentPage
         {
             if (item is VisualElement)
             {
-                boxViewsX.Add((item as VisualElement).X);
+                boxViewsX.Add(Math.Round((item as VisualElement).X + item.TranslationX, 2));
             }
         }
         return boxViewsX;
     }
 
-    private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    private void RadioButton_CheckedChanged(object sender, ToggledEventArgs e)
     {
         if (e.Value)
         {
@@ -156,5 +150,9 @@ public partial class BezierModulatedLayoutPage : ContentPage
                 }
             }
         }
+        this.BoxViewsXList.ItemsSource = GetBoxViewsX();
+        ModulatedPath.IsVisible = e.Value;
+        UnModulatedPath.IsVisible = !e.Value;
     }
+
 }
