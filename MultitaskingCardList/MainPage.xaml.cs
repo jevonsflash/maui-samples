@@ -57,8 +57,9 @@ public partial class MainPage : ContentPage
 
     }
 
-    private void ToggleAnimation_Clicked(object sender, EventArgs e)
+    private async void ToggleAnimation_Clicked(object sender, EventArgs e)
     {
+        await App.Current.MainPage.Navigation.PushAsync(new BezierModulatedLayoutPage());
 
     }
 

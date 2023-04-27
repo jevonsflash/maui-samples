@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MultitaskingCardList.BezierModulatedLayoutPage"
+             Background="black"
+             Title="BezierModulatedLayoutPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <StackLayout Grid.Row="1" Orientation="Horizontal" x:Name="BoxLayout">
+            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20" Color="Orange"></BoxView>
+            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20" Color="DarkSeaGreen"></BoxView>
+            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20"  Color="Orange"></BoxView>
+            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20"  Color="DarkSeaGreen"></BoxView>
+            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20"  Color="Orange"></BoxView>
+            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20"   Color="DarkSeaGreen"></BoxView>
+
+        </StackLayout>
+        <Grid  Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Text="" x:Name="Tip"></Label>
+            <ListView Grid.Column="1" x:Name="BoxViewsXList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding}" TextColor="White"></TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</ContentPage>
