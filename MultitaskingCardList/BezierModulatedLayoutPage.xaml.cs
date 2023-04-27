@@ -15,6 +15,12 @@ public partial class BezierModulatedLayoutPage : ContentPage
 
     private void BezierModulatedLayoutPage_SizeChanged(object sender, EventArgs e)
     {
+        RenderTransform();
+    }
+
+    private void RenderTransform()
+    {
+        var layoutWidth = this.BoxLayout.DesiredSize.Width;
         if (this.BezeirPoints == null)
         {
             return;
@@ -23,13 +29,14 @@ public partial class BezierModulatedLayoutPage : ContentPage
         foreach (var item in this.BoxLayout.Children)
         {
 
-            if (item is BoxView)
+            if (item is VisualElement)
             {
-                var progress = this.Modulate((item as BoxView).X, new double[] { 0, this.Width }, new double[] { 0, 1 });
-                (item as BoxView).ScaleTo(Modulate(progress, new double[] { 0, 1 }, new double[] { 0.61, 0.72 }), 0);
-                var modulatedX = Modulate(1 - GetMappingY(progress), new double[] { 0, 1 }, new double[] { 0, this.Width });
-                var offsetX = modulatedX - (item as BoxView).X;
-                (item as BoxView).TranslateTo(offsetX, 0, 100);
+                var progress = this.Modulate((item as VisualElement).X, new double[] { 0, layoutWidth }, new double[] { 0, 1 });
+                (item as VisualElement).ScaleTo(Modulate(progress, new double[] { 0, 1 }, new double[] { 0.61, 0.72 }), 0);
+                //(item as VisualElement).FadeTo(Modulate(progress, new double[] { 0.2, 0.54 }, new double[] { 0, 1 }), 0);
+                var modulatedX = Modulate(1 - GetMappingY(progress), new double[] { 0, 1 }, new double[] { 0, layoutWidth });
+                var offsetX = modulatedX - (item as VisualElement).X;
+                (item as VisualElement).TranslateTo(offsetX, 0, 0);
                 this.BoxViewsXList.ItemsSource = GetBoxViewsX();
                 sb.AppendLine($"{BoxLayout.Children.IndexOf(item)}:offsetX-{offsetX}");
             }
@@ -120,15 +127,34 @@ public partial class BezierModulatedLayoutPage : ContentPage
         List<double> boxViewsX = new List<double>();
         foreach (var item in this.BoxLayout.Children)
         {
-            if (item is BoxView)
+            if (item is VisualElement)
             {
-                boxViewsX.Add((item as BoxView).X);
+                boxViewsX.Add((item as VisualElement).X);
             }
         }
         return boxViewsX;
     }
 
+    private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        if (e.Value)
+        {
+            RenderTransform();
 
+        }
+        else
+        {
+            foreach (var item in this.BoxLayout.Children)
+            {
 
+                if (item is VisualElement)
+                {
+                    (item as VisualElement).ScaleTo(1, 100);
+                    //(item as VisualElement).FadeTo(1, 100);             
+                    (item as VisualElement).TranslateTo(0, 0, 100);
 
+                }
+            }
+        }
+    }
 }

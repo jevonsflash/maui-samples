@@ -4,6 +4,14 @@
              x:Class="MultitaskingCardList.BezierModulatedLayoutPage"
              Background="black"
              Title="BezierModulatedLayoutPage">
+    <ContentPage.Resources>
+        <Style TargetType="Grid" x:Key="BoxFrameStyle" >
+            <Setter Property="HeightRequest" Value="500"></Setter>
+            <Setter Property="WidthRequest" Value="300"></Setter>
+            <Setter Property="Margin"   Value="0,0,-220,0"></Setter>
+
+        </Style>
+    </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
@@ -15,19 +23,40 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
-        <StackLayout Grid.Row="1" Orientation="Horizontal" x:Name="BoxLayout">
-            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20" Color="Orange"></BoxView>
-            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20" Color="DarkSeaGreen"></BoxView>
-            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20"  Color="Orange"></BoxView>
-            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20"  Color="DarkSeaGreen"></BoxView>
-            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20"  Color="Orange"></BoxView>
-            <BoxView HeightRequest="500" WidthRequest="300" Margin="0,0,-220,0" CornerRadius="20"   Color="DarkSeaGreen"></BoxView>
+        <StackLayout Grid.Row="1" Orientation="Horizontal" x:Name="BoxLayout" Background="gray" MaximumWidthRequest="480">
+            <Grid Style="{StaticResource BoxFrameStyle}">
+                <BoxView CornerRadius="20" Color="Orange"></BoxView>
+                
+                <Label Text="1" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </Grid>
+            <Grid Style="{StaticResource BoxFrameStyle}">
+                <BoxView  CornerRadius="20" Color="DarkSeaGreen"></BoxView>
+                <Label Text="2" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </Grid>
+            <Grid Style="{StaticResource BoxFrameStyle}">
+                <BoxView  CornerRadius="20"  Color="Orange"></BoxView>
+                <Label Text="3" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </Grid>
+            <Grid Style="{StaticResource BoxFrameStyle}">
+                <BoxView  CornerRadius="20"  Color="DarkSeaGreen"></BoxView>
+                <Label Text="4" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </Grid>
+            <Grid Style="{StaticResource BoxFrameStyle}">
+                <BoxView  CornerRadius="20"  Color="Orange"></BoxView>
+                <Label Text="5" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </Grid>
+            <Grid Style="{StaticResource BoxFrameStyle}">
+                <BoxView  CornerRadius="20"   Color="DarkSeaGreen"></BoxView>
+                <Label Text="6" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </Grid>
+
 
         </StackLayout>
         <Grid  Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Text="" x:Name="Tip"></Label>
             <ListView Grid.Column="1" x:Name="BoxViewsXList">
@@ -37,6 +66,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <RadioButton Content="ToggleTransform" Grid.Column="2" CheckedChanged="RadioButton_CheckedChanged">
+                
+            </RadioButton>
         </Grid>
     </Grid>
 </ContentPage>
