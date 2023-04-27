@@ -27,11 +27,11 @@ public partial class BezierModulatedLayoutPage : ContentPage
             if (item is VisualElement)
             {
                 var progress = this.Modulate((item as VisualElement).X, new double[] { 0, layoutWidth }, new double[] { 0, 1 });
-                (item as VisualElement).ScaleTo(Modulate(progress, new double[] { 0, 1 }, new double[] { 0.61, 0.72 }), 0);
-                //(item as VisualElement).FadeTo(Modulate(progress, new double[] { 0.2, 0.54 }, new double[] { 0, 1 }), 0);
+                (item as VisualElement).ScaleTo(Modulate(progress, new double[] { 0, 1 }, new double[] { 0.61, 0.72 }), 400);
+                //(item as VisualElement).FadeTo(Modulate(progress, new double[] { 0.2, 0.54 }, new double[] { 0, 1 }), 400);
                 var modulatedX = Modulate(1 - GetMappingY(progress), new double[] { 0, 1 }, new double[] { 0, layoutWidth });
                 var offsetX = modulatedX - (item as VisualElement).X;
-                (item as VisualElement).TranslateTo(offsetX, 0, 0);
+                (item as VisualElement).TranslateTo(offsetX, 0, 400);
                 sb.AppendLine($"{BoxLayout.Children.IndexOf(item)}:offsetX-{offsetX}");
             }
         }
@@ -143,9 +143,9 @@ public partial class BezierModulatedLayoutPage : ContentPage
 
                 if (item is VisualElement)
                 {
-                    (item as VisualElement).ScaleTo(1, 100);
+                    (item as VisualElement).ScaleTo(1, 400);
                     //(item as VisualElement).FadeTo(1, 100);             
-                    (item as VisualElement).TranslateTo(0, 0, 100);
+                    (item as VisualElement).TranslateTo(0, 0, 400);
 
                 }
             }

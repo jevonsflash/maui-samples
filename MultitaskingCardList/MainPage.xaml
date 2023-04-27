@@ -6,87 +6,75 @@
              Loaded="ContentPage_Loaded"
              SizeChanged="ContentPage_SizeChanged"
              x:Class="MultitaskingCardList.MainPage">
-
+    <ContentPage.Resources>
+        <Style TargetType="Grid"
+               x:Key="BoxFrameStyle">
+            <Setter Property="HeightRequest"
+                    Value="500"></Setter>
+            <Setter Property="WidthRequest"
+                    Value="300"></Setter>
+            <Setter Property="Margin"
+                    Value="0,0,-220,0"></Setter>
+            <Setter Property="AnchorX"
+                    Value="0"></Setter>
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="150" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <!--标题区域-->
 
+            <Grid x:Name="MainLayout">
+                <ScrollView Margin="20"
+                            Orientation="Horizontal"
+                            Scrolled="ScrollView_Scrolled">
+                    <StackLayout Orientation="Horizontal"
+                                 BindingContextChanged="BoxLayout_BindingContextChanged"
+                                 x:Name="BoxLayout"
+                                 BindableLayout.ItemsSource="{Binding AppTombStones}">
 
 
-            <!--播放控制区域-->
-            <Grid Grid.Row="0">
-                <Grid x:Name="PitContentLayout" BackgroundColor="Azure"
-                      Opacity="1">
-                    <Path Stroke="Black" x:Name="ModulatedPath" >
-                        <Path.Data>
-                            <PathGeometry>
-                                <PathGeometry.Figures>
-                                    <PathFigureCollection>
-                                        <PathFigure StartPoint="0,100">
-                                            <PathFigure.Segments>
-                                                <PathSegmentCollection>
-                                                    <PolyQuadraticBezierSegment Points="10, 99.88
-                                                                                17.5,99.55
-                                                                                40, 99 
-                                                                                57.5,92
-                                                                                70, 88
-                                                                                77.5,71
-                                                                                90,40
-                                                                                100,0
-                                                                                " />
-                                                </PathSegmentCollection>
-                                            </PathFigure.Segments>
-                                        </PathFigure>
-                                    </PathFigureCollection>
-                                </PathGeometry.Figures>
-                            </PathGeometry>
-                        </Path.Data>
-                    </Path>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Style="{StaticResource BoxFrameStyle}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Label Margin="25,0,0,0" Text="{Binding AppName}"></Label>
+                                    <Image Aspect="AspectFill"
+                                           Grid.Row="1"
+                                           HeightRequest="500"
+                                           WidthRequest="250"
+                                           Source="{Binding AppScreen}">
+                                        <Image.Clip>
+                                            <RoundRectangleGeometry   CornerRadius="20"
+                                                                      Rect="0,20,250,480">
 
-                </Grid>
+                                            </RoundRectangleGeometry>
+                                        </Image.Clip>
+                                        <Image.Shadow>
+                                            <Shadow Brush="Black"
+                                                    Radius="40"
+                                                    Offset="-20,0"
+                                                    Opacity="0.3" />
+                                        </Image.Shadow>
+                                    </Image>
 
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView> 
             </Grid>
-            <Grid>
-                <CollectionView Background="red " ItemsSource="{Binding AppTombStones}" ItemSizingStrategy="MeasureFirstItem">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="0" Orientation="Horizontal" ></LinearItemsLayout>
-                    </CollectionView.ItemsLayout>
-                    
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="0,0,-100,0"
-                                  TranslationX="{Binding TestOffset}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="50"></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Label Text="{Binding AppName}"></Label>
-                                <Image Aspect="AspectFill" Grid.Row="1" HeightRequest="500" WidthRequest="250" Source="{Binding AppScreen}">
-                                    <Image.Clip>
-                                        <RoundRectangleGeometry   CornerRadius="20"
-                                                            Rect="0,20,250,480" >
-                                           
-                                        </RoundRectangleGeometry>
-                                    </Image.Clip>
-                                    <Image.Shadow>
-                                        <Shadow Brush="Black" 
-                                              
-                                                Radius="20"
-                                                Opacity="0.3" />
-                                    </Image.Shadow>
-                                </Image>
 
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Grid>
             <Grid Grid.Row="1">
-                <Button Text="Toggle" x:Name="ToggleAnimation" Clicked="ToggleAnimation_Clicked"></Button>
+                <Button Text="Toggle"
+                        x:Name="ToggleAnimation"
+                        Clicked="ToggleAnimation_Clicked"></Button>
 
             </Grid>
         </Grid>
