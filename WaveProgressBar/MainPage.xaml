@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:WaveProgressBar.Controls;assembly=WaveProgressBar"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             Loaded="ContentPage_Loaded"
+             SizeChanged="ContentPage_SizeChanged"
+             x:Class="WaveProgressBar.MainPage">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+            <!--标题区域-->
+
+
+
+            <!--播放控制区域-->
+            <Grid Grid.Row="0">
+
+                <controls:WaveCircle></controls:WaveCircle>
+
+            </Grid>
+            <Grid Grid.Row="1">
+                <Button Text="Toggle" x:Name="ToggleAnimation" Clicked="ToggleAnimation_Clicked"></Button>
+
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>
