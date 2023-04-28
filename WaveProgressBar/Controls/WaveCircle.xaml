@@ -5,7 +5,7 @@
              Background="red"
              x:Class="WaveProgressBar.Controls.WaveCircle">
     <Grid>
-        <Path Grid.Row="0" Grid.Column="1" Stroke="white" IsVisible="false" x:Name="ModulatedPath" >
+        <Path Grid.Row="0" Grid.Column="1" Stroke="white" IsVisible="true" x:Name="ModulatedPath" >
             <Path.Data>
                 <PathGeometry>
                     <PathGeometry.Figures>
