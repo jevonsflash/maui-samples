@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             SizeChanged="ContentView_SizeChanged"
+             Background="red"
+             x:Class="WaveProgressBar.Controls.WaveCircle">
+    <Grid>
+        <Path Grid.Row="0" Grid.Column="1" Stroke="white" IsVisible="false" x:Name="ModulatedPath" >
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigureCollection>
+                            <PathFigure StartPoint="0,100" >
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection x:Name="MainPathSegmentCollection">
+                                       
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+
+                        </PathFigureCollection>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+
+    </Grid>
+</ContentView>
