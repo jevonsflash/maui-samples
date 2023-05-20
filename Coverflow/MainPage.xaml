@@ -3,20 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
              BackgroundColor="{StaticResource PhoneBackgroundBrush}"
-             Loaded="ContentPage_Loaded"
-             SizeChanged="ContentPage_SizeChanged"
+             xmlns:controls="clr-namespace:Coverflow;assembly=Coverflow"
              x:Class="Coverflow.MainPage">
-   
+
     <ContentPage.Resources>
         <Style TargetType="Grid"
                x:Key="BoxFrameStyle">
-
+            <Setter Property="HeightRequest"
+                    Value="100"></Setter>
             <Setter Property="WidthRequest"
-                    Value="300"></Setter>
-            <Setter Property="Margin"
-                    Value="0,0,-220,0"></Setter>
-            <Setter Property="AnchorX"
-                    Value="0"></Setter>
+                    Value="100"></Setter>
+            <Setter Property="HorizontalOptions"
+                    Value="Center"></Setter>
+            <Setter Property="VerticalOptions"
+                    Value="Center"></Setter>
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -28,24 +28,62 @@
             <!--标题区域-->
 
             <Grid x:Name="MainLayout">
-                <Image  HorizontalOptions="FillAndExpand"
-                    VerticalOptions="Fill"
-                    Aspect="AspectFill"
-                    Source="pb.png"></Image>
 
-                <ScrollView x:Name="MainScroller"
-                            Background="Transparent"
-                            Orientation="Horizontal"
-                            Scrolled="ScrollView_Scrolled">
-                </ScrollView> 
+                <Grid.GestureRecognizers>
+                    <SwipeGestureRecognizer Direction="Left"
+                                            Swiped="OnSwiped" />
+                    <SwipeGestureRecognizer Direction="Right"
+                                            Swiped="OnSwiped" />
+
+                </Grid.GestureRecognizers>
+
+                <Grid Grid.Row="1"
+                      x:Name="BoxLayout"
+                      Background="black"
+                      BindableLayout.ItemsSource="{Binding AppTombStones}">
+
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Style="{StaticResource BoxFrameStyle}"
+                                  Background="Transparent">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <controls:RotationImage WidthRequest="200"
+                                                        HeightRequest="500"
+                                                        ImageWidth="200"
+                                                        ImageHeight="200"
+                                                        Source="{Binding AppScreen}"></controls:RotationImage>
+
+
+                                <Label Margin="0,30,0,0"
+                                       Text="{Binding AppName}"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalOptions="Center"></Label>
+
+
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+
+                </Grid>
+
             </Grid>
 
-            <Grid Grid.Row="1">
+            <VerticalStackLayout Grid.Row="1">
+                <Slider x:Name="ProgressSlider"
+                        ThumbColor="White"
+                        MinimumTrackColor="White"
+                        Grid.Row="2"
+                        Margin="0,0,0,20"
+                        ValueChanged="OnSliderValueChanged" />
                 <Button Text="BezierModulatedLayoutPage"
                         x:Name="ToggleAnimation"
                         Clicked="ToggleAnimation_Clicked"></Button>
 
-            </Grid>
+            </VerticalStackLayout>
         </Grid>
     </ContentPage.Content>
 

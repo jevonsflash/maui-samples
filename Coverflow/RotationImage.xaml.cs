@@ -1,13 +1,42 @@
+using Microsoft.Maui.Graphics;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
+using static Microsoft.Maui.Controls.Internals.GIFBitmap;
+using Microsoft.Maui;
+using System.Drawing;
+using System.Diagnostics;
 
 namespace Coverflow;
 
 public partial class RotationImage : ContentView
 {
 
-    public string Source { get; set; }
     public SKBitmap bitmap { get; private set; }
+
+
+    public static readonly BindableProperty SourceProperty =
+BindableProperty.Create("Source", typeof(string), typeof(RotationImage), default(string), propertyChanged: (bindable, oldValue, newValue) =>
+{
+    var obj = (RotationImage)bindable;
+    if (obj.canvasView != null)
+    {
+        obj.canvasView.InvalidateSurface();
+    }
+});
+
+
+    public string Source
+    {
+        get { return (string)GetValue(SourceProperty); }
+        set
+        {
+            SetValue(SourceProperty, value);
+            OnPropertyChanged();
+
+        }
+    }
 
 
     public static readonly BindableProperty RotateYProperty =
@@ -20,9 +49,15 @@ BindableProperty.Create("RotateY", typeof(double), typeof(RotationImage), defaul
     }
 });
 
+
     public double RotateY
     {
-        get { return (double)GetValue(RotateYProperty); }
+        get
+        {
+            var val = (double)GetValue(RotateYProperty);
+            Debug.WriteLine("--Reading the value of RotateY: "+val+"--");
+            return val;
+        }
         set
         {
             SetValue(RotateYProperty, value);
@@ -31,28 +66,79 @@ BindableProperty.Create("RotateY", typeof(double), typeof(RotationImage), defaul
         }
     }
 
-    public float Depth { get; set; } = 300;
+    public static readonly BindableProperty SkewYProperty =
+BindableProperty.Create("SkewY", typeof(double), typeof(RotationImage), default(double), propertyChanged: (bindable, oldValue, newValue) =>
+{
+    var obj = (RotationImage)bindable;
+    if (obj.canvasView != null)
+    {
+        obj.canvasView.InvalidateSurface();
+    }
+});
+
+
+    public double SkewY
+    {
+        get { return (double)GetValue(SkewYProperty); }
+        set
+        {
+            SetValue(SkewYProperty, value);
+            OnPropertyChanged();
+
+        }
+    }
+
+    public static readonly BindableProperty TransYProperty =
+BindableProperty.Create("TransY", typeof(double), typeof(RotationImage), default(double), propertyChanged: (bindable, oldValue, newValue) =>
+{
+    var obj = (RotationImage)bindable;
+    if (obj.canvasView != null)
+    {
+        obj.canvasView.InvalidateSurface();
+    }
+});
+
+
+    public double TransY
+    {
+        get { return (double)GetValue(TransYProperty); }
+        set
+        {
+            SetValue(TransYProperty, value);
+            OnPropertyChanged();
+
+        }
+    }
+
+    public double ImageHeight { get; set; }
+    public double ImageWidth { get; set; }
+
+    public float Depth { get; set; } = 800;
     public RotationImage()
     {
         InitializeComponent();
-        Loaded+=RotationImage_Loaded;
-
-
+        this.SizeChanged+=RotationImage_SizeChanged;
     }
 
-    private void RotationImage_Loaded(object sender, EventArgs e)
+    private async void RotationImage_SizeChanged(object sender, EventArgs e)
     {
-        Init();
+        await InitBitmap();
     }
 
-    public async void Init()
+    private async Task InitBitmap()
     {
         using (Stream stream = await FileSystem.OpenAppPackageFileAsync(Source))
         {
             if (stream!=null)
             {
+                var mainDisplayInfo = DeviceDisplay.Current.MainDisplayInfo;
+                var pixcelHeight = mainDisplayInfo.Density*ImageHeight;
+                var pixcelWidth = mainDisplayInfo.Density*ImageWidth;
+
                 var bitmap = SKBitmap.Decode(stream);
-                bitmap= bitmap.Resize(new SKImageInfo(200, 200), SKFilterQuality.Medium);
+                bitmap= bitmap.Resize(new SKImageInfo((int)pixcelHeight,
+                    (int)pixcelWidth),
+                    SKFilterQuality.Medium);
                 this.bitmap=bitmap;
             }
 
@@ -61,6 +147,10 @@ BindableProperty.Create("RotateY", typeof(double), typeof(RotationImage), defaul
 
     void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
     {
+        if (this.bitmap==null)
+        {
+            return;
+        }
         SKImageInfo info = args.Info;
         SKSurface surface = args.Surface;
         SKCanvas canvas = surface.Canvas;
@@ -85,11 +175,26 @@ BindableProperty.Create("RotateY", typeof(double), typeof(RotationImage), defaul
 
         matrix= matrix.PostConcat(
             SKMatrix.CreateTranslation(xCenter, yCenter));
+        matrix.SkewY =  (float)Math.Tan(Math.PI * (float)this.SkewY / 180);
+        matrix.TransY = (float)this.TransY;
 
         canvas.SetMatrix(matrix);
         float xBitmap = xCenter - bitmap.Width / 2;
-        float yBitmap = yCenter - bitmap.Height / 2;
+        //float yBitmap = yCenter - bitmap.Height / 2;
+        float yBitmap = yCenter-bitmap.Height;
         canvas.DrawBitmap(bitmap, xBitmap, yBitmap);
+
+        using (SKPaint paint = new SKPaint())
+        {
+
+
+            paint.Color = SKColors.Black.WithAlpha((byte)(255 * 0.8));
+            canvas.Scale(1, -1, 0, yCenter);
+            canvas.DrawBitmap(bitmap, xBitmap, yBitmap, paint);
+            SKRect rect = SKRect.Create(xBitmap, yBitmap, bitmap.Width, bitmap.Height);
+            canvas.DrawRect(rect, paint);
+
+        }
     }
 
 

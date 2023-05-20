@@ -7,14 +7,19 @@
              xmlns:forms="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              Title="BezierModulatedLayoutPage">
     <ContentPage.Resources>
-        <Style TargetType="Grid" x:Key="BoxFrameStyle" >
-            <Setter Property="HeightRequest" Value="300"></Setter>
-            <Setter Property="WidthRequest" Value="300"></Setter>
-            <!--<Setter Property="HorizontalOptions"
+        <Style TargetType="Grid"
+               x:Key="BoxFrameStyle">
+            <Setter Property="HeightRequest"
+                    Value="100"></Setter>
+            <Setter Property="WidthRequest"
+                    Value="100"></Setter>
+            <Setter Property="HorizontalOptions"
                     Value="Center"></Setter>
             <Setter Property="VerticalOptions"
-                    Value="Center"></Setter>-->
+                    Value="Center"></Setter>
         </Style>
+
+
     </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -22,38 +27,67 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Text="{Binding Source={x:Reference MainRotationImage},
+                              Path=RotateY,
+                              StringFormat='MainRotationY = {0:F0}'}" />
 
-        <Grid Grid.Row="1"  x:Name="BoxLayout" Background="gray">
-            <controls:RotationImage x:Name="MainRotationImage"
-                                    Background="red"
-                                    Source="p1.png" ></controls:RotationImage>
-
-
+        <Grid Grid.Row="1"
+              x:Name="BoxLayout"
+              Background="gray">
+            <Grid  Style="{StaticResource BoxFrameStyle}">
+                <controls:RotationImage x:Name="MainRotationImage"
+                                        RotateY="{Binding Source={x:Reference yRotateSlider},
+                                        
+                              Path=Value}"
+                                        TransY="{Binding Source={x:Reference TransYSlider},
+                                        
+                              Path=Value}"
+                                        SkewY="{Binding Source={x:Reference SkewYSlider},
+                                        
+                              Path=Value}"
+                                        WidthRequest="300"
+                                        HeightRequest="600"
+                                        ImageWidth="250"
+                                        ImageHeight="250"
+                                        Source="p1.png"></controls:RotationImage>
+            </Grid>
         </Grid>
         <Grid Grid.Row="2">
-            <VerticalStackLayout 
-                         Background="gray"
-                         Grid.ColumnSpan="2"
-                         Grid.Row="1">
-                <Label Text="ToggleBezierModulate"></Label>
-                <Switch x:Name="RadioButton"
-                        Toggled="RadioButton_CheckedChanged">
+            <VerticalStackLayout Background="gray"
+                                 Grid.ColumnSpan="2"
+                                 Grid.Row="1">
+                <Slider x:Name="SkewYSlider"
+                        Grid.Row="2"
+                        Minimum="-100"
+                        Maximum="100"
+                       />
 
-                </Switch>
+                <Label Text="{Binding Source={x:Reference SkewYSlider},
+                              Path=Value,
+                              StringFormat='SkewY = {0:F0}'}"
+             />
+
+                
+                <Slider x:Name="TransYSlider"
+                        Grid.Row="2"
+                        Minimum="-100"
+                        Maximum="100" />
+
+                <Label Text="{Binding Source={x:Reference TransYSlider},
+                              Path=Value,
+                              StringFormat='TransY = {0:F0}'}" />
+
+
                 <Slider x:Name="yRotateSlider"
                         Grid.Row="2"
                         Maximum="360"
-                        ValueChanged="OnSliderValueChanged" />
+                        />
 
                 <Label Text="{Binding Source={x:Reference yRotateSlider},
                               Path=Value,
-                              StringFormat='Y-Axis Rotation = {0:F0}'}"
-                       Grid.Row="3" />
-
+                              StringFormat='RotationY = {0:F0}'}"
+                       Grid.Row="3" Margin="0,0,0,50" />
+               
             </VerticalStackLayout>
 
         </Grid>

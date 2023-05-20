@@ -10,11 +10,14 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Numerics;
 using System.Text;
+using Microsoft.Maui.Controls;
+using System;
 
 namespace Coverflow;
 
 public partial class MainPage : ContentPage
 {
+    private int currentPos;
 
     public PitGrid CurrentPitView { get; set; }
 
@@ -29,27 +32,12 @@ public partial class MainPage : ContentPage
 
     private void MainPage_Loaded(object sender, EventArgs e)
     {
-         
-    }
-
-    private void DefaultPanContainer_OnOnfinishedChoise(object sender, PitGrid e)
-    {
-
+        RenderTransform(currentPos);
     }
 
 
-    private async void ContentPage_SizeChanged(object sender, EventArgs e)
-    {
-        var layoutWidth = this.MainLayout.DesiredSize.Width;
 
-        var scrollY = this.MainScroller.ScrollY;
-        var posX = this.MainScroller.ContentSize.Width-layoutWidth;
-        await this.MainScroller.ScrollToAsync(posX, scrollY, false).ContinueWith((t) =>
-        {
-            RenderTransform(this.MainScroller.ScrollX);
-        });
 
-    }
 
     private async void ToggleAnimation_Clicked(object sender, EventArgs e)
     {
@@ -57,101 +45,140 @@ public partial class MainPage : ContentPage
 
     }
 
-    private void RenderTransform(double scrollX)
-    {
-        var layoutWidth = this.MainLayout.DesiredSize.Width;
-        if (this.BezeirPoints == null)
-        {
-            return;
-        }
-
-
-    }
-
-
-    private void ContentPage_Loaded(object sender, EventArgs e)
+    private void RenderTransform(int currentPos)
     {
 
 
-        BezeirPoints = new List<Point>();
-
-        var bezeirPointSubdivs = 999;
-
-
-
-        var p0 = new Point(0, 1);
-        var p1 = new Point(0.1, 0.9988);
-        var p2 = new Point(0.175, 0.9955);
-
-
-        var p3 = new Point(0.4, 0.99);
-        var p4 = new Point(0.575, 0.92);
-        var p5 = new Point(0.7, 0.88);
-
-        var p6 = new Point(0.775, 0.71);
-        var p7 = new Point(0.9, 0.4);
-        var p8 = new Point(1, 0);
-
-        this.BezierSegments = new Point[][] {
-
-            new Point[]{p0,p1,p2},
-            new Point[]{p2,p3,p4},
-            new Point[]{p4,p5,p6},
-            new Point[] {p6,p7,p8}
-       };
-
-        for (int i = 0; i < this.BezierSegments.Length; i++)
+        var info = this.BoxLayout;
+        double xCenter = info.Width / 2;
+        info.TranslateTo(0, 100, 0);
+        uint duration = 400;
+        var step = xCenter*0.12;
+        var sb = new StringBuilder();
+        var currentSlidePadding = this.BoxLayout.Width * 0.15;
+        var rotateY = 65;
+        var skewY = 25;
+        var transY = 150;
+        foreach (var bitmapLayout in this.BoxLayout.Children)
         {
-            for (int j = 0; j < bezeirPointSubdivs; j++)
+            (bitmapLayout as VisualElement).AbortAnimation("AlbumArtImageAnimation");
+
+            var pos = this.BoxLayout.Children.IndexOf(bitmapLayout);
+            var bitmapObj = (bitmapLayout as Grid).Children.FirstOrDefault();
+            var labelObj = (bitmapLayout as Grid).Children.LastOrDefault();
+            double xBitmap;
+            int zIndex;
+            double targetScale;
+            double targetRotateY;
+            double targetSkewY;
+            double targetTransY;
+            if (pos < currentPos)
             {
-                var bezeirPointX = Math.Pow(1 - (double)j / bezeirPointSubdivs, 2) * BezierSegments[i][0].X + 2 * (double)j / bezeirPointSubdivs * (1 - (double)j / bezeirPointSubdivs) * BezierSegments[i][1].X + Math.Pow((double)j / bezeirPointSubdivs, 2) * BezierSegments[i][2].X;
-                var bezeirPointY = Math.Pow(1 - (double)j / bezeirPointSubdivs, 2) * BezierSegments[i][0].Y + 2 * (double)j / bezeirPointSubdivs * (1 - (double)j / bezeirPointSubdivs) * BezierSegments[i][1].Y + Math.Pow((double)j / bezeirPointSubdivs, 2) * BezierSegments[i][2].Y;
-                BezeirPoints.Add(new Point(bezeirPointX, bezeirPointY));
+                zIndex=pos;
+                xBitmap = (double)(-(currentPos * step) + (pos * step)  - currentSlidePadding);
+                targetRotateY=rotateY;
+                targetSkewY=skewY;
+                targetTransY=-transY;
+                targetScale=0.8;
+                (labelObj as Label).IsVisible=false;
 
             }
-        }
-    }
-
-    public double Modulate(double value, double[] source, double[] target)
-    {
-        if (source.Length != 2 || target.Length != 2)
-        {
-            throw new ArgumentOutOfRangeException();
-        }
-
-        var start = source[0];
-        var end = source[1];
-        var targetStart = target[0];
-        var targetEnd = target[1];
-        if (value < start || value > end)
-        {
-            return value;
-        }
-        var k = (value - start) / (end - start);
-        var result = k * (targetEnd - targetStart) + targetStart;
-        return result;
-    }
-
-    public double GetMappingY(double x)
-    {
-        foreach (var item in BezeirPoints)
-        {
-            if (x < item.X)
+            else if (pos > currentPos)
             {
-                return item.Y;
+                zIndex=this.BoxLayout.Children.Count-pos;
+                xBitmap = (double)(((pos - currentPos) * step)  + currentSlidePadding);
+                targetRotateY=-rotateY;
+                targetSkewY=-skewY;
+                targetTransY=transY;
+                targetScale=0.8;
+                (labelObj as Label).IsVisible=false;
+
             }
+            else
+            {
+                xBitmap =  0;
+                zIndex=this.BoxLayout.Children.Count;
+                targetRotateY=0;
+                targetSkewY=0;
+                targetTransY=0;
+                targetScale=1;
+                (labelObj as Label).IsVisible=true;
+
+            }
+
+
+            sb.AppendLine(pos.ToString() + ": " + xBitmap);
+
+            (bitmapLayout as VisualElement).ZIndex = zIndex;
+
+
+            //Use animation
+            //(bitmapObj as RotationImage).RotateY=targetRotateY;
+            //(bitmapObj as RotationImage).SkewY=targetSkewY;
+            //(bitmapObj as RotationImage).TransY=targetTransY;
+
+            Animation albumAnimation = new Animation();
+
+
+            var originTranslationX = (bitmapLayout as VisualElement).TranslationX;
+            var originScale = (bitmapLayout as VisualElement).Scale;
+            var animation1 = new Animation(v => (bitmapLayout as VisualElement).TranslationX = v, originTranslationX, xBitmap, Easing.CubicInOut);
+            var animation2 = new Animation(v => (bitmapLayout as VisualElement).Scale = v, originScale, targetScale, Easing.CubicInOut);
+
+
+            if (targetSkewY!=(bitmapObj as RotationImage).SkewY)
+            {
+                var animation4 = new Animation(v => (bitmapObj as RotationImage).SkewY = v, (bitmapObj as RotationImage).SkewY, targetSkewY, Easing.CubicInOut);
+                albumAnimation.Add(0, 1, animation4);
+
+            }
+
+            if (targetRotateY!=(bitmapObj as RotationImage).RotateY)
+            {
+                var animation3 = new Animation(v => (bitmapObj as RotationImage).RotateY = v, (bitmapObj as RotationImage).RotateY, targetRotateY, Easing.CubicInOut);
+                albumAnimation.Add(0, 1, animation3);
+
+            }
+
+            if (targetTransY!=(bitmapObj as RotationImage).TransY)
+            {
+                var animation5 = new Animation(v => (bitmapObj as RotationImage).TransY = v, (bitmapObj as RotationImage).TransY, targetTransY, Easing.CubicInOut);
+                albumAnimation.Add(0, 1, animation5);
+
+            }
+            albumAnimation.Add(0, 1, animation1);
+            albumAnimation.Add(0, 1, animation2);
+
+            albumAnimation.Commit((bitmapLayout as VisualElement), "AlbumArtImageAnimation", 16, duration);
+
+
+
         }
-        return default;
+        //Debug.WriteLine(sb.ToString());
     }
 
-    public List<Point> BezeirPoints { get; set; }
-    public Point[][] BezierSegments { get; set; }
 
 
-    private void ScrollView_Scrolled(object sender, ScrolledEventArgs e)
+    private void OnSliderValueChanged(object sender, ValueChangedEventArgs e)
     {
-        RenderTransform(e.ScrollX);
+        var currentPos = (int)Math.Floor(e.NewValue*  (this.BoxLayout.Children.Count-1));
+        if (this.currentPos!=currentPos)
+        {
+            this.currentPos = currentPos;
+            RenderTransform(this.currentPos);
 
+        }
+    }
+
+
+    private void OnSwiped(object sender, SwipedEventArgs e)
+    {
+        this.currentPos=e.Direction==SwipeDirection.Right
+            ? Math.Max(0, this.currentPos-1)
+            : Math.Min(this.BoxLayout.Children.Count-1, this.currentPos+1);
+
+        RenderTransform(this.currentPos);
+        ProgressSlider.Value= this.currentPos/(this.BoxLayout.Children.Count-1);
 
     }
 }

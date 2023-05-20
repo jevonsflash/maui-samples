@@ -31,49 +31,6 @@ public partial class BezierModulatedLayoutPage : ContentPage
 
 
 
-    private void RenderTransform()
-    {
-        var info = this.BoxLayout;
-        double xCenter = info.Width / 2;
-        double yCenter = info.Height / 2;
-
-
-        var step = xCenter*0.15;
-        var currentSlide = (int)this.BoxLayout.Children.Count/2;
-        var sb = new StringBuilder();
-        //var currentSlidePadding = layoutWidth * 0.7;
-        var currentSlidePadding = 0;
-
-
-        foreach (var bitmap in this.BoxLayout.Children)
-        {
-
-            var pos = this.BoxLayout.Children.IndexOf(bitmap);
-
-            double xBitmap;
-            if (pos < currentSlide)
-            {
-                xBitmap = (double)(xCenter - (currentSlide * step) + (pos * step) - (bitmap.Width / 2) - currentSlidePadding);
-
-            }
-            else if (pos > currentSlide)
-            {
-                xBitmap = (double)(xCenter + ((pos - currentSlide) * step) - (bitmap.Width / 2) + currentSlidePadding);
-            }
-            else
-            {
-                xBitmap = xCenter - (info.Width / 2);
-            }
-
-            double yBitmap = yCenter - info.Height / 2;
-
-            (bitmap as VisualElement).TranslateTo(xBitmap, yBitmap, 400);
-
-
-        }
-
-    }
-
 
     public double Modulate(double value, double[] source, double[] target)
     {
@@ -97,26 +54,9 @@ public partial class BezierModulatedLayoutPage : ContentPage
 
 
 
-    private void RadioButton_CheckedChanged(object sender, ToggledEventArgs e)
-    {
-        if (e.Value)
-        {
-            RenderTransform();
-
-        }
-        else
-        {
-
-        }
-    }
-
     private void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs e)
     {
 
     }
 
-    private void OnSliderValueChanged(object sender, ValueChangedEventArgs e)
-    {
-        this.MainRotationImage.RotateY=e.NewValue;
-    }
 }
