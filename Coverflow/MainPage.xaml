@@ -40,7 +40,7 @@
                 <Grid Grid.Row="1"
                       x:Name="BoxLayout"
                       Background="black"
-                      BindableLayout.ItemsSource="{Binding AppTombStones}">
+                      BindableLayout.ItemsSource="{Binding AlbumInfos}">
 
 
                     <BindableLayout.ItemTemplate>
@@ -55,11 +55,11 @@
                                                         HeightRequest="500"
                                                         ImageWidth="200"
                                                         ImageHeight="200"
-                                                        Source="{Binding AppScreen}"></controls:RotationImage>
+                                                        Source="{Binding AlbumArtSource}"></controls:RotationImage>
 
 
                                 <Label Margin="0,30,0,0"
-                                       Text="{Binding AppName}"
+                                       Text="{Binding AlbumName}"
                                        HorizontalTextAlignment="Center"
                                        VerticalOptions="Center"></Label>
 
@@ -79,7 +79,7 @@
                         Grid.Row="2"
                         Margin="0,0,0,20"
                         ValueChanged="OnSliderValueChanged" />
-                <Button Text="BezierModulatedLayoutPage"
+                <Button Text="RotationImageTestPage"
                         x:Name="ToggleAnimation"
                         Clicked="ToggleAnimation_Clicked"></Button>
 

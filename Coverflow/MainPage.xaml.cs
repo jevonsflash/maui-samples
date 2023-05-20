@@ -26,22 +26,25 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         this.Loaded+=MainPage_Loaded;
         this.BindingContext=new MainPageViewModel();
+        this.SizeChanged+=MainPage_SizeChanged;
         NavigationPage.SetHasNavigationBar(this, false);
 
     }
 
-    private void MainPage_Loaded(object sender, EventArgs e)
+    private void MainPage_SizeChanged(object sender, EventArgs e)
     {
         RenderTransform(currentPos);
     }
 
-
+    private void MainPage_Loaded(object sender, EventArgs e)
+    {
+    }
 
 
 
     private async void ToggleAnimation_Clicked(object sender, EventArgs e)
     {
-        await App.Current.MainPage.Navigation.PushAsync(new BezierModulatedLayoutPage());
+        await App.Current.MainPage.Navigation.PushAsync(new RotationImageTestPage());
 
     }
 
@@ -178,7 +181,7 @@ public partial class MainPage : ContentPage
             : Math.Min(this.BoxLayout.Children.Count-1, this.currentPos+1);
 
         RenderTransform(this.currentPos);
-        ProgressSlider.Value= this.currentPos/(this.BoxLayout.Children.Count-1);
+        ProgressSlider.Value= currentPos/(double)(this.BoxLayout.Children.Count-1);
 
     }
 }
