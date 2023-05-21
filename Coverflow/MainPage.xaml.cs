@@ -50,18 +50,15 @@ public partial class MainPage : ContentPage
 
     private void RenderTransform(int currentPos)
     {
-
-
-        var info = this.BoxLayout;
-        double xCenter = info.Width / 2;
-        info.TranslateTo(0, 100, 0);
+        var sb = new StringBuilder();
+        var xCenter = this.BoxLayout.Width / 2;
+        this.BoxLayout.TranslateTo(0, 100, 0);
         uint duration = 400;
         var step = xCenter*0.12;
-        var sb = new StringBuilder();
         var currentSlidePadding = this.BoxLayout.Width * 0.15;
         var rotateY = 65;
         var skewY = 25;
-        var transY = 150;
+        var transY = 125;
         foreach (var bitmapLayout in this.BoxLayout.Children)
         {
             (bitmapLayout as VisualElement).AbortAnimation("AlbumArtImageAnimation");
