@@ -179,7 +179,7 @@ BindableProperty.Create("SpringBack", typeof(bool), typeof(PanContainer), true);
                     scaleAnimation.Add(0, 1, scaleUpAnimation0);
 
                     scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)PanScaleAnimationLength);
-                    WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Start, this.CurrentView), TokenHelper.PanAction);
+                    WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(this, PanType.Start, this.CurrentView), TokenHelper.PanAction);
 
                     break;
                 case GestureStatus.Running:
@@ -243,13 +243,13 @@ BindableProperty.Create("SpringBack", typeof(bool), typeof(PanContainer), true);
 
                         if (isSwitch)
                         {
-                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Out, lastView), TokenHelper.PanAction);
-                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.In, this.CurrentView), TokenHelper.PanAction);
+                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(this, PanType.Out, lastView), TokenHelper.PanAction);
+                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(this, PanType.In, this.CurrentView), TokenHelper.PanAction);
                             isSwitch = false;
                         }
                         if (!isInPitPre)
                         {
-                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.In, this.CurrentView), TokenHelper.PanAction);
+                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(this, PanType.In, this.CurrentView), TokenHelper.PanAction);
                             isInPitPre = true;
 
 
@@ -261,7 +261,7 @@ BindableProperty.Create("SpringBack", typeof(bool), typeof(PanContainer), true);
 
                         if (isInPitPre)
                         {
-                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Out, this.CurrentView), TokenHelper.PanAction);
+                            WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(this, PanType.Out, this.CurrentView), TokenHelper.PanAction);
                             isInPitPre = false;
                         }
                         this.CurrentView = null;
@@ -274,7 +274,7 @@ BindableProperty.Create("SpringBack", typeof(bool), typeof(PanContainer), true);
                             if (!IsRuningTranslateToTask)
                             {
                                 IsRuningTranslateToTask = true;
-                                await Content.TranslateTo(translationX, translationY, 200, Easing.CubicOut).ContinueWith(c => IsRuningTranslateToTask = false); ;
+                                await Content.TranslateTo(translationX, translationY, (uint)PanScaleAnimationLength, Easing.CubicOut).ContinueWith(c => IsRuningTranslateToTask = false); ;
                             }
 
                             isAdsorbInPit = false;
@@ -346,7 +346,7 @@ BindableProperty.Create("SpringBack", typeof(bool), typeof(PanContainer), true);
                         // WeakReferenceMessenger.Default.Send("true");
 
                     }
-                    WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(PanType.Over, this.CurrentView), TokenHelper.PanAction);
+                    WeakReferenceMessenger.Default.Send<PanActionArgs, string>(new PanActionArgs(this, PanType.Over, this.CurrentView), TokenHelper.PanAction);
 
                     break;
             }
@@ -371,11 +371,13 @@ BindableProperty.Create("SpringBack", typeof(bool), typeof(PanContainer), true);
 
     public class PanActionArgs
     {
-        public PanActionArgs(PanType type, PitGrid pit = null)
+        public PanActionArgs(object sender, PanType type, PitGrid pit = null)
         {
+            Sender = sender;
             PanType = type;
             CurrentPit = pit;
         }
+        public object Sender { get; set; }
         public PanType PanType { get; set; }
         public PitGrid CurrentPit { get; set; }
 

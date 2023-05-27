@@ -167,14 +167,34 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
     }
 
 
+    public static readonly BindableProperty AnimationLengthProperty =
+BindableProperty.Create("AnimationLength", typeof(double), typeof(StickyPan), default(double), propertyChanged: (bindable, oldValue, newValue) =>
+{
+    var obj = (StickyPan)bindable;
+
+
+});
+
+    public double AnimationLength
+    {
+        get { return (double)GetValue(AnimationLengthProperty); }
+        set
+        {
+            SetValue(AnimationLengthProperty, value);
+            OnPropertyChanged();
+
+        }
+    }
+
+
+
     private void ContentView_SizeChanged(object sender, EventArgs e)
     {
         ReRender();
     }
 
-    private void Animate( Action<double, bool> finished = null)
+    private void Animate(Action<double, bool> finished = null)
     {
-        var PanScaleAnimationLength = 1000;
         Content.AbortAnimation("ReshapeAnimations");
         var scaleAnimation = new Animation();
 
@@ -235,7 +255,7 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
         var scaleUpAnimation0 = new Animation(animateAction, 0, 1, mySpringOut);
 
         scaleAnimation.Add(0, 1, scaleUpAnimation0);
-        scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)PanScaleAnimationLength, finished: finished);
+        scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)this.AnimationLength, finished: finished);
 
     }
 
