@@ -1,4 +1,5 @@
 using Microsoft.Maui;
+using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -250,9 +251,13 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(StickyPan), de
 
             this.arc4.Point3 = p0;
         };
-        var mySpringOut = (double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
+        //var mySpringOut = (double x) => 1-1*(Math.Cos(30*x)/Math.Pow(Math.E, 5*x));
+        //var mySpringOut = (double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
 
-        var scaleUpAnimation0 = new Animation(animateAction, 0, 1, mySpringOut);
+        //Use a repeat bounce action
+        //var scaleUpAnimation0 = new Animation(animateAction, 0, 1, mySpringOut);
+
+        var scaleUpAnimation0 = new Animation(animateAction, 0, 1);
 
         scaleAnimation.Add(0, 1, scaleUpAnimation0);
         scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)this.AnimationLength, finished: finished);

@@ -10,7 +10,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
-                <RowDefinition Height="250" />
+                <RowDefinition Height="200" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <!--标题区域-->
@@ -94,7 +94,6 @@
                 </Grid>
                 <controls1:PanContainer BackgroundColor="Transparent" ZIndex="0"
                                         x:Name="DefaultPanContainer"
-                                        OnTapped="DefaultPanContainer_OnOnTapped"
                                         AutoAdsorption="False"
                                         PanScale="1.0"
                                         SpringBack="True"

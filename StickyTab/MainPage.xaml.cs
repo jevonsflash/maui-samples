@@ -15,12 +15,10 @@ public partial class MainPage : ContentPage
     private PitGrid _currentDefaultPit;
     private PitGrid _currentNewsPit;
     private Label tipLabel;
-
-    public PitGrid CurrentPitView { get; set; }
-
     public MainPage()
     {
         InitializeComponent();
+        NavigationPage.SetHasNavigationBar(this, false);
         this.NewTabLabel.Text = FaIcons.IconPlus;
         this.RefreshLabel.Text = FaIcons.IconRefresh;
         this.CloseTabLabel.Text = FaIcons.IconTimes;
@@ -42,22 +40,7 @@ public partial class MainPage : ContentPage
         {
             switch (args.PanType)
             {
-
                 case PanType.Out:
-                    switch (args.CurrentPit?.PitName)
-                    {
-                        case "CancelPit":
-                            break;
-
-                        case "SendPit":
-                            break;
-
-                        case "TransliterationPit":
-                            break;
-
-                        default:
-                            break;
-                    }
                     tipLabel = args.CurrentPit?.Children.LastOrDefault() as Label;
                     if (tipLabel!=null)
                     {
@@ -65,21 +48,6 @@ public partial class MainPage : ContentPage
                     }
                     break;
                 case PanType.In:
-                    switch (args.CurrentPit?.PitName)
-                    {
-                        case "CancelPit":
-                            break;
-
-                        case "SendPit":
-                            break;
-
-                        case "TransliterationPit":
-
-                            break;
-
-                        default:
-                            break;
-                    }
                     tipLabel = args.CurrentPit?.Children.LastOrDefault() as Label;
                     if (tipLabel!=null)
                     {
@@ -87,20 +55,6 @@ public partial class MainPage : ContentPage
                     }
                     break;
                 case PanType.Over:
-                    switch (args.CurrentPit?.PitName)
-                    {
-                        case "CancelPit":
-                            break;
-
-                        case "SendPit":
-                            break;
-
-                        case "TransliterationPit":
-                            break;
-
-                        default:
-                            break;
-                    }
                     tipLabel.FadeTo(0);
                     ShowLayout(0);
                     break;
@@ -159,14 +113,6 @@ public partial class MainPage : ContentPage
         this.DefaultPanContainer.FadeTo(opacity, (uint)length);
     }
 
-
-
-
-
-    private void DefaultPanContainer_OnOnTapped(object sender, EventArgs e)
-    {
-
-    }
 
 
     private void BindableObject_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
