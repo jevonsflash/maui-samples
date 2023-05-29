@@ -3,14 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StickyTab.Controls.HoldDownButton">
     <VerticalStackLayout>
-        <BoxView 
+        <Button Text="test"
+                BackgroundColor="Red"
            HeightRequest="100"
            WidthRequest="100"
             VerticalOptions="Center" 
             HorizontalOptions="Center" >
-            <BoxView.GestureRecognizers>
-                <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"></PanGestureRecognizer>
-            </BoxView.GestureRecognizers>
-        </BoxView>
+
+        </Button>
     </VerticalStackLayout>
 </ContentView>

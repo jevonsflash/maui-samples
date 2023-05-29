@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultitaskingCardList", "Mul
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaveProgressBar", "WaveProgressBar\WaveProgressBar.csproj", "{E88989A3-5AAC-4A6F-A589-23F0008D167A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coverflow", "Coverflow\Coverflow.csproj", "{542BB319-A7C7-432A-980C-8DF131DD70BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,12 @@ Global
 		{E88989A3-5AAC-4A6F-A589-23F0008D167A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E88989A3-5AAC-4A6F-A589-23F0008D167A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E88989A3-5AAC-4A6F-A589-23F0008D167A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{542BB319-A7C7-432A-980C-8DF131DD70BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{542BB319-A7C7-432A-980C-8DF131DD70BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{542BB319-A7C7-432A-980C-8DF131DD70BB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{542BB319-A7C7-432A-980C-8DF131DD70BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{542BB319-A7C7-432A-980C-8DF131DD70BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{542BB319-A7C7-432A-980C-8DF131DD70BB}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,11 +6,11 @@
              Loaded="ContentPage_Loaded"
              SizeChanged="ContentPage_SizeChanged"
              x:Class="MultitaskingCardList.MainPage">
+   
     <ContentPage.Resources>
         <Style TargetType="Grid"
                x:Key="BoxFrameStyle">
-            <Setter Property="HeightRequest"
-                    Value="500"></Setter>
+
             <Setter Property="WidthRequest"
                     Value="300"></Setter>
             <Setter Property="Margin"
@@ -28,10 +28,18 @@
             <!--标题区域-->
 
             <Grid x:Name="MainLayout">
-                <ScrollView Margin="20"
+                <Image  HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Fill"
+                    Aspect="AspectFill"
+                    Source="pb.png"></Image>
+
+                <ScrollView x:Name="MainScroller"
+                            Background="Transparent"
                             Orientation="Horizontal"
                             Scrolled="ScrollView_Scrolled">
+                    <!--App后台任务卡片容器-->
                     <StackLayout Orientation="Horizontal"
+                                 Background="Transparent"
                                  BindingContextChanged="BoxLayout_BindingContextChanged"
                                  x:Name="BoxLayout"
                                  BindableLayout.ItemsSource="{Binding AppTombStones}">
@@ -39,15 +47,15 @@
 
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Grid Style="{StaticResource BoxFrameStyle}">
+                                <Grid Style="{StaticResource BoxFrameStyle}" Background="Transparent" >
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"></RowDefinition>
+                                        <RowDefinition Height="auto"></RowDefinition>
                                         <RowDefinition></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <Label Margin="25,0,0,0" Text="{Binding AppName}"></Label>
-                                    <Image Aspect="AspectFill"
+                                    <Label Margin="25,0,0,0" TranslationY="30"  Text="{Binding AppName}" VerticalOptions="End"></Label>
+                                    <Image  Aspect="AspectFill"
                                            Grid.Row="1"
-                                           HeightRequest="500"
+                                           HeightRequest="550"
                                            WidthRequest="250"
                                            Source="{Binding AppScreen}">
                                         <Image.Clip>
@@ -72,7 +80,7 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                <Button Text="Toggle"
+                <Button Text="BezierModulatedLayoutPage"
                         x:Name="ToggleAnimation"
                         Clicked="ToggleAnimation_Clicked"></Button>
 

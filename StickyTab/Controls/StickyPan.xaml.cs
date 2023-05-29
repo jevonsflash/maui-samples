@@ -1,4 +1,5 @@
 using Microsoft.Maui;
+using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -167,14 +168,34 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
     }
 
 
+    public static readonly BindableProperty AnimationLengthProperty =
+BindableProperty.Create("AnimationLength", typeof(double), typeof(StickyPan), default(double), propertyChanged: (bindable, oldValue, newValue) =>
+{
+    var obj = (StickyPan)bindable;
+
+
+});
+
+    public double AnimationLength
+    {
+        get { return (double)GetValue(AnimationLengthProperty); }
+        set
+        {
+            SetValue(AnimationLengthProperty, value);
+            OnPropertyChanged();
+
+        }
+    }
+
+
+
     private void ContentView_SizeChanged(object sender, EventArgs e)
     {
         ReRender();
     }
 
-    private void Animate( Action<double, bool> finished = null)
+    private void Animate(Action<double, bool> finished = null)
     {
-        var PanScaleAnimationLength = 1000;
         Content.AbortAnimation("ReshapeAnimations");
         var scaleAnimation = new Animation();
 
@@ -230,12 +251,16 @@ BindableProperty.Create("PanStrokeBrush", typeof(Brush), typeof(StickyPan), Soli
 
             this.arc4.Point3 = p0;
         };
-        var mySpringOut = (double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
+        //var mySpringOut = (double x) => 1-1*(Math.Cos(30*x)/Math.Pow(Math.E, 5*x));
+        //var mySpringOut = (double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
 
-        var scaleUpAnimation0 = new Animation(animateAction, 0, 1, mySpringOut);
+        //Use a repeat bounce action
+        //var scaleUpAnimation0 = new Animation(animateAction, 0, 1, mySpringOut);
+
+        var scaleUpAnimation0 = new Animation(animateAction, 0, 1);
 
         scaleAnimation.Add(0, 1, scaleUpAnimation0);
-        scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)PanScaleAnimationLength, finished: finished);
+        scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)this.AnimationLength, finished: finished);
 
     }
 

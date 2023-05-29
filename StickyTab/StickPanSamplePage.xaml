@@ -6,60 +6,59 @@
              BackgroundColor="Black"
              Title="StickPanSamplePage">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Text="Welcome to .NET MAUI!"
+               VerticalOptions="Center"
+               HorizontalOptions="Center" />
 
         <StackLayout>
-            <controls:StickyPan 
-                     x:Name="MainStickyPan"
-                     PanHeight="100"                                    
-                     PanWidth="100" 
-                     HeightRequest="200"
-                     WidthRequest="200"></controls:StickyPan>
-            <Slider Maximum="200"                         
-                        Margin="12"
-                        x:Name="OffsetXPositive"
-                        ValueChanged="OnSliderValueChanged" />
+            <controls:StickyPan x:Name="MainStickyPan"
+                                PanHeight="100"
+                                PanWidth="100"
+                                AnimationLength="400"
+                                HeightRequest="200"
+                                WidthRequest="200"></controls:StickyPan>
+            <Slider Maximum="200"
+                    Margin="12"
+                    x:Name="OffsetXPositive"
+                    ValueChanged="OnSliderValueChanged" />
             <Label x:Name="OffsetXPositiveLabel"
-                       Margin="12"
-                       Text="(uninitialized)"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
+                   Margin="12"
+                   Text="(uninitialized)"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
 
             <Slider Maximum="200"
-                        Margin="12"
-                        x:Name="OffsetXNegative"
-                        ValueChanged="OnSliderValueChanged2" />
+                    Margin="12"
+                    x:Name="OffsetXNegative"
+                    ValueChanged="OnSliderValueChanged2" />
 
             <Label x:Name="OffsetXNegativeLabel"
-                       Margin="12"
-                       Text="(uninitialized)"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
+                   Margin="12"
+                   Text="(uninitialized)"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
 
 
             <Slider Maximum="200"
-                        Margin="12"
-                        x:Name="OffsetYPositive"
-                        ValueChanged="OnSliderValueChanged3" />
+                    Margin="12"
+                    x:Name="OffsetYPositive"
+                    ValueChanged="OnSliderValueChanged3" />
             <Label x:Name="OffsetYPositiveLabel"
-                       Margin="12"
-                       Text="(uninitialized)"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
+                   Margin="12"
+                   Text="(uninitialized)"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
 
             <Slider Maximum="200"
-                        Margin="12"
-                        x:Name="OffsetYNegative"
-                        ValueChanged="OnSliderValueChanged4" />
+                    Margin="12"
+                    x:Name="OffsetYNegative"
+                    ValueChanged="OnSliderValueChanged4" />
 
             <Label x:Name="OffsetYNegativeLabel"
-                       Margin="12"
-                       Text="(uninitialized)"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
+                   Margin="12"
+                   Text="(uninitialized)"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
         </StackLayout>
 
     </VerticalStackLayout>

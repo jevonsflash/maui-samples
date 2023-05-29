@@ -10,6 +10,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
+                <RowDefinition Height="200" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <!--标题区域-->
@@ -20,9 +21,10 @@
             </Grid>
 
             <!--播放控制区域-->
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1"
+                  BackgroundColor="#F1F1F1">
                 <Grid x:Name="PitContentLayout"
-                      Opacity="1">
+                      ZIndex="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
@@ -32,72 +34,89 @@
                     <controls1:PitGrid x:Name="NewTabPit"
                                        PitName="NewTabPit"
                                        WidthRequest="100"
-                                      
-                                       HeightRequest="100"
-                                       Background="yellow"
+                                       HeightRequest="200"
                                        Grid.Column="0">
 
                         <Label   x:Name="NewTabLabel"
-                                 TextColor="{StaticResource PhoneContrastForegroundBrush}"
+                                 TextColor="Black"
                                  FontFamily="FontAwesome"
-                                 FontSize="28"                            
+                                 FontSize="28"
                                  HorizontalOptions="CenterAndExpand"
                                  Margin="0"></Label>
-                        
+                        <Label  Margin="0,100,0,0"
+                                Opacity="0"
+                                 Text="新建标签页"
+                                 TextColor="#6E6E6E"
+                                 FontSize="18"
+                                 HorizontalOptions="CenterAndExpand"
+                                ></Label>
+
+
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="RefreshPit"
                                        PitName="RefreshPit"
-                                      
                                        WidthRequest="100"
-                                       HeightRequest="100"
-                                       Background="red"
+                                       HeightRequest="200"
                                        Grid.Column="1">
 
                         <Label   x:Name="RefreshLabel"
-                                 TextColor="{StaticResource PhoneContrastForegroundBrush}"
+                                 TextColor="Black"
                                  FontFamily="FontAwesome"
-                                 FontSize="28"                            
+                                 FontSize="28"
                                  HorizontalOptions="CenterAndExpand"
                                  Margin="0"></Label>
-
+                        <Label  Margin="0,100,0,0"
+                                Opacity="0"
+                                Text="刷新"
+                                TextColor="#6E6E6E"
+                                FontSize="18"
+                                HorizontalOptions="CenterAndExpand"></Label>
                     </controls1:PitGrid>
                     <controls1:PitGrid x:Name="CloseTabPit"
                                        PitName="CloseTabPit"
-                                      
                                        WidthRequest="100"
-                                       HeightRequest="100"
-                                       Background="green"
+                                       HeightRequest="200"
                                        Grid.Column="2">
 
                         <Label   x:Name="CloseTabLabel"
-                                 TextColor="{StaticResource PhoneContrastForegroundBrush}"
+                                 TextColor="Black"
                                  FontFamily="FontAwesome"
-                                 FontSize="28"                            
+                                 FontSize="28"
                                  HorizontalOptions="CenterAndExpand"
                                  Margin="0"></Label>
-
+                        <Label  Margin="0,100,0,0"
+                                Opacity="0"
+                                Text="关闭标签页"
+                                TextColor="#6E6E6E"
+                                FontSize="18"
+                                HorizontalOptions="CenterAndExpand"></Label>
                     </controls1:PitGrid>
                 </Grid>
-                <controls1:PanContainer BackgroundColor="Transparent"
+                <controls1:PanContainer BackgroundColor="Transparent" ZIndex="0"
                                         x:Name="DefaultPanContainer"
-                                        OnTapped="DefaultPanContainer_OnOnTapped"
                                         AutoAdsorption="False"
                                         PanScale="1.0"
-                                        SpringBack="False"
-                                        PanScaleAnimationLength="1000"
-                                        Orientation="Both"
-                                        OnfinishedChoise="DefaultPanContainer_OnOnfinishedChoise">
+                                        SpringBack="True"
+                                        PanScaleAnimationLength="100"
+                                        Orientation="Horizontal">
 
                     <Grid PropertyChanged="BindableObject_OnPropertyChanged"
                           VerticalOptions="Start"
                           HorizontalOptions="Start">
 
-                        <controls:StickyPan 
-                         x:Name="MainStickyPan"
-                         PanHeight="100"                                    
-                         PanWidth="100" 
-                         HeightRequest="200"
-                         WidthRequest="200"></controls:StickyPan>
+                        <controls:StickyPan x:Name="MainStickyPan"
+                                            Background="Transparent"
+                                            PanStrokeBrush="Transparent"
+                                            PanFillBrush="White"
+                                            AnimationLength="400"
+                                            PanHeight="80"
+                                            PanWidth="80"
+                                            HeightRequest="120"
+                                            WidthRequest="120">
+                            
+                            
+                            
+                        </controls:StickyPan>
 
                     </Grid>
 
@@ -105,6 +124,117 @@
                 </controls1:PanContainer>
 
             </Grid>
+            <Grid Grid.Row="2"
+                  BackgroundColor="Black">
+                <Grid x:Name="NewsPitContentLayout">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <controls1:PitGrid PitName="News1Pit"
+                                       WidthRequest="100"
+                                       HeightRequest="100"
+                                       Grid.Row="0">
+
+                        <Label  Text="头条"
+                                 TextColor="White"
+                                 FontFamily="FontAwesome"
+                                 FontSize="28"
+                                 HorizontalOptions="CenterAndExpand"
+                                 Margin="0"></Label>
+
+                    </controls1:PitGrid>
+                    <controls1:PitGrid PitName="News2Pit"
+                                       WidthRequest="100"
+                                       HeightRequest="100"
+                                       Grid.Row="1">
+
+                        <Label   Text="体育"
+                                 TextColor="White"
+                                 FontFamily="FontAwesome"
+                                 FontSize="28"
+                                 HorizontalOptions="CenterAndExpand"
+                                 Margin="0"></Label>
+
+                    </controls1:PitGrid>
+                    <controls1:PitGrid PitName="News3Pit"
+                                       WidthRequest="100"
+                                       HeightRequest="100"
+                                       Grid.Row="2">
+
+                        <Label   Text="财经"
+                                 TextColor="White"
+                                 FontFamily="FontAwesome"
+                                 FontSize="28"
+                                 HorizontalOptions="CenterAndExpand"
+                                 Margin="0"></Label>
+
+                    </controls1:PitGrid>
+                    <controls1:PitGrid PitName="News4Pit"
+                                       WidthRequest="100"
+                                       HeightRequest="100"
+                                       Grid.Row="3">
+
+                        <Label   Text="科技"
+                                 TextColor="White"
+                                 FontFamily="FontAwesome"
+                                 FontSize="28"
+                                 HorizontalOptions="CenterAndExpand"
+                                 Margin="0"></Label>
+
+                    </controls1:PitGrid>
+                </Grid>
+                <controls1:PanContainer BackgroundColor="Transparent"
+                                        ZIndex="0"
+                                        x:Name="NewsPanContainer"
+                                        AutoAdsorption="True"
+                                        PanScale="1.1"
+                                        SpringBack="False"
+                                        PanScaleAnimationLength="400"
+                                        Orientation="Vertical">
+
+                    <Grid PropertyChanged="BindableObject_OnPropertyChanged2"
+                          VerticalOptions="Start"
+                          HorizontalOptions="Start">
+
+                        <controls:StickyPan x:Name="NewsStickyPan"
+                                            Background="Transparent"
+                                            PanStrokeBrush="Transparent"
+                                            
+                                            AnimationLength="400"
+                                            PanHeight="100"
+                                            PanWidth="100"
+                                            HeightRequest="180"
+                                            WidthRequest="180">
+                            <controls:StickyPan.PanFillBrush>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="Yellow"
+                                                  Offset="0.1" />
+                                    <GradientStop Color="Green"
+                                                  Offset="1.0" />
+                                </LinearGradientBrush>
+                            </controls:StickyPan.PanFillBrush>
+                            
+                        </controls:StickyPan>
+                        <Label   x:Name="NewsTipLabel"
+                                 TextColor="White"
+                                 FontFamily="FontAwesome"
+                                 FontSize="28"
+                                 HorizontalOptions="CenterAndExpand"
+                                 Margin="0"></Label>
+
+
+                    </Grid>
+
+
+                </controls1:PanContainer>
+
+            </Grid>
+
+
         </Grid>
     </ContentPage.Content>
 

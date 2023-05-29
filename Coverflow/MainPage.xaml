@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             xmlns:controls="clr-namespace:Coverflow;assembly=Coverflow"
+             x:Class="Coverflow.MainPage">
+
+    <ContentPage.Resources>
+        <Style TargetType="Grid"
+               x:Key="BoxFrameStyle">
+            <Setter Property="HeightRequest"
+                    Value="100"></Setter>
+            <Setter Property="WidthRequest"
+                    Value="100"></Setter>
+            <Setter Property="HorizontalOptions"
+                    Value="Center"></Setter>
+            <Setter Property="VerticalOptions"
+                    Value="Center"></Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <!--标题区域-->
+
+            <Grid x:Name="MainLayout">
+
+                <Grid.GestureRecognizers>
+                    <SwipeGestureRecognizer Direction="Left"
+                                            Swiped="OnSwiped" />
+                    <SwipeGestureRecognizer Direction="Right"
+                                            Swiped="OnSwiped" />
+
+                </Grid.GestureRecognizers>
+
+                <Grid Grid.Row="1"
+                      x:Name="BoxLayout"
+                      Background="black"
+                      BindableLayout.ItemsSource="{Binding AlbumInfos}">
+
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Style="{StaticResource BoxFrameStyle}"
+                                  Background="Transparent">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <controls:RotationImage WidthRequest="200"
+                                                        HeightRequest="500"
+                                                        ImageWidth="200"
+                                                        ImageHeight="200"
+                                                        Source="{Binding AlbumArtSource}"></controls:RotationImage>
+
+
+                                <Label Margin="0,30,0,0"
+                                       Text="{Binding AlbumName}"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalOptions="Center"></Label>
+
+
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+
+                </Grid>
+
+            </Grid>
+
+            <VerticalStackLayout Grid.Row="1">
+                <Slider x:Name="ProgressSlider"
+                        ThumbColor="White"
+                        MinimumTrackColor="White"
+                        Grid.Row="2"
+                        Margin="0,0,0,20"
+                        ValueChanged="OnSliderValueChanged" />
+                <Button Text="RotationImageTestPage"
+                        x:Name="ToggleAnimation"
+                        Clicked="ToggleAnimation_Clicked"></Button>
+
+            </VerticalStackLayout>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

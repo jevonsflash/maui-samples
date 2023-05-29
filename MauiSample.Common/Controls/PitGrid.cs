@@ -33,5 +33,10 @@ namespace MauiSample.Common.Controls
 
         public string PitName { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            return this.PitName==(obj as PitGrid).PitName;
+        }
+
     }
 }

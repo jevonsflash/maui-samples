@@ -21,10 +21,16 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+        this.Loaded+=MainPage_Loaded;
         this.BindingContext=new MainPageViewModel();
+        NavigationPage.SetHasNavigationBar(this, false);
 
     }
 
+    private void MainPage_Loaded(object sender, EventArgs e)
+    {
+         
+    }
 
     private void DefaultPanContainer_OnOnfinishedChoise(object sender, PitGrid e)
     {
@@ -32,10 +38,16 @@ public partial class MainPage : ContentPage
     }
 
 
-    private void ContentPage_SizeChanged(object sender, EventArgs e)
+    private async void ContentPage_SizeChanged(object sender, EventArgs e)
     {
+        var layoutWidth = this.MainLayout.DesiredSize.Width;
 
-        RenderTransform(0);
+        var scrollY = this.MainScroller.ScrollY;
+        var posX = this.MainScroller.ContentSize.Width-layoutWidth;
+        await this.MainScroller.ScrollToAsync(posX, scrollY, false).ContinueWith((t) =>
+        {
+            RenderTransform(this.MainScroller.ScrollX);
+        });
 
     }
 
@@ -59,15 +71,12 @@ public partial class MainPage : ContentPage
             {
 
                 var relativeOffsetX = (item as VisualElement).X-scrollX;
-
-
                 var progress = this.Modulate(relativeOffsetX, new double[] { 0, layoutWidth }, new double[] { 0, 1 });
                 (item as VisualElement).ScaleTo(Modulate(progress, new double[] { 0, 1 }, new double[] { 0.72, 0.84 }), 0);
                 //(item as VisualElement).FadeTo(Modulate(progress, new double[] { 0.2, 0.54 }, new double[] { 0, 1 }), 0);
                 var modulatedX = Modulate(1 - GetMappingY(progress), new double[] { 0, 1 }, new double[] { 0, layoutWidth });
                 var offsetX = modulatedX - relativeOffsetX;
                 (item as VisualElement).TranslateTo(offsetX, 0, 0);
-
                 Debug.WriteLine(item.TranslationX);
 
 
@@ -75,6 +84,8 @@ public partial class MainPage : ContentPage
 
             }
         }
+
+
     }
 
 
@@ -160,6 +171,8 @@ public partial class MainPage : ContentPage
     private void ScrollView_Scrolled(object sender, ScrolledEventArgs e)
     {
         RenderTransform(e.ScrollX);
+
+
     }
 
     private void BoxLayout_BindingContextChanged(object sender, EventArgs e)
@@ -168,7 +181,7 @@ public partial class MainPage : ContentPage
         {
             WidthRequest=300,
             HeightRequest=500,
-            BackgroundColor=Colors.Red
+            BackgroundColor=Colors.Transparent
         });
     }
 }

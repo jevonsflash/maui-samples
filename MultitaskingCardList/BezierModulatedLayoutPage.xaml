@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MultitaskingCardList.BezierModulatedLayoutPage"
              Background="black"
+            
              Title="BezierModulatedLayoutPage">
     <ContentPage.Resources>
         <Style TargetType="Grid" x:Key="BoxFrameStyle" >
@@ -14,7 +15,7 @@
     </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
