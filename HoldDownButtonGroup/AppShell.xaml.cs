@@ -1,4 +1,4 @@
-﻿namespace StickyTab;
+﻿namespace HoldDownButtonGroup;
 
 public partial class AppShell : Shell
 {

@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
-             xmlns:controls="clr-namespace:StickyTab.Controls;assembly=HoldDownButtonGroup"
+             xmlns:controls="clr-namespace:HoldDownButtonGroup.Controls;assembly=HoldDownButtonGroup"
              BackgroundColor="{StaticResource PhoneBackgroundBrush}"
-             SizeChanged="ContentPage_SizeChanged"
-             x:Class="StickyTab.FlexibleBoxSamplePage">
+             Loaded="ContentView_Loaded"
+             SizeChanged="ContentView_SizeChanged"
+             x:Class="HoldDownButtonGroup.Bubbles">
 
-    <ContentPage.Content>
+    <ContentView.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
@@ -22,21 +23,10 @@
                 <Grid x:Name="PitContentLayout" BackgroundColor="Azure"
                       Opacity="1">
 
-
-                    <BoxView
-                        Opacity="0"
-                        x:Name="TestCircle"
-                        HeightRequest="80"
-                         WidthRequest="80"
-                         Color="Blue"
-                        BackgroundColor="Red"
-                         VerticalOptions="Start"
-                         HorizontalOptions="Start"
-                         CornerRadius="80,80,0,0"></BoxView>
-
-                    <controls:FlexibleBox></controls:FlexibleBox>
+                  
 
                 </Grid>
+                <controls:HoldDownButton></controls:HoldDownButton>
 
             </Grid>
             <Grid Grid.Row="1">
@@ -44,6 +34,6 @@
 
             </Grid>
         </Grid>
-    </ContentPage.Content>
+    </ContentView.Content>
 
-</ContentPage>
+</ContentView>

@@ -2,19 +2,19 @@ using Microsoft.Maui.Controls.Shapes;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace StickyTab.Controls;
+namespace HoldDownButtonGroup.Controls;
 
-public partial class FlexibleBox : ContentView
+public partial class Bubble : ContentView
 {
-    public FlexibleBox()
+    public Bubble()
     {
         InitializeComponent();
     }
 
     public static readonly BindableProperty FillColorProperty =
-BindableProperty.Create("FillColor", typeof(Brush), typeof(FlexibleBox), default(Brush), propertyChanged: (bindable, oldValue, newValue) =>
+BindableProperty.Create("FillColor", typeof(Brush), typeof(Bubble), default(Brush), propertyChanged: (bindable, oldValue, newValue) =>
 {
-    var obj = (FlexibleBox)bindable;
+    var obj = (Bubble)bindable;
     obj.MainBox.Fill = (Brush)newValue;
 
 });
@@ -31,9 +31,9 @@ BindableProperty.Create("FillColor", typeof(Brush), typeof(FlexibleBox), default
     }
 
     public static readonly BindableProperty BorderColorProperty =
-BindableProperty.Create("BorderColor", typeof(Brush), typeof(FlexibleBox), default(Brush), propertyChanged: (bindable, oldValue, newValue) =>
+BindableProperty.Create("BorderColor", typeof(Brush), typeof(Bubble), default(Brush), propertyChanged: (bindable, oldValue, newValue) =>
 {
-    var obj = (FlexibleBox)bindable;
+    var obj = (Bubble)bindable;
     obj.MainBox.Stroke = (Brush)newValue;
 
 });

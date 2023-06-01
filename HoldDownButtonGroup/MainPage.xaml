@@ -2,37 +2,32 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
-             xmlns:controls="clr-namespace:StickyTab.Controls;assembly=HoldDownButtonGroup"
+             xmlns:controls="clr-namespace:HoldDownButtonGroup.Controls;assembly=HoldDownButtonGroup"
              BackgroundColor="{StaticResource PhoneBackgroundBrush}"
-             Loaded="ContentPage_Loaded"
-             SizeChanged="ContentPage_SizeChanged"
-             x:Class="StickyTab.MainPage">
+             x:Class="HoldDownButtonGroup.MainPage">
 
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="200" />
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="150" />
             </Grid.RowDefinitions>
             <!--标题区域-->
 
-
+            <Grid>
+                <Button Clicked="Button_Clicked"
+                        Text="StickPanSample"></Button>
+            </Grid>
 
             <!--播放控制区域-->
-            <Grid Grid.Row="0">
-                <Grid x:Name="PitContentLayout" BackgroundColor="Azure"
-                      Opacity="1">
-
-                  
-
-                </Grid>
+            <Grid Grid.Row="1"
+                  BackgroundColor="#F1F1F1">
                 <controls:HoldDownButton></controls:HoldDownButton>
-
+                
             </Grid>
-            <Grid Grid.Row="1">
-                <Button Text="Toggle" x:Name="ToggleAnimation" Clicked="ToggleAnimation_Clicked"></Button>
 
-            </Grid>
+
         </Grid>
     </ContentPage.Content>
 

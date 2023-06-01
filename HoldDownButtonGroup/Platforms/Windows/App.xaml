@@ -1,8 +1,8 @@
 ﻿<maui:MauiWinUIApplication
-    x:Class="StickyTab.WinUI.App"
+    x:Class="HoldDownButtonGroup.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:StickyTab.WinUI">
+    xmlns:local="using:HoldDownButtonGroup.WinUI">
 
 </maui:MauiWinUIApplication>

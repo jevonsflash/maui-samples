@@ -1,4 +1,4 @@
-﻿namespace StickyTab.Controls
+﻿namespace HoldDownButtonGroup.Controls
 {
     public delegate void TouchActionEventHandler(object sender, TouchActionEventArgs args);
 }

@@ -5,7 +5,7 @@ using CoreGraphics;
 using Foundation;
 using UIKit;
 
-namespace StickyTab.Controls
+namespace HoldDownButtonGroup.Controls
 {
     public partial class TouchRecognizer : UIGestureRecognizer, IDisposable
     {

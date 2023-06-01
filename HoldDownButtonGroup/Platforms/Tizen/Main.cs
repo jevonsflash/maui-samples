@@ -2,7 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace StickyTab;
+namespace HoldDownButtonGroup;
 
 class Program : MauiApplication
 {

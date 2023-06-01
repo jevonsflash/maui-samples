@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace StickyTab.Platforms.Android;
+namespace HoldDownButtonGroup.Platforms.Android;
 
 [Application]
 public class MainApplication : MauiApplication

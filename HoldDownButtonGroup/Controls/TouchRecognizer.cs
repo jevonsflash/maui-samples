@@ -1,7 +1,7 @@
 using Microsoft.Maui.Platform;
 using Region = MauiSample.Common.Common.Region;
 
-namespace StickyTab.Controls
+namespace HoldDownButtonGroup.Controls
 {
     public partial class TouchRecognizer
     {

@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace StickyTab;
+namespace HoldDownButtonGroup;
 
 public class Program
 {

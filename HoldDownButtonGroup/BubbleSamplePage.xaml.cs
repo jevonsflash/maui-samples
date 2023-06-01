@@ -9,16 +9,16 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Numerics;
 
-namespace StickyTab;
+namespace HoldDownButtonGroup;
 
-public partial class FlexibleBoxSamplePage : ContentPage
+public partial class BubbleSamplePage : ContentPage
 {
     private PitGrid _currentPit;
     private static readonly Random rnd = new Random();
 
     public PitGrid CurrentPitView { get; set; }
 
-    public FlexibleBoxSamplePage()
+    public BubbleSamplePage()
     {
         InitializeComponent();
 

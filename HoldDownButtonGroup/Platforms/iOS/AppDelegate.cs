@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace StickyTab;
+namespace HoldDownButtonGroup;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

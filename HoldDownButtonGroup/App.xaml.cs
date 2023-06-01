@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 
 
-namespace StickyTab;
+namespace HoldDownButtonGroup;
 
 public partial class App : Application
 {

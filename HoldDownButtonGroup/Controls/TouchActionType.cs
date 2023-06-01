@@ -1,4 +1,4 @@
-﻿namespace StickyTab.Controls
+﻿namespace HoldDownButtonGroup.Controls
 {
     public enum TouchActionType
     {

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:HoldDownButtonGroup.Controls;assembly=HoldDownButtonGroup"
              x:Name="MainView"
-             x:Class="StickyTab.Controls.HoldDownButton">
-   
+             x:Class="HoldDownButtonGroup.Controls.HoldDownButton">
+    <controls:TouchContentView OnTouchActionInvoked="TouchContentView_OnTouchActionInvoked">
+        <controls:CircleProgressBar x:Name="MainCircleProgressBar"
+                                    HeightRequest="200"
+                                    WidthRequest="200"
+                                    Maximum="100.0"
+                                   ></controls:CircleProgressBar>
+    </controls:TouchContentView>
 </ContentView>

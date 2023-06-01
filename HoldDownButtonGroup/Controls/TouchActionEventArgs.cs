@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StickyTab.Controls
+namespace HoldDownButtonGroup.Controls
 {
     public class TouchActionEventArgs : EventArgs
     {

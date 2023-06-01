@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Region = MauiSample.Common.Common.Region;
 
-namespace StickyTab.Controls
+namespace HoldDownButtonGroup.Controls
 {
     public partial class TouchRecognizer : IDisposable
     {
