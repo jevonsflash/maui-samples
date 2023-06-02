@@ -5,10 +5,11 @@
              x:Name="MainView"
              x:Class="HoldDownButtonGroup.Controls.HoldDownButton">
     <controls:TouchContentView OnTouchActionInvoked="TouchContentView_OnTouchActionInvoked">
-        <controls:CircleProgressBar x:Name="MainCircleProgressBar"
-                                    HeightRequest="200"
-                                    WidthRequest="200"
-                                    Maximum="100.0"
-                                   ></controls:CircleProgressBar>
+        <Grid>
+            <controls:Bubbles x:Name="MainBubbles"></controls:Bubbles>
+            <controls:CircleProgressBar x:Name="MainCircleProgressBar"
+                                        BorderWidth="10.0"
+                                        Maximum="100.0"></controls:CircleProgressBar>
+        </Grid>
     </controls:TouchContentView>
 </ContentView>

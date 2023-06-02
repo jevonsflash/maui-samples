@@ -32,6 +32,7 @@ public partial class HoldDownButton : ContentView
 
                 break;
             case TouchActionType.Exited:
+                this.MainBubbles.StartAnimation();
                 break;
             case TouchActionType.Cancelled:
                 break;

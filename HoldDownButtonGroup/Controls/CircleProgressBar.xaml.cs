@@ -132,8 +132,8 @@ BindableProperty.Create("BorderWidth", typeof(double), typeof(CircleProgressBar)
 {
     var obj = (CircleProgressBar)bindable;
     obj.RefreshMainRectPadding();
-    obj.ArcPaint.StrokeWidth = (float)newValue;
-    obj.OutlinePaint.StrokeWidth = (float)newValue;
+    obj.ArcPaint.StrokeWidth = Convert.ToSingle(newValue);
+    obj.OutlinePaint.StrokeWidth = Convert.ToSingle(newValue);
 });
 
         public double BorderWidth

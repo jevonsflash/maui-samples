@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
+             xmlns:controls="clr-namespace:AnalogClock.Controls;assembly=AnalogClock"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             x:Class="AnalogClock.MainPage">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="200" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <!--标题区域-->
+
+            <Grid>
+                <Button Clicked="Button_Clicked"
+                        Text="StickPanSample"></Button>
+            </Grid>
+
+            <!--播放控制区域-->
+            <Grid Grid.Row="1"
+                  BackgroundColor="#F1F1F1">
+                <controls:Clock1></controls:Clock1>
+                
+            </Grid>
+
+
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

@@ -1,21 +1,13 @@
-﻿using CommunityToolkit.Maui.Extensions;
-using CommunityToolkit.Mvvm.Messaging;
-using MauiSample.Common.Common;
-using MauiSample.Common.Controls;
-using MauiSample.Common.Helper;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls.Shapes;
-using HoldDownButtonGroup.Controls;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Numerics;
+﻿using MauiSample.Common.Controls;
 
-namespace HoldDownButtonGroup;
+namespace HoldDownButtonGroup.Controls;
 
 public partial class Bubbles : ContentView
 {
     private const int bubbleSize = 20;
-    private const int bubbleCnt = 30;
+    private const int bubbleCnt =60;
+    private Size targetSize = new Size(80, 80);
+
     private static readonly Random rnd = new Random();
 
     public PitGrid CurrentPitView { get; set; }
@@ -75,29 +67,6 @@ public partial class Bubbles : ContentView
 
 
 
-
-    private void DefaultPanContainer_OnOnTapped(object sender, EventArgs e)
-    {
-
-    }
-
-
-
-    private async void Button_Clicked(object sender, EventArgs e)
-    {
-        //await App.Current.Bubbles.Navigation.PushAsync(new ColorAnimation());
-    }
-
-    private void DefaultPanContainer_OnOnfinishedChoise(object sender, PitGrid e)
-    {
-
-    }
-
-    private void ToggleAnimation_Clicked(object sender, EventArgs e)
-    {
-        this.StartAnimation();
-    }
-
     private void ContentView_SizeChanged(object sender, EventArgs e)
     {
 
@@ -108,11 +77,9 @@ public partial class Bubbles : ContentView
                 Init(item as Bubble);
             }
         }
-
-
     }
 
-    private void StartAnimation()
+    public void StartAnimation()
     {
         Content.AbortAnimation("ReshapeAnimations");
         var offsetAnimationGroup = new Animation();
@@ -122,7 +89,7 @@ public partial class Bubbles : ContentView
             if (item is Bubble)
             {
                 var isOntop = this.PitContentLayout.Children.IndexOf(item) > this.PitContentLayout.Children.Count / 2;
-                var currentAnimation = InitAnimation(item as Bubble, new Size(30, 30), isOntop);
+                var currentAnimation = InitAnimation(item as Bubble, targetSize, isOntop);
                 offsetAnimationGroup.Add(0, 1, currentAnimation);
 
 

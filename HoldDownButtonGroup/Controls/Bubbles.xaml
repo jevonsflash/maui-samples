@@ -3,37 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
              xmlns:controls="clr-namespace:HoldDownButtonGroup.Controls;assembly=HoldDownButtonGroup"
-             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
              Loaded="ContentView_Loaded"
-             SizeChanged="ContentView_SizeChanged"
-             x:Class="HoldDownButtonGroup.Bubbles">
+             x:Class="HoldDownButtonGroup.Controls.Bubbles">
 
     <ContentView.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="150" />
-            </Grid.RowDefinitions>
-            <!--标题区域-->
-
-
-
-            <!--播放控制区域-->
-            <Grid Grid.Row="0">
-                <Grid x:Name="PitContentLayout" BackgroundColor="Azure"
-                      Opacity="1">
-
-                  
-
-                </Grid>
-                <controls:HoldDownButton></controls:HoldDownButton>
-
-            </Grid>
-            <Grid Grid.Row="1">
-                <Button Text="Toggle" x:Name="ToggleAnimation" Clicked="ToggleAnimation_Clicked"></Button>
-
-            </Grid>
-        </Grid>
+        <Grid x:Name="PitContentLayout"></Grid>
     </ContentView.Content>
 
 </ContentView>
