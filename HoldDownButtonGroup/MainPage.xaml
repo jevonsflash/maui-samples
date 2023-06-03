@@ -5,39 +5,12 @@
              xmlns:controls="clr-namespace:HoldDownButtonGroup.Controls;assembly=HoldDownButtonGroup"
              BackgroundColor="{StaticResource PhoneBackgroundBrush}"
              x:Class="HoldDownButtonGroup.MainPage">
-    <ContentPage.Resources>
-        <Style TargetType="controls:HoldDownButton"
-               x:Key="HoldDownButtonStyle">
-            <Setter Property="HeightRequest"
-                    Value="120"></Setter>
-            <Setter Property="WidthRequest"
-                    Value="120"></Setter>
-            <Setter Property="HorizontalOptions"
-                    Value="Center"></Setter>
-            <Setter Property="VerticalOptions"
-                    Value="Center"></Setter>
-        </Style>
-    </ContentPage.Resources>
+
 
     <ContentPage.Content>
-            <Grid 
-                  WidthRequest="500"
-                  HorizontalOptions="Center"
-                  VerticalOptions="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <controls:HoldDownButton  Style="{StaticResource HoldDownButtonStyle}"
-                                          Grid.Column="0"></controls:HoldDownButton>
-                <controls:HoldDownButton Style="{StaticResource HoldDownButtonStyle}"
-                                         Grid.Column="1"></controls:HoldDownButton>
-                <controls:HoldDownButton Style="{StaticResource HoldDownButtonStyle}"
-                                         Grid.Column="2"></controls:HoldDownButton>
 
-
-            </Grid>
+            <controls:HoldDownButton ></controls:HoldDownButton>
+          
 
 
     </ContentPage.Content>

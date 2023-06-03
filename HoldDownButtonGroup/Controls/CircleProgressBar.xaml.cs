@@ -42,6 +42,27 @@ namespace HoldDownButtonGroup.Controls
 
         }
 
+        public static readonly BindableProperty LabelContentProperty =
+        BindableProperty.Create("LabelContent", typeof(View), typeof(CircleProgressBar), default, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            var obj = (CircleProgressBar)bindable;
+            if (newValue is not null)
+            {
+                obj.MainContent.Content=newValue as View;
+                obj.labelView.IsVisible=false;
+            }
+            else
+            {
+                obj.labelView.IsVisible=true;
+            }
+        });
+
+        public View LabelContent
+        {
+            get { return (View)GetValue(LabelContentProperty); }
+            set { SetValue(LabelContentProperty, value); }
+        }
+
         public static readonly BindableProperty MaximumProperty =
     BindableProperty.Create("Maximum", typeof(double), typeof(CircleProgressBar), 1.0, propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -109,12 +130,12 @@ BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleProgressBa
       if (Math.Abs(valueChangedSpan) > ANIMATE_THROTTLE)
       {
           obj.UpdateProgressWithAnimate();
-          Debug.WriteLine("valueChangedSpan is " + valueChangedSpan + " ,triggered animate");
+          //Debug.WriteLine("valueChangedSpan is " + valueChangedSpan + " ,triggered animate");
       }
       else
       {
           obj.UpdateProgress();
-          Debug.WriteLine("valueChangedSpan is " + valueChangedSpan);
+          //Debug.WriteLine("valueChangedSpan is " + valueChangedSpan);
       }
   });
 
@@ -173,7 +194,7 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleProgress
 
         private void UpdateProgressWithAnimate(Action<double, bool> finished = null)
         {
-            Content.AbortAnimation("ReshapeAnimations");
+            LabelContent.AbortAnimation("ReshapeAnimations");
             var scaleAnimation = new Animation();
 
 

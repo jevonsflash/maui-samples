@@ -7,7 +7,7 @@
         <Grid>
             <forms:SKCanvasView x:Name="canvasView"
                                 PaintSurface="OnCanvasViewPaintSurface" />
-
+            <ContentView x:Name="MainContent"></ContentView>
             <Label 
                 FontSize="28"
                 HorizontalOptions="Center"

@@ -10,7 +10,7 @@ namespace HoldDownButtonGroup.Controls
 {
     public class TouchContentView : ContentView
     {
-        
+
         public event EventHandler<TouchActionEventArgs> OnTouchActionInvoked;
 
         private IList<IView> appendedViews;
@@ -29,12 +29,12 @@ namespace HoldDownButtonGroup.Controls
                 }
 
 #if WINDOWS
-            var touchRecognizer = new TouchRecognizer(handler.PlatformView as Microsoft.UI.Xaml.FrameworkElement);
-            touchRecognizer.OnTouchActionInvoked += TouchRecognizer_OnTouchActionInvoked;
+                var touchRecognizer = new TouchRecognizer(handler.PlatformView as Microsoft.UI.Xaml.FrameworkElement);
+                touchRecognizer.OnTouchActionInvoked += TouchRecognizer_OnTouchActionInvoked;
 #endif
 #if ANDROID
-            var touchRecognizer = new TouchRecognizer(handler.PlatformView as Android.Views.View);
-            touchRecognizer.OnTouchActionInvoked += TouchRecognizer_OnTouchActionInvoked;
+                var touchRecognizer = new TouchRecognizer(handler.PlatformView as Android.Views.View);
+                touchRecognizer.OnTouchActionInvoked += TouchRecognizer_OnTouchActionInvoked;
 
 #endif
 
