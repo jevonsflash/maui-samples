@@ -10,7 +10,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
-                <RowDefinition Height="200" />
+                <RowDefinition Height="300" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <!--标题区域-->
