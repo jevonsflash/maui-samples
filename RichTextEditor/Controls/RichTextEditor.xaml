@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:RichTextEditor.Controls;assembly=RichTextEditor"
+             x:Class="RichTextEditor.Controls.RichTextEditor">
+    <ContentView.Resources>
+        <Style TargetType="Button"
+               x:Key="RichTextButtonStyle">
+            <Setter Property="BackgroundColor" Value="{StaticResource PhoneContrastBackgroundBrush}"></Setter>
+        </Style>
+        <Style TargetType="Border"
+               x:Key="SelectableLayoutStyle">
+            <Setter Property="StrokeThickness" Value="5"></Setter>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+
+                                <Setter Property="Stroke"
+                                        Value="{StaticResource PhoneAccentBrush}" />
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PhoneAccentBrush}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke"
+                                        Value="LightGray" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <controls:WysiwygContentEditor MinimumHeightRequest="150"
+                                           AutoSize="TextChanges"
+                                           BackgroundColor="{StaticResource PhoneContrastBackgroundBrush}"
+                                           IsSpellCheckEnabled="false"
+                                           x:Name="MainEditor"></controls:WysiwygContentEditor>
+
+            <VerticalStackLayout x:Name="OptionsLayout"
+                                 Grid.Row="2"
+                                 Spacing="5">
+                <CollectionView x:Name="TextSizeCollectionView"
+                                Background="Transparent"
+                                SelectionChanged="TextSizeCollectionView_SelectionChanged"
+                                SelectionMode="Single"
+                                HeightRequest="45">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal"
+                                           ItemSpacing="5"></LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Border x:Name="TargetElement"
+                                    Style="{StaticResource SelectableLayoutStyle}"
+                                    Background="{StaticResource PhoneContrastBackgroundBrush}"
+                                    Padding="5,0">
+                                <Label Text="{Binding Name}"
+                                       TextColor="{StaticResource PhoneForegroundBrush}"
+                                       VerticalOptions="Center"
+                                       FontSize="{Binding Value}"></Label>
+                            </Border>
+
+
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <CollectionView x:Name="ColorCollectionView"
+                                SelectionChanged="ColorCollectionView_SelectionChanged"
+                                SelectionMode="Single"
+                                HeightRequest="45">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal"
+                                           ItemSpacing="5"></LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Border x:Name="TargetElement"
+                                    Style="{StaticResource SelectableLayoutStyle}"
+                                    BackgroundColor="{Binding}"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    StrokeShape="RoundRectangle 40">
+
+                            </Border>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+
+            <HorizontalStackLayout Grid.Row="3"
+                                   Spacing="5"
+                                   Margin="0,10">
+                <Button Text="{Binding Source={x:Reference TextSizeCollectionView}, Path=SelectedItem.Name, FallbackValue=Auto}"
+                        Style="{StaticResource RichTextButtonStyle}"
+                        Clicked="TextSizeButton_Clicked"
+                        x:Name="TextSizeButton"></Button>
+                <Button Text="Color"
+                        TextColor="{Binding Source={x:Reference ColorCollectionView}, Path=SelectedItem}"
+                        Style="{StaticResource RichTextButtonStyle}"
+                        Clicked="TextColorButton_Clicked"
+                        x:Name="TextColorButton"></Button>
+                <Button Text="B"
+                        Style="{StaticResource RichTextButtonStyle}"
+                        FontAttributes="Bold"
+                        x:Name="BoldButton"
+                        Clicked="BoldButton_Clicked"></Button>
+                <Button Text="I"
+                        Style="{StaticResource RichTextButtonStyle}"
+                        FontAttributes="Italic"
+                        x:Name="ItalicButton"
+                        Clicked="ItalicButton_Clicked"></Button>
+                <Button Text="U"
+                        Style="{StaticResource RichTextButtonStyle}"
+                        FontAttributes="None"
+                        x:Name="UnderLineButton"
+                        Clicked="UnderLineButton_Clicked"></Button>
+            </HorizontalStackLayout>
+        </Grid>
+    </Border>
+</ContentView>
