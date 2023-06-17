@@ -8,9 +8,33 @@
 
 
     <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <!--标题区域-->
 
-            <controls:HoldDownButton ></controls:HoldDownButton>
-          
+            <Grid x:Name="MainLayout">
+
+                <controls:HoldDownButton></controls:HoldDownButton>
+
+
+
+
+            </Grid>
+            <StackLayout Grid.Row="1" Orientation="Vertical">
+                <Button Text="CircleSliderSamplePage"
+                        x:Name="CircleSliderSamplePage"
+                       Clicked="CircleSliderSamplePage_Clicked_1"></Button>
+                <Button Text="CircleProgressBarSamplePage"
+                        x:Name="CircleProgressBarSamplePage"
+                        Clicked="CircleProgressBarSamplePage_Clicked_1"></Button>
+            </StackLayout>
+        </Grid>
+
+
+
 
 
     </ContentPage.Content>

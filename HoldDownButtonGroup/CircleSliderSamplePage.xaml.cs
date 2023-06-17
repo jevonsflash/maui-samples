@@ -11,14 +11,14 @@ using System.Numerics;
 
 namespace HoldDownButtonGroup;
 
-public partial class CircleProgressBarTestPage : ContentPage
+public partial class CircleSliderSamplePage : ContentPage
 {
     private PitGrid _currentPit;
     private static readonly Random rnd = new Random();
 
     public PitGrid CurrentPitView { get; set; }
 
-    public CircleProgressBarTestPage()
+    public CircleSliderSamplePage()
     {
         InitializeComponent();
 

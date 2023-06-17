@@ -63,6 +63,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Controls\CircleSlider.xaml.cs">
+	    <DependentUpon>CircleSlider.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Controls\CircleProgressBar.xaml.cs">
 	    <DependentUpon>CircleProgressBar.xaml</DependentUpon>
 	  </Compile>
@@ -75,8 +78,8 @@
 	  <Compile Update="BubbleSamplePage.xaml.cs">
 	    <DependentUpon>BubbleSamplePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="CircleProgressBarTestPage.xaml.cs">
-	    <DependentUpon>CircleProgressBarTestPage.xaml</DependentUpon>
+	  <Compile Update="CircleSliderSamplePage.xaml.cs">
+	    <DependentUpon>CircleSliderSamplePage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="BubbleSamplePage.xaml.cs">
 	    <DependentUpon>BubbleSamplePage.xaml</DependentUpon>
@@ -85,6 +88,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="ColorAnimation.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\CircleSlider.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Controls\CircleProgressBar.xaml">
@@ -102,7 +108,7 @@
 	  <MauiXaml Update="BubbleSamplePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="CircleProgressBarTestPage.xaml">
+	  <MauiXaml Update="CircleSliderSamplePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

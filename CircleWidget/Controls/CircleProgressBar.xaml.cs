@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 
-namespace HoldDownButtonGroup.Controls
+namespace CircleWidget.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CircleProgressBar : ContentView, IProgress

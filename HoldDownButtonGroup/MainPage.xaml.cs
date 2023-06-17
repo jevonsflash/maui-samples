@@ -26,9 +26,17 @@ public partial class MainPage : ContentPage
 
     }
 
-    private async void Button_Clicked(object sender, EventArgs e)
+    private async void CircleSliderSamplePage_Clicked_1(object sender, EventArgs e)
     {
-        await App.Current.MainPage.Navigation.PushAsync(new CircleProgressBarTestPage());
+        await App.Current.MainPage.Navigation.PushAsync(new CircleSliderSamplePage());
+
+    }
+
+
+    private async void CircleProgressBarSamplePage_Clicked_1(object sender, EventArgs e)
+    {
+        await App.Current.MainPage.Navigation.PushAsync(new CircleProgressBarSamplePage());
+
     }
 }
 

@@ -11,19 +11,19 @@ using SkiaSharp.Views.Maui;
 namespace HoldDownButtonGroup.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CircleProgressBar : ContentView, IProgress
+    public partial class CircleSlider : ContentView, IProgress
     {
         private const int ANIMATE_THROTTLE = 10;
         //https://learn.microsoft.com/zh-cn/dotnet/api/system.double.tostring?view=net-7.0
         private const string LABEL_FORMATE = "0";
         double _realtimeProgress;
         private float _mainRectPadding;
-        public CircleProgressBar()
+        public CircleSlider()
         {
             InitializeComponent();
             this.PropertyChanged += CircleProgressBar_PropertyChanged;
             this.labelView.TextColor = this.ProgressColor;
-
+            this.Orientation=ScrollOrientation.Both;
         }
 
         private void RefreshMainRectPadding()
@@ -43,9 +43,9 @@ namespace HoldDownButtonGroup.Controls
         }
 
         public static readonly BindableProperty LabelContentProperty =
-        BindableProperty.Create("LabelContent", typeof(View), typeof(CircleProgressBar), default, propertyChanged: (bindable, oldValue, newValue) =>
+        BindableProperty.Create("LabelContent", typeof(View), typeof(CircleSlider), default, propertyChanged: (bindable, oldValue, newValue) =>
         {
-            var obj = (CircleProgressBar)bindable;
+            var obj = (CircleSlider)bindable;
             if (newValue is not null)
             {
                 obj.MainContent.Content=newValue as View;
@@ -64,9 +64,9 @@ namespace HoldDownButtonGroup.Controls
         }
 
         public static readonly BindableProperty MaximumProperty =
-    BindableProperty.Create("Maximum", typeof(double), typeof(CircleProgressBar), 1.0, propertyChanged: (bindable, oldValue, newValue) =>
+    BindableProperty.Create("Maximum", typeof(double), typeof(CircleSlider), 1.0, propertyChanged: (bindable, oldValue, newValue) =>
     {
-        var obj = (CircleProgressBar)bindable;
+        var obj = (CircleSlider)bindable;
         obj.canvasView?.InvalidateSurface();
     });
 
@@ -77,9 +77,9 @@ namespace HoldDownButtonGroup.Controls
         }
 
         public static readonly BindableProperty MinimumProperty =
-  BindableProperty.Create("Minimum", typeof(double), typeof(CircleProgressBar), 0.0, propertyChanged: (bindable, oldValue, newValue) =>
+  BindableProperty.Create("Minimum", typeof(double), typeof(CircleSlider), 0.0, propertyChanged: (bindable, oldValue, newValue) =>
   {
-      var obj = (CircleProgressBar)bindable;
+      var obj = (CircleSlider)bindable;
       obj.canvasView?.InvalidateSurface();
 
   });
@@ -92,9 +92,9 @@ namespace HoldDownButtonGroup.Controls
 
 
         public static readonly BindableProperty ProgressColorProperty =
-BindableProperty.Create("ProgressColor", typeof(Color), typeof(CircleProgressBar), Colors.Red, propertyChanged: (bindable, oldValue, newValue) =>
+BindableProperty.Create("ProgressColor", typeof(Color), typeof(CircleSlider), Colors.Red, propertyChanged: (bindable, oldValue, newValue) =>
 {
-    var obj = (CircleProgressBar)bindable;
+    var obj = (CircleSlider)bindable;
     obj.ArcPaint.Color = obj.ProgressColor.ToSKColor();
     obj.labelView.TextColor = obj.ProgressColor;
 });
@@ -107,9 +107,9 @@ BindableProperty.Create("ProgressColor", typeof(Color), typeof(CircleProgressBar
 
 
         public static readonly BindableProperty ContainerColorProperty =
-BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleProgressBar), Colors.White, propertyChanged: (bindable, oldValue, newValue) =>
+BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleSlider), Colors.White, propertyChanged: (bindable, oldValue, newValue) =>
 {
-    var obj = (CircleProgressBar)bindable;
+    var obj = (CircleSlider)bindable;
     obj.OutlinePaint.Color = obj.ContainerColor.ToSKColor();
 
 });
@@ -123,19 +123,19 @@ BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleProgressBa
 
 
         public static readonly BindableProperty ProgressProperty =
-  BindableProperty.Create("Progress", typeof(double), typeof(CircleProgressBar), 0.5, propertyChanged: (bindable, oldValue, newValue) =>
+  BindableProperty.Create("Progress", typeof(double), typeof(CircleSlider), 0.5, propertyChanged: (bindable, oldValue, newValue) =>
   {
-      var obj = (CircleProgressBar)bindable;
+      var obj = (CircleSlider)bindable;
       var valueChangedSpan = (double)oldValue - (double)newValue;
       if (Math.Abs(valueChangedSpan) > ANIMATE_THROTTLE)
       {
           obj.UpdateProgressWithAnimate();
-          //Debug.WriteLine("valueChangedSpan is " + valueChangedSpan + " ,triggered animate");
+          Debug.WriteLine("valueChangedSpan is " + valueChangedSpan + " ,triggered animate");
       }
       else
       {
           obj.UpdateProgress();
-          //Debug.WriteLine("valueChangedSpan is " + valueChangedSpan);
+          Debug.WriteLine("valueChangedSpan is " + valueChangedSpan);
       }
   });
 
@@ -149,9 +149,9 @@ BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleProgressBa
 
 
         public static readonly BindableProperty BorderWidthProperty =
-BindableProperty.Create("BorderWidth", typeof(double), typeof(CircleProgressBar), 20.0, propertyChanged: (bindable, oldValue, newValue) =>
+BindableProperty.Create("BorderWidth", typeof(double), typeof(CircleSlider), 20.0, propertyChanged: (bindable, oldValue, newValue) =>
 {
-    var obj = (CircleProgressBar)bindable;
+    var obj = (CircleSlider)bindable;
     obj.RefreshMainRectPadding();
     obj.ArcPaint.StrokeWidth = Convert.ToSingle(newValue);
     obj.OutlinePaint.StrokeWidth = Convert.ToSingle(newValue);
@@ -167,9 +167,9 @@ BindableProperty.Create("BorderWidth", typeof(double), typeof(CircleProgressBar)
 
 
         public static readonly BindableProperty AnimationLengthProperty =
-BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleProgressBar), 1000.0, propertyChanged: (bindable, oldValue, newValue) =>
+BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleSlider), 1000.0, propertyChanged: (bindable, oldValue, newValue) =>
 {
-    var obj = (CircleProgressBar)bindable;
+    var obj = (CircleSlider)bindable;
 
 
 });
@@ -190,6 +190,7 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleProgress
             this._realtimeProgress = this.Progress;
             this.labelView.Text = this.Progress.ToString(LABEL_FORMATE);
             this.canvasView?.InvalidateSurface();
+            
         }
 
         private void UpdateProgressWithAnimate(Action<double, bool> finished = null)
@@ -215,14 +216,11 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleProgress
             scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)this.AnimationLength, finished: finished);
 
         }
-
+        public double SumValue => Maximum - Minimum;
 
 
         private void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
-
-            var SumValue = Maximum - Minimum;
-
 
             SKImageInfo info = args.Info;
             SKSurface surface = args.Surface;
@@ -239,9 +237,16 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleProgress
             using (SKPath path = new SKPath())
             {
                 path.AddArc(rect, startAngle, sweepAngle);
-                
+
                 canvas.DrawPath(path, ArcPaint);
             }
+
+            var thumbX = Math.Sin(sweepAngle * Math.PI / 180) * this.Width/2;
+            var thumbY = Math.Cos(sweepAngle * Math.PI / 180) * this.Height / 2;
+
+            this.ThumbContent.TranslationX=thumbX;
+            this.ThumbContent.TranslationY=-thumbY;
+
         }
 
 
@@ -291,5 +296,37 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleProgress
             }
         }
 
+        private void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            var thumb = sender as ContentView;
+            var PositionX = thumb.TranslationX+e.TotalX;
+            var PositionY = thumb.TranslationY+e.TotalY;
+
+            this.test.TranslationX = thumb.TranslationX+e.TotalX;
+            this.test.TranslationY = thumb.TranslationY+e.TotalY;
+
+            var sweepAngle = AngleNormalize(Math.Atan2(PositionX, -PositionY)*180/Math.PI);
+
+            var targetProgress = sweepAngle*SumValue/360;
+            this.Progress=targetProgress;
+            //UpdateProgress();
+            Debug.WriteLine(PositionX+","+PositionY+","+sweepAngle);
+
+        }
+        private double AngleNormalize(double value)
+        {
+            double twoPi = 360;
+            while (value <= -180) value += twoPi;
+            while (value >   180) value -= twoPi;
+            value= (value + twoPi) % twoPi;
+            return value;
+        }
+
+        public ScrollOrientation Orientation { get; set; }
+
+        private void PanGestureRecognizer_PanUpdated2(object sender, PanUpdatedEventArgs e)
+        {
+            Debug.WriteLine(e.TotalX+","+ e.TotalY);
+        }
     }
 }

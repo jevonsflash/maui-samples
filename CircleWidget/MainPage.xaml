@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
+             xmlns:controls="clr-namespace:CircleWidget.Controls;assembly=CircleWidget"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             x:Class="CircleWidget.MainPage">
+
+    <ContentPage.Content>
+        <StackLayout Margin="12,10" Spacing="5">
+            <Label Text="新邮件" FontSize="48"></Label>
+
+            <!--标题区域-->
+            <Label Text="收件人"></Label>
+            <Entry Placeholder="请输入收件人"
+                   Background="white"></Entry>
+            <Label Text="正文"></Label>
+            <controls:CircleWidget  
+                                      x:Name="MainCircleWidget"
+                                      Text="{Binding Content}"
+                                      Placeholder="{Binding PlaceHolder}"></controls:CircleWidget>
+            <Button Text="GetHtml"
+                    Background="{StaticResource PhoneContrastBackgroundBrush}"
+                    Clicked="Button_Clicked"></Button>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

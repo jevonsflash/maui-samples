@@ -4,34 +4,32 @@
              xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
              xmlns:controls="clr-namespace:HoldDownButtonGroup.Controls;assembly=HoldDownButtonGroup"
              BackgroundColor="{StaticResource PhoneBackgroundBrush}"
-             x:Class="HoldDownButtonGroup.CircleProgressBarTestPage">
+             x:Class="HoldDownButtonGroup.CircleSliderSamplePage">
 
     <ContentPage.Content>
-        <Grid>
+
+        <Grid Grid.Row="0"
+              Margin="0,50,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="150" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <!--标题区域-->
+            <controls:CircleSlider Grid.Row="0"
+                                   WidthRequest="200"
+                                   HeightRequest="200"
+                                   Maximum="100.0"
+                                   Progress="{Binding Source={x:Reference slider},
+                              Path=Value}"></controls:CircleSlider>
+            <controls:CircleSlider Grid.Row="1"
+                                   WidthRequest="200"
+                                   HeightRequest="200"
+                                   Maximum="100.0"
+                                   Progress="{Binding Source={x:Reference slider},
+                              Path=Value}"></controls:CircleSlider>
+            <VerticalStackLayout Grid.Row="2">
 
-
-
-            <!--播放控制区域-->
-            <Grid Grid.Row="0"
-                  Margin="0,50,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                </Grid.RowDefinitions>
-                <controls:CircleProgressBar Grid.Row="0"
-                                            HeightRequest="200"
-                                            WidthRequest="200"
-                                            Maximum="100.0"
-                                            Progress="{Binding Source={x:Reference slider},
-                              Path=Value}"></controls:CircleProgressBar>
-                <Grid  Grid.Row="1">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
@@ -49,17 +47,15 @@
                             Clicked="Button_Clicked3"></Button>
                 </Grid>
                 <Slider x:Name="slider"
-                        Grid.Row="2"
                         Maximum="100"
                         Margin="12" />
                 <Label x:Name="displayLabel"
-                       Grid.Row="3"
                        Text="{Binding Source={x:Reference slider},
                               Path=Value,
                               StringFormat='The Slider value is {0:F0}'}"
                        HorizontalOptions="Center"
                        VerticalOptions="Center" />
-            </Grid>
+            </VerticalStackLayout>
         </Grid>
     </ContentPage.Content>
 

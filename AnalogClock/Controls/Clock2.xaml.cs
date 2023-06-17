@@ -6,11 +6,11 @@ using System.Diagnostics;
 
 namespace AnalogClock.Controls;
 
-public partial class Clock1 : ContentView
+public partial class Clock2 : ContentView
 {
 
     IDispatcherTimer _timer;
-    public Clock1()
+    public Clock2()
     {
         InitializeComponent();
         this.SizeChanged+=ContentView_SizeChanged;
