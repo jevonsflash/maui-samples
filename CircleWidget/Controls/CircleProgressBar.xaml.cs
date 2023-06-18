@@ -11,56 +11,14 @@ using SkiaSharp.Views.Maui;
 namespace CircleWidget.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CircleProgressBar : ContentView, IProgress
+    public partial class CircleProgressBar : CircleProgressBase
     {
-        private const int ANIMATE_THROTTLE = 10;
-        //https://learn.microsoft.com/zh-cn/dotnet/api/system.double.tostring?view=net-7.0
-        private const string LABEL_FORMATE = "0";
-        double _realtimeProgress;
-        private float _mainRectPadding;
         public CircleProgressBar()
         {
             InitializeComponent();
-            this.PropertyChanged += CircleProgressBar_PropertyChanged;
             this.labelView.TextColor = this.ProgressColor;
+            this.ValueChanged+=CircleProgressBar_ValueChanged;
 
-        }
-
-        private void RefreshMainRectPadding()
-        {
-            //边界补偿
-            this._mainRectPadding = (float)(this.BorderWidth / 2);
-            //this._mainRectPadding = (float)(this.BorderWidth);
-        }
-
-        private void CircleProgressBar_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(IsEnabled))
-            {
-                this.ArcPaint.Color = IsEnabled ? Colors.Gray.ToSKColor() : this.ProgressColor.ToSKColor();
-            }
-
-        }
-
-        public static readonly BindableProperty LabelContentProperty =
-        BindableProperty.Create("LabelContent", typeof(View), typeof(CircleProgressBar), default, propertyChanged: (bindable, oldValue, newValue) =>
-        {
-            var obj = (CircleProgressBar)bindable;
-            if (newValue is not null)
-            {
-                obj.MainContent.Content=newValue as View;
-                obj.labelView.IsVisible=false;
-            }
-            else
-            {
-                obj.labelView.IsVisible=true;
-            }
-        });
-
-        public View LabelContent
-        {
-            get { return (View)GetValue(LabelContentProperty); }
-            set { SetValue(LabelContentProperty, value); }
         }
 
         public static readonly BindableProperty MaximumProperty =
@@ -70,25 +28,41 @@ namespace CircleWidget.Controls
         obj.canvasView?.InvalidateSurface();
     });
 
-        public double Maximum
+        public override double Maximum
         {
             get { return (double)GetValue(MaximumProperty); }
             set { SetValue(MaximumProperty, value); }
         }
 
         public static readonly BindableProperty MinimumProperty =
-  BindableProperty.Create("Minimum", typeof(double), typeof(CircleProgressBar), 0.0, propertyChanged: (bindable, oldValue, newValue) =>
-  {
-      var obj = (CircleProgressBar)bindable;
-      obj.canvasView?.InvalidateSurface();
+BindableProperty.Create("Minimum", typeof(double), typeof(CircleProgressBar), 0.0, propertyChanged: (bindable, oldValue, newValue) =>
+{
+    var obj = (CircleProgressBar)bindable;
+    obj.canvasView?.InvalidateSurface();
 
-  });
+});
 
-        public double Minimum
+        public override double Minimum
         {
             get { return (double)GetValue(MinimumProperty); }
             set { SetValue(MinimumProperty, value); }
         }
+
+        public static readonly BindableProperty ContainerColorProperty =
+BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleSlider), Colors.White, propertyChanged: (bindable, oldValue, newValue) =>
+{
+    var obj = (CircleSlider)bindable;
+    obj.OutlinePaint.Color = obj.ContainerColor.ToSKColor();
+
+});
+
+        public override Color ContainerColor
+        {
+            get { return (Color)GetValue(ContainerColorProperty); }
+            set { SetValue(ContainerColorProperty, value); }
+        }
+
+
 
 
         public static readonly BindableProperty ProgressColorProperty =
@@ -99,25 +73,10 @@ BindableProperty.Create("ProgressColor", typeof(Color), typeof(CircleProgressBar
     obj.labelView.TextColor = obj.ProgressColor;
 });
 
-        public Color ProgressColor
+        public override Color ProgressColor
         {
             get { return (Color)GetValue(ProgressColorProperty); }
             set { SetValue(ProgressColorProperty, value); }
-        }
-
-
-        public static readonly BindableProperty ContainerColorProperty =
-BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleProgressBar), Colors.White, propertyChanged: (bindable, oldValue, newValue) =>
-{
-    var obj = (CircleProgressBar)bindable;
-    obj.OutlinePaint.Color = obj.ContainerColor.ToSKColor();
-
-});
-
-        public Color ContainerColor
-        {
-            get { return (Color)GetValue(ContainerColorProperty); }
-            set { SetValue(ContainerColorProperty, value); }
         }
 
 
@@ -139,10 +98,32 @@ BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleProgressBa
       }
   });
 
-        public double Progress
+        public override double Progress
         {
             get { return (double)GetValue(ProgressProperty); }
             set { SetValue(ProgressProperty, value); }
+        }
+
+
+        public static readonly BindableProperty LabelContentProperty =
+        BindableProperty.Create("LabelContent", typeof(View), typeof(CircleProgressBar), default, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            var obj = (CircleProgressBar)bindable;
+            if (newValue is not null)
+            {
+                obj.MainContent.Content=newValue as View;
+                obj.labelView.IsVisible=false;
+            }
+            else
+            {
+                obj.labelView.IsVisible=true;
+            }
+        });
+
+        public override View LabelContent
+        {
+            get { return (View)GetValue(LabelContentProperty); }
+            set { SetValue(LabelContentProperty, value); }
         }
 
 
@@ -157,13 +138,11 @@ BindableProperty.Create("BorderWidth", typeof(double), typeof(CircleProgressBar)
     obj.OutlinePaint.StrokeWidth = Convert.ToSingle(newValue);
 });
 
-        public double BorderWidth
+        public override double BorderWidth
         {
             get { return (double)GetValue(BorderWidthProperty); }
             set { SetValue(BorderWidthProperty, value); }
         }
-
-
 
 
         public static readonly BindableProperty AnimationLengthProperty =
@@ -174,7 +153,7 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleProgress
 
 });
 
-        public double AnimationLength
+        public override double AnimationLength
         {
             get { return (double)GetValue(AnimationLengthProperty); }
             set
@@ -185,111 +164,11 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleProgress
             }
         }
 
-        private void UpdateProgress()
+
+        private void CircleProgressBar_ValueChanged(object sender, double e)
         {
-            this._realtimeProgress = this.Progress;
-            this.labelView.Text = this.Progress.ToString(LABEL_FORMATE);
+            this.labelView.Text = e.ToString(LABEL_FORMATE);
             this.canvasView?.InvalidateSurface();
         }
-
-        private void UpdateProgressWithAnimate(Action<double, bool> finished = null)
-        {
-            this.AbortAnimation("ReshapeAnimations");
-            var scaleAnimation = new Animation();
-
-
-            double progressTarget = this.Progress;
-
-            double progressOrigin = this._realtimeProgress;
-
-            var animateAction = (double r) =>
-            {
-                this._realtimeProgress = r;
-                this.labelView.Text = r.ToString(LABEL_FORMATE);
-                this.canvasView?.InvalidateSurface();
-            };
-
-            var mySpringOut = (double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
-            var scaleUpAnimation0 = new Animation(animateAction, progressOrigin, progressTarget, mySpringOut);
-            scaleAnimation.Add(0, 1, scaleUpAnimation0);
-            scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)this.AnimationLength, finished: finished);
-
-        }
-
-
-
-        private void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
-        {
-
-            var SumValue = Maximum - Minimum;
-
-
-            SKImageInfo info = args.Info;
-            SKSurface surface = args.Surface;
-            SKCanvas canvas = surface.Canvas;
-
-            canvas.Clear();
-
-            SKRect rect = new SKRect(_mainRectPadding, _mainRectPadding, info.Width - _mainRectPadding, info.Height - _mainRectPadding);
-            float startAngle = -90;
-            float sweepAngle = (float)((_realtimeProgress / SumValue) * 360);
-
-            canvas.DrawOval(rect, OutlinePaint);
-
-            using (SKPath path = new SKPath())
-            {
-                path.AddArc(rect, startAngle, sweepAngle);
-                
-                canvas.DrawPath(path, ArcPaint);
-            }
-        }
-
-
-
-
-        private SKPaint _outlinePaint;
-
-        public SKPaint OutlinePaint
-        {
-            get
-            {
-                if (_outlinePaint == null)
-                {
-                    RefreshMainRectPadding();
-                    SKPaint outlinePaint = new SKPaint
-                    {
-                        Color = this.ContainerColor.ToSKColor(),
-                        Style = SKPaintStyle.Stroke,
-                        StrokeWidth = (float)BorderWidth,
-                    };
-                    _outlinePaint = outlinePaint;
-                }
-                return _outlinePaint;
-            }
-        }
-
-        private SKPaint _arcPaint;
-
-        public SKPaint ArcPaint
-        {
-            get
-            {
-                if (_arcPaint == null)
-                {
-                    RefreshMainRectPadding();
-                    SKPaint arcPaint = new SKPaint
-                    {
-                        Color = this.ProgressColor.ToSKColor(),
-                        Style = SKPaintStyle.Stroke,
-                        StrokeWidth = (float)BorderWidth,
-                        StrokeCap = SKStrokeCap.Round,
-                    };
-                    _arcPaint = arcPaint;
-                }
-
-                return _arcPaint;
-            }
-        }
-
     }
 }

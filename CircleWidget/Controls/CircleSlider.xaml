@@ -1,49 +1,55 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:forms="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
-             xmlns:controls1="clr-namespace:CircleWidget.Controls;assembly=CircleWidget"
-             x:Class="CircleWidget.Controls.CircleSlider">
+<controls:CircleProgressBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                             xmlns:forms="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+                             xmlns:controls1="clr-namespace:CircleWidget.Controls;assembly=CircleWidget"
+                             xmlns:controls="clr-namespace:CircleWidget.Controls;assembly=CircleWidget"
+                             x:Class="CircleWidget.Controls.CircleSlider">
 
-    <ContentView.Content>
+    <controls:CircleProgressBase.Content>
 
         <Grid>
             <forms:SKCanvasView x:Name="canvasView"
                                 PaintSurface="OnCanvasViewPaintSurface" />
             <ContentView x:Name="MainContent"></ContentView>
 
-            <ContentView x:Name="ThumbContent"   
-                         Background="transparent"
-                         HeightRequest="50"
-                         WidthRequest="50">
+            <ContentView x:Name="ThumbContent"
+                         Background="transparent">
                 <ContentView.GestureRecognizers>
                     <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"></PanGestureRecognizer>
                 </ContentView.GestureRecognizers>
-                <Border Background="green" Opacity="0.5" StrokeThickness="0">
+                <Border Background="white"
+                        x:Name="ThumbBorder"
+                        StrokeThickness="0">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="50" />
+                        <RoundRectangle x:Name="ThumbBorderLayout" />
                     </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,0"
+                                Radius="10"
+                                Opacity="0.8" />
+                    </Border.Shadow>
                 </Border>
             </ContentView>
-            
-            <Border
-                x:Name="test"
-                Background="pink"
+
+            <!--for test-->
+            <!--<Border x:Name="test"
+                    Background="pink"
                     Opacity="0.5"
-                    HeightRequest="50"
-                    WidthRequest="50"
+                    HeightRequest="20"
+                    WidthRequest="20"
                     StrokeThickness="0">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="50" />
+                    <RoundRectangle CornerRadius="20" />
                 </Border.StrokeShape>
-            </Border>
+            </Border>-->
 
             <Label FontSize="28"
-                   Background="green"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    x:Name="labelView"></Label>
         </Grid>
 
-    </ContentView.Content>
-</ContentView>
+    </controls:CircleProgressBase.Content>
+</controls:CircleProgressBase>

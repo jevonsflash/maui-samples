@@ -7,24 +7,57 @@
              x:Class="CircleWidget.MainPage">
 
     <ContentPage.Content>
-        <StackLayout Margin="12,10" Spacing="5">
-            <Label Text="新邮件" FontSize="48"></Label>
+        <Grid Grid.Row="0"
+              Margin="0,50,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <controls:CircleProgressBar Grid.Row="0"
+                                   WidthRequest="200"
+                                   HeightRequest="200"
+                                   Maximum="100.0"
+                                   Progress="{Binding Source={x:Reference slider},
+                              Path=Value}"></controls:CircleProgressBar>
+            <controls:CircleSlider Grid.Row="1"
+                                   WidthRequest="200"
+                                   HeightRequest="200"
+                                   Maximum="100.0"
+                                   ProgressColor="#0008FF"
+                                   BorderWidth="3"
+                                   Progress="{Binding Source={x:Reference slider},
+                              Path=Value}"></controls:CircleSlider>
+            <VerticalStackLayout Grid.Row="2">
 
-            <!--标题区域-->
-            <Label Text="收件人"></Label>
-            <Entry Placeholder="请输入收件人"
-                   Background="white"></Entry>
-            <Label Text="正文"></Label>
-            <controls:CircleWidget  
-                                      x:Name="MainCircleWidget"
-                                      Text="{Binding Content}"
-                                      Placeholder="{Binding PlaceHolder}"></controls:CircleWidget>
-            <Button Text="GetHtml"
-                    Background="{StaticResource PhoneContrastBackgroundBrush}"
-                    Clicked="Button_Clicked"></Button>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
 
-
-        </StackLayout>
+                    <Button Text="20%"
+                            Grid.Column="0"
+                            Clicked="Button_Clicked"></Button>
+                    <Button Text="50%"
+                            Grid.Column="1"
+                            Clicked="Button_Clicked2"></Button>
+                    <Button Text="80%"
+                            Grid.Column="2"
+                            Clicked="Button_Clicked3"></Button>
+                </Grid>
+                <Slider x:Name="slider"
+                        Maximum="100"
+                        Margin="12" />
+                <Label x:Name="displayLabel"
+                       Text="{Binding Source={x:Reference slider},
+                              Path=Value,
+                              StringFormat='The Slider value is {0:F0}'}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
     </ContentPage.Content>
 
 </ContentPage>

@@ -309,6 +309,7 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleSlider),
 
             var targetProgress = sweepAngle*SumValue/360;
             this.Progress=targetProgress;
+            this.OnPropertyChanged(nameof(this.Progress));
             //UpdateProgress();
             Debug.WriteLine(PositionX+","+PositionY+","+sweepAngle);
 

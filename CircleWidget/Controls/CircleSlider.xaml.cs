@@ -11,34 +11,19 @@ using SkiaSharp.Views.Maui;
 namespace CircleWidget.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CircleSlider : ContentView, IProgress
+    public partial class CircleSlider : CircleProgressBase
     {
-        private const int ANIMATE_THROTTLE = 10;
-        //https://learn.microsoft.com/zh-cn/dotnet/api/system.double.tostring?view=net-7.0
-        private const string LABEL_FORMATE = "0";
-        double _realtimeProgress;
-        private float _mainRectPadding;
+
+        private const double DEFAULT_THUMB_SIZE = 20.0;
+
         public CircleSlider()
         {
             InitializeComponent();
-            this.PropertyChanged += CircleProgressBar_PropertyChanged;
+            this.ValueChanged +=CircleSlider_PropertyChanged; ;
             this.labelView.TextColor = this.ProgressColor;
-            this.Orientation=ScrollOrientation.Both;
-        }
-
-        private void RefreshMainRectPadding()
-        {
-            //边界补偿
-            this._mainRectPadding = (float)(this.BorderWidth / 2);
-            //this._mainRectPadding = (float)(this.BorderWidth);
-        }
-
-        private void CircleProgressBar_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(IsEnabled))
-            {
-                this.ArcPaint.Color = IsEnabled ? Colors.Gray.ToSKColor() : this.ProgressColor.ToSKColor();
-            }
+            ThumbContent.HeightRequest=DEFAULT_THUMB_SIZE;
+            ThumbContent.WidthRequest=DEFAULT_THUMB_SIZE;
+            ThumbBorderLayout.CornerRadius=DEFAULT_THUMB_SIZE;
 
         }
 
@@ -57,7 +42,7 @@ namespace CircleWidget.Controls
             }
         });
 
-        public View LabelContent
+        public override View LabelContent
         {
             get { return (View)GetValue(LabelContentProperty); }
             set { SetValue(LabelContentProperty, value); }
@@ -70,7 +55,7 @@ namespace CircleWidget.Controls
         obj.canvasView?.InvalidateSurface();
     });
 
-        public double Maximum
+        public override double Maximum
         {
             get { return (double)GetValue(MaximumProperty); }
             set { SetValue(MaximumProperty, value); }
@@ -84,7 +69,7 @@ namespace CircleWidget.Controls
 
   });
 
-        public double Minimum
+        public override double Minimum
         {
             get { return (double)GetValue(MinimumProperty); }
             set { SetValue(MinimumProperty, value); }
@@ -99,7 +84,7 @@ BindableProperty.Create("ProgressColor", typeof(Color), typeof(CircleSlider), Co
     obj.labelView.TextColor = obj.ProgressColor;
 });
 
-        public Color ProgressColor
+        public override Color ProgressColor
         {
             get { return (Color)GetValue(ProgressColorProperty); }
             set { SetValue(ProgressColorProperty, value); }
@@ -114,7 +99,7 @@ BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleSlider), C
 
 });
 
-        public Color ContainerColor
+        public override Color ContainerColor
         {
             get { return (Color)GetValue(ContainerColorProperty); }
             set { SetValue(ContainerColorProperty, value); }
@@ -123,7 +108,7 @@ BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleSlider), C
 
 
         public static readonly BindableProperty ProgressProperty =
-  BindableProperty.Create("Progress", typeof(double), typeof(CircleSlider), 0.5, propertyChanged: (bindable, oldValue, newValue) =>
+  BindableProperty.Create("Progress", typeof(double), typeof(CircleSlider), 0.5, defaultBindingMode:BindingMode.TwoWay, propertyChanged: (bindable, oldValue, newValue) =>
   {
       var obj = (CircleSlider)bindable;
       var valueChangedSpan = (double)oldValue - (double)newValue;
@@ -139,7 +124,7 @@ BindableProperty.Create("ContainerColor", typeof(Color), typeof(CircleSlider), C
       }
   });
 
-        public double Progress
+        public override double Progress
         {
             get { return (double)GetValue(ProgressProperty); }
             set { SetValue(ProgressProperty, value); }
@@ -157,7 +142,7 @@ BindableProperty.Create("BorderWidth", typeof(double), typeof(CircleSlider), 20.
     obj.OutlinePaint.StrokeWidth = Convert.ToSingle(newValue);
 });
 
-        public double BorderWidth
+        public override double BorderWidth
         {
             get { return (double)GetValue(BorderWidthProperty); }
             set { SetValue(BorderWidthProperty, value); }
@@ -174,7 +159,7 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleSlider),
 
 });
 
-        public double AnimationLength
+        public override double AnimationLength
         {
             get { return (double)GetValue(AnimationLengthProperty); }
             set
@@ -185,41 +170,40 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleSlider),
             }
         }
 
-        private void UpdateProgress()
+
+        public static readonly BindableProperty ThumbSizeProperty =
+BindableProperty.Create("ThumbSize", typeof(double), typeof(CircleSlider), DEFAULT_THUMB_SIZE, propertyChanged: (bindable, oldValue, newValue) =>
+{
+    var obj = (CircleSlider)bindable;
+    obj.ThumbContent.HeightRequest=(double)newValue;
+    obj.ThumbContent.WidthRequest=(double)newValue;
+    obj.ThumbBorderLayout.CornerRadius=(double)newValue;
+
+});
+
+        public double ThumbSize
         {
-            this._realtimeProgress = this.Progress;
-            this.labelView.Text = this.Progress.ToString(LABEL_FORMATE);
-            this.canvasView?.InvalidateSurface();
-            
+            get { return (double)GetValue(ThumbSizeProperty); }
+            set { SetValue(ThumbSizeProperty, value); }
         }
 
-        private void UpdateProgressWithAnimate(Action<double, bool> finished = null)
+        public static readonly BindableProperty ThumbColorProperty =
+BindableProperty.Create("ThumbColor", typeof(Color), typeof(CircleSlider), Colors.White, propertyChanged: (bindable, oldValue, newValue) =>
+{
+var obj = (CircleSlider)bindable;
+obj.ThumbBorder.Background = obj.ThumbColor;
+
+});
+
+        public Color ThumbColor
         {
-            this.AbortAnimation("ReshapeAnimations");
-            var scaleAnimation = new Animation();
-
-
-            double progressTarget = this.Progress;
-
-            double progressOrigin = this._realtimeProgress;
-
-            var animateAction = (double r) =>
-            {
-                this._realtimeProgress = r;
-                this.labelView.Text = r.ToString(LABEL_FORMATE);
-                this.canvasView?.InvalidateSurface();
-            };
-
-            var mySpringOut = (double x) => (x - 1) * (x - 1) * ((5f + 1) * (x - 1) + 5) + 1;
-            var scaleUpAnimation0 = new Animation(animateAction, progressOrigin, progressTarget, mySpringOut);
-            scaleAnimation.Add(0, 1, scaleUpAnimation0);
-            scaleAnimation.Commit(this, "ReshapeAnimations", 16, (uint)this.AnimationLength, finished: finished);
-
+            get { return (Color)GetValue(ThumbColorProperty); }
+            set { SetValue(ThumbColorProperty, value); }
         }
-        public double SumValue => Maximum - Minimum;
 
 
-        private void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
+
+        protected override void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
 
             SKImageInfo info = args.Info;
@@ -240,60 +224,12 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleSlider),
 
                 canvas.DrawPath(path, ArcPaint);
             }
-
-            var thumbX = Math.Sin(sweepAngle * Math.PI / 180) * this.Width/2;
-            var thumbY = Math.Cos(sweepAngle * Math.PI / 180) * this.Height / 2;
+            var thumbX = Math.Sin(sweepAngle * Math.PI / 180) * (this.Width/2-1.25*this._mainRectPadding);
+            var thumbY = Math.Cos(sweepAngle * Math.PI / 180) * (this.Height / 2-1.25*this._mainRectPadding);
 
             this.ThumbContent.TranslationX=thumbX;
             this.ThumbContent.TranslationY=-thumbY;
 
-        }
-
-
-
-
-        private SKPaint _outlinePaint;
-
-        public SKPaint OutlinePaint
-        {
-            get
-            {
-                if (_outlinePaint == null)
-                {
-                    RefreshMainRectPadding();
-                    SKPaint outlinePaint = new SKPaint
-                    {
-                        Color = this.ContainerColor.ToSKColor(),
-                        Style = SKPaintStyle.Stroke,
-                        StrokeWidth = (float)BorderWidth,
-                    };
-                    _outlinePaint = outlinePaint;
-                }
-                return _outlinePaint;
-            }
-        }
-
-        private SKPaint _arcPaint;
-
-        public SKPaint ArcPaint
-        {
-            get
-            {
-                if (_arcPaint == null)
-                {
-                    RefreshMainRectPadding();
-                    SKPaint arcPaint = new SKPaint
-                    {
-                        Color = this.ProgressColor.ToSKColor(),
-                        Style = SKPaintStyle.Stroke,
-                        StrokeWidth = (float)BorderWidth,
-                        StrokeCap = SKStrokeCap.Round,
-                    };
-                    _arcPaint = arcPaint;
-                }
-
-                return _arcPaint;
-            }
         }
 
         private void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
@@ -302,15 +238,14 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleSlider),
             var PositionX = thumb.TranslationX+e.TotalX;
             var PositionY = thumb.TranslationY+e.TotalY;
 
-            this.test.TranslationX = thumb.TranslationX+e.TotalX;
-            this.test.TranslationY = thumb.TranslationY+e.TotalY;
+            //for test 
+            //this.test.TranslationX = thumb.TranslationX+e.TotalX;
+            //this.test.TranslationY = thumb.TranslationY+e.TotalY;
 
             var sweepAngle = AngleNormalize(Math.Atan2(PositionX, -PositionY)*180/Math.PI);
 
             var targetProgress = sweepAngle*SumValue/360;
             this.Progress=targetProgress;
-            //UpdateProgress();
-            Debug.WriteLine(PositionX+","+PositionY+","+sweepAngle);
 
         }
         private double AngleNormalize(double value)
@@ -322,11 +257,12 @@ BindableProperty.Create("AnimationLength", typeof(double), typeof(CircleSlider),
             return value;
         }
 
-        public ScrollOrientation Orientation { get; set; }
 
-        private void PanGestureRecognizer_PanUpdated2(object sender, PanUpdatedEventArgs e)
+        private void CircleSlider_PropertyChanged(object sender, double e)
         {
-            Debug.WriteLine(e.TotalX+","+ e.TotalY);
+            this.labelView.Text = e.ToString(LABEL_FORMATE);
+            this.canvasView?.InvalidateSurface();
         }
+
     }
 }

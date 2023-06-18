@@ -19,12 +19,20 @@ public partial class MainPage : ContentPage
 
     }
 
-    private async void Button_Clicked(object sender, EventArgs e)
+    private void Button_Clicked(object sender, EventArgs e)
     {
-        var html = this.MainCircleWidget.GetHtmlText();
-        await DisplayAlert("GetHtml()", html, "OK");
+        this.slider.Value = 20;
+    }
 
+    private void Button_Clicked2(object sender, EventArgs e)
+    {
+        this.slider.Value = 50;
 
+    }
+    private void Button_Clicked3(object sender, EventArgs e)
+    {
+
+        this.slider.Value = 80;
     }
 }
 
