@@ -9,27 +9,19 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <!--标题区域-->
 
-            <Grid>
-                <Button Clicked="Button_Clicked"
-                        Text="StickPanSample"></Button>
-            </Grid>
 
             <!--播放控制区域-->
-            <Grid Grid.Row="1"
-                  HeightRequest="300"
-                  BackgroundColor="#F1F1F1">
+            <Grid Grid.Row="0"
+                  HeightRequest="300">
                 <controls:Clock1></controls:Clock1>
                 
             </Grid>
-            <Grid Grid.Row="2"
-                  HeightRequest="300"
-                  BackgroundColor="#F1F1F1">
+            <Grid Grid.Row="1"
+                  HeightRequest="300">
                 <controls:Clock2></controls:Clock2>
 
             </Grid>

@@ -52,33 +52,31 @@ public partial class Clock1 : ContentView
 
             // Hour hand
             strokePaint.Color = SKColor.Parse("#5E4000");
-            strokePaint.StrokeWidth = 20;
+            strokePaint.StrokeWidth = 15;
             canvas.Save();
             canvas.RotateDegrees(30 * dateTime.Hour + dateTime.Minute / 2f);
-            canvas.DrawLine(0, 0, 0, -r*(float)0.5, strokePaint);
+            canvas.DrawLine(0, 0, 0, -r*(float)0.4, strokePaint);
             canvas.Restore();
 
             // Minute hand
             strokePaint.Color = SKColor.Parse("#9C6D00");
-            strokePaint.StrokeWidth = 10;
             canvas.Save();
             canvas.RotateDegrees(6 * dateTime.Minute + dateTime.Second / 10f);
-            canvas.DrawLine(0, 0, 0, -r*(float)0.7, strokePaint);
+            canvas.DrawLine(0, 0, 0, -r*(float)0.62, strokePaint);
             canvas.Restore();
 
             // Second hand
             strokePaint.Color = SKColor.Parse("#657E3F");
-            strokePaint.StrokeWidth = 2;
             canvas.Save();
             canvas.RotateDegrees(6 * dateTime.Second);
-            canvas.DrawLine(0, r*(float)0.1, 0, -r*(float)0.8, strokePaint);
+            strokePaint.StrokeWidth *=(float)0.5;
             strokePaint.Style=SKPaintStyle.Fill;
-            canvas.DrawCircle(0, 0, 5, strokePaint);
+
+            canvas.DrawCircle(0, -r*(float)0.8, strokePaint.StrokeWidth, strokePaint);
 
             strokePaint.Color = SKColors.Black;
             strokePaint.StrokeWidth = 1;
             var dateStr = dateTime.ToString("M");
-            Debug.WriteLine(dateStr);
             var pathAngle = 20;
             var startAngle = 90-pathAngle;
             var sweepAngle = pathAngle*2;
@@ -87,9 +85,6 @@ public partial class Clock1 : ContentView
             using (SKPath path = new SKPath())
             {
                 path.AddArc(rect, startAngle, sweepAngle);
-
-                //canvas.DrawPath(path, strokePaint);
-                
                 canvas.DrawTextOnPath(dateStr, path, new SKPoint(), strokePaint);
             }
 
@@ -106,12 +101,12 @@ public partial class Clock1 : ContentView
         var centerY = (float)this.Height / 2;
         var points = new List<Point>();
         var r = length / 2;
-        var r2 = r * 1.16;
-        var r3 = r * 0.851;
+        var r2 = r * 1.1;
+        var r3 = r * 0.9;
         //var r2 = r * 1.06;
         //var r3 = r * 1;
         var index = 0;
-        var segments = 60;
+        var segments = 40;
         for (var i = 0; i < segments; i += 2)
         {
             var x = r * Math.Cos(i * 2 * Math.PI / segments) + centerX;

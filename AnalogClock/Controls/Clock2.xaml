@@ -3,30 +3,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:forms="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              x:Class="AnalogClock.Controls.Clock2">
-    <Grid> 
-        <Path Grid.Row="0"
-              Grid.Column="1"
-              Stroke="white"
-              Fill="#FFEED9"
-              IsVisible="true"
-              x:Name="ModulatedPath">
-            <Path.Data>
-                <PathGeometry>
-                    <PathGeometry.Figures>
-                        <PathFigureCollection>
-                            <PathFigure IsClosed="True" x:Name="MainPathFigure">
-                                <PathFigure.Segments>
-                                    <PathSegmentCollection x:Name="MainPathSegmentCollection">
+    <ContentView.Resources>
+        <Style TargetType="Label"
+               x:Key="ClockPlateNumberLabelStyle">
+            <Setter Property="HorizontalTextAlignment"
+                    Value="Center"></Setter>
+            <Setter Property="VerticalTextAlignment"
+                    Value="Center"></Setter>
+            <Setter Property="VerticalOptions"
+                    Value="Center"></Setter>
+            <Setter Property="FontAttributes"
+                    Value="Bold"></Setter>
+            <Setter Property="FontSize"
+                    Value="120"></Setter>
+            <Setter Property="TextColor"
+                    Value="#F9BC49"></Setter>
+            <Setter Property="FontFamily"
+                    Value="URWGeometricBlack"></Setter>
+        </Style>
+    </ContentView.Resources>
+    <Grid>
 
-                                    </PathSegmentCollection>
-                                </PathFigure.Segments>
-                            </PathFigure>
+        <Ellipse Grid.Row="0"
+                 Grid.Column="1"
+                 Stroke="white"
+                 Fill="#FFEED9"
+                 IsVisible="true"
+                 HeightRequest="200"
+                 WidthRequest="200"
+                 x:Name="ModulatedPath">
+        </Ellipse>
+        <Grid TranslationY="-15">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label   Grid.Row="0"
+                     Grid.ColumnSpan="2"
+                     Text="12"
+                     Style="{StaticResource ClockPlateNumberLabelStyle}"></Label>
 
-                        </PathFigureCollection>
-                    </PathGeometry.Figures>
-                </PathGeometry>
-            </Path.Data>
-        </Path>
+            <Label   Grid.RowSpan="2"
+                     Grid.Column="1"
+                     Text="3"
+                     Style="{StaticResource ClockPlateNumberLabelStyle}"></Label>
+
+            <Label   Grid.Row="1"
+                     Grid.ColumnSpan="2"
+                     Text="6"
+                     Style="{StaticResource ClockPlateNumberLabelStyle}"></Label>
+
+            <Label   Grid.RowSpan="2"
+                     Grid.Column="0"
+                     Text="9"
+                     Style="{StaticResource ClockPlateNumberLabelStyle}"></Label>
+
+        </Grid>
+
+
 
         <forms:SKCanvasView x:Name="canvasView"
                             PaintSurface="OnCanvasViewPaintSurface" />

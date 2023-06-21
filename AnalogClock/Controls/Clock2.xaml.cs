@@ -13,11 +13,17 @@ public partial class Clock2 : ContentView
     public Clock2()
     {
         InitializeComponent();
-        this.SizeChanged+=ContentView_SizeChanged;
+        this.SizeChanged+=Clock2_SizeChanged;
         _timer=  Dispatcher.CreateTimer();
         _timer.Interval=TimeSpan.FromSeconds(1);
         _timer.Tick+=_timer_Tick;
         _timer.Start();
+    }
+
+    private void Clock2_SizeChanged(object sender, EventArgs e)
+    {
+        this.ModulatedPath.Scale=(Math.Min(this.Width / 200f, this.Height / 200f));
+
     }
 
     private void _timer_Tick(object sender, EventArgs e)
@@ -52,18 +58,18 @@ public partial class Clock2 : ContentView
 
             // Hour hand
             strokePaint.Color = SKColor.Parse("#5E4000");
-            strokePaint.StrokeWidth = 20;
+            strokePaint.StrokeWidth = 15;
             canvas.Save();
             canvas.RotateDegrees(30 * dateTime.Hour + dateTime.Minute / 2f);
-            canvas.DrawLine(0, 0, 0, -r*(float)0.5, strokePaint);
+            canvas.DrawLine(0, 0, 0, -r*(float)0.4, strokePaint);
             canvas.Restore();
 
             // Minute hand
             strokePaint.Color = SKColor.Parse("#9C6D00");
-            strokePaint.StrokeWidth = 10;
+            strokePaint.StrokeWidth = 5;
             canvas.Save();
             canvas.RotateDegrees(6 * dateTime.Minute + dateTime.Second / 10f);
-            canvas.DrawLine(0, 0, 0, -r*(float)0.7, strokePaint);
+            canvas.DrawLine(0, 0, 0, -r*(float)0.8, strokePaint);
             canvas.Restore();
 
             // Second hand
@@ -75,68 +81,7 @@ public partial class Clock2 : ContentView
             strokePaint.Style=SKPaintStyle.Fill;
             canvas.DrawCircle(0, 0, 5, strokePaint);
 
-            strokePaint.Color = SKColors.Black;
-            strokePaint.StrokeWidth = 1;
-            var dateStr = dateTime.ToString("M");
-            Debug.WriteLine(dateStr);
-            var pathAngle = 20;
-            var startAngle = 90-pathAngle;
-            var sweepAngle = pathAngle*2;
-            var rect = new SKRect(-r*(float)0.8, -r*(float)0.8, r*(float)0.8, r*(float)0.8);
-
-            using (SKPath path = new SKPath())
-            {
-                path.AddArc(rect, startAngle, sweepAngle);
-
-                //canvas.DrawPath(path, strokePaint);
-                
-                canvas.DrawTextOnPath(dateStr, path, new SKPoint(), strokePaint);
-            }
-
-
             canvas.Restore();
-        }
-    }
-
-    private void ContentView_SizeChanged(object sender, EventArgs e)
-    {
-
-        var length = (float)Math.Min(this.Width, this.Height) * 0.95;
-        var centerX = (float)this.Width / 2;
-        var centerY = (float)this.Height / 2;
-        var points = new List<Point>();
-        var r = length / 2;
-        var r2 = r * 1.16;
-        var r3 = r * 0.851;
-        //var r2 = r * 1.06;
-        //var r3 = r * 1;
-        var index = 0;
-        var segments = 60;
-        for (var i = 0; i < segments; i += 2)
-        {
-            var x = r * Math.Cos(i * 2 * Math.PI / segments) + centerX;
-            var y = r * Math.Sin(i * 2 * Math.PI / segments) + centerY;
-
-            points.Add(new Point((float)x, (float)y));
-            var currentR = index++ % 2 == 0 ? r2 : r3;
-            x = currentR * Math.Cos((i + 1) * 2 * Math.PI / segments) + centerX;
-            y = currentR * Math.Sin((i + 1) * 2 * Math.PI / segments) + centerY;
-
-            points.Add(new Point((float)x, (float)y));
-        }
-        MainPathFigure.StartPoint=points[0];
-
-        points.Add(points[0]);
-
-        for (var i = 0; i < points.Count - 2; i += 2)
-        {
-            var currentPoint = points[i];
-            var centerPoint = points[i + 1];
-            var nextPoint = points[i + 2];
-            MainPathSegmentCollection.Add(new BezierSegment(
-                currentPoint, centerPoint, nextPoint
-
-          ));
         }
     }
 

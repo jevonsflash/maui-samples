@@ -50,6 +50,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\FontAwesome.ttf" />
+	  <None Remove="Resources\Fonts\URWGeometricBlack.otf" />
 	</ItemGroup>
 
 	<ItemGroup>
