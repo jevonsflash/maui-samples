@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichTextEditor", "RichTextE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CircleWidget", "CircleWidget\CircleWidget.csproj", "{724403A7-D469-4E0F-9206-CE1A2AEB2565}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tile", "Tile\Tile.csproj", "{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,12 @@ Global
 		{724403A7-D469-4E0F-9206-CE1A2AEB2565}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{724403A7-D469-4E0F-9206-CE1A2AEB2565}.Release|Any CPU.Build.0 = Release|Any CPU
 		{724403A7-D469-4E0F-9206-CE1A2AEB2565}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

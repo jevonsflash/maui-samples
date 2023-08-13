@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls1="clr-namespace:Tile.Controls;assembly=Tile"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             x:Class="Tile.MainPage">
+    <ContentPage.Resources>
+        <ControlTemplate x:Key="NoteSegmentCardViewPhone">
+            <ContentView>
+                <StackLayout>
+                    <StackLayout.GestureRecognizers>
+                        <DropGestureRecognizer AllowDrop="True"
+                                               DragLeaveCommand="{TemplateBinding BindingContext.DragLeave}"
+                                               DragLeaveCommandParameter="{TemplateBinding}"
+                                               DragOverCommand="{TemplateBinding BindingContext.DraggedOver}"
+                                               DragOverCommandParameter="{TemplateBinding}"
+                                               DropCommand="{TemplateBinding BindingContext.Dropped}"
+                                               DropCommandParameter="{TemplateBinding}" />
+                    </StackLayout.GestureRecognizers>
+                    <Border StrokeThickness="4"
+                            StrokeDashArray="2 2"
+                            StrokeDashOffset="6"
+                            Stroke="black"
+                            HorizontalOptions="Center"
+                            IsVisible="{TemplateBinding BindingContext.IsBeingDraggedOver}">
+                        <Grid HeightRequest="{TemplateBinding BindingContext.DropPlaceHolderItem.Height}"
+                              WidthRequest="{TemplateBinding BindingContext.DropPlaceHolderItem.Width}">
+                            <Label HorizontalTextAlignment="Center"
+                                   VerticalOptions="Center"
+                                   Text="松开手指将放置条目至此处"></Label>
+
+
+                        </Grid>
+                    </Border>
+
+                    <Border x:Name="ContentLayout"
+                            Margin="0"
+                            Padding="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.GestureRecognizers>
+                                <DragGestureRecognizer CanDrag="True"
+                                                       DragStartingCommand="{TemplateBinding BindingContext.Dragged}"
+                                                       DragStartingCommandParameter="{TemplateBinding}" />
+                            </Grid.GestureRecognizers>
+
+                            <Label Grid.Column="0"
+                                   VerticalOptions="Center"
+                                   Text="{TemplateBinding BindingContext.NoteSegment.Icon}"
+                                   FontFamily="FontAwesome"></Label>
+                            <Label Grid.Column="1"
+                                   VerticalOptions="Center"
+                                   Text="{TemplateBinding BindingContext.NoteSegment.Title}">
+
+                            </Label>
+                            <ContentPresenter Grid.Row="1"
+                                              Grid.ColumnSpan="2" />
+                        </Grid>
+                    </Border>
+                </StackLayout>
+            </ContentView>
+        </ControlTemplate>
+
+        <DataTemplate x:Key="DateTimeSegment">
+            <controls1:DateTimeSegmentView  Margin="0,5"
+                                            ControlTemplate="NoteSegmentCardViewPhone">
+            </controls1:DateTimeSegmentView>
+        </DataTemplate>
+        <DataTemplate x:Key="TextSegment">
+            <controls1:TextSegmentView Margin="0,5"
+                                       ControlTemplate="NoteSegmentCardViewPhone">
+                           
+            </controls1:TextSegmentView>
+        </DataTemplate>
+
+        <controls1:NoteSegmentDataTemplateSelector x:Key="NoteSegmentDataTemplateSelector"
+                                              ResourcesContainer="{x:Reference MainPage}" />
+
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto, *, Auto"
+          Padding="20, 10, 20, 0">
+        <CollectionView Grid.Row="1"
+                        x:Name="MainCollectionView"
+                        ItemsSource="{Binding NoteSegments}"
+                        SelectedItems="{Binding SelectedNoteSegments}"
+                        SelectedItem="{Binding SelectedNoteSegment}"
+                        SelectionMode="{Binding SelectionMode}"
+                        ItemTemplate="{StaticResource NoteSegmentDataTemplateSelector}">
+
+
+            <CollectionView.Header>
+                <VerticalStackLayout>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span>共</Span>
+                                <Span Text="{Binding NoteSegments.Count}"></Span>
+                                <Span>个片段</Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                </VerticalStackLayout>
+            </CollectionView.Header>
+        </CollectionView>
+
+    </Grid>
+
+
+</ContentPage>
