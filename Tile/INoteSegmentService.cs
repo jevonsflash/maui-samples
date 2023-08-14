@@ -1,11 +1,8 @@
 ﻿namespace Tile
 {
-    public interface INoteSegmentService : IDraggableItem
+    public interface ITileSegmentService : IDraggableItem
     {
-        NoteSegment NoteSegment { get; set; }
-        NoteSegmentState NoteSegmentState { get; set; }
-        IReadOnlyNoteSegmentServiceContainer Container { get; set; }
-
-
+        TileSegment TileSegment { get; set; }
+        IReadOnlyTileSegmentServiceContainer Container { get; set; }
     }
 }

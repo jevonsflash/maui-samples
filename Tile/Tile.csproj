@@ -61,13 +61,34 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Controls\LargeSegmentView.xaml.cs">
+	    <DependentUpon>LargeSegmentView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Controls\SmallSegmentView.xaml.cs">
+	    <DependentUpon>SmallSegmentView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Controls\MediumSegmentView.xaml.cs">
+	    <DependentUpon>MediumSegmentView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="MainPage.xaml.cs">
+	    <DependentUpon>MainPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="ColorAnimation.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Controls\DateTimeSegmentView.xaml">
+	  <MauiXaml Update="Controls\LargeSegmentView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Controls\TextSegmentView.xaml">
+	  <MauiXaml Update="Controls\SmallSegmentView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\MediumSegmentView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MainPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

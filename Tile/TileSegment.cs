@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Tile
 {
-    public class NoteSegment 
+    public class TileSegment 
     {
-        public NoteSegment()
+        public TileSegment()
         {
 
         }
@@ -22,7 +22,7 @@ namespace Tile
         public string Status { get; set; }
         public string Desc { get; set; }
         public string Icon { get; set; }
-        public string Color { get; set; }
+        public Color Color { get; set; }
         public int Rank { get; set; }
 
         public bool IsHidden { get; set; }

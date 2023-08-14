@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tile.Controls
 {
-    public class NoteSegmentDataTemplateSelector : DataTemplateSelector
+    public class TileSegmentDataTemplateSelector : DataTemplateSelector
     {
 
         public object ResourcesContainer { get; set; }
@@ -18,9 +18,9 @@ namespace Tile.Controls
             {
                 return default;
             }
-            if (item is INoteSegmentService)
+            if (item is ITileSegmentService)
             {
-                var dataTemplateName = (item as INoteSegmentService).NoteSegment.Type;
+                var dataTemplateName = (item as ITileSegmentService).TileSegment.Type;
                 if (dataTemplateName == null) { return default; }
                 if (ResourcesContainer == null)
                 {

@@ -7,21 +7,14 @@ using System.Threading.Tasks;
 namespace Tile
 {
 
-    public enum NoteSegmentState
-    {
-        Config,
-        Edit,
-        PreView
-    }
-    public class NoteSegmentService : ObservableObject, INoteSegmentService
+    public class TileSegmentService : ObservableObject, ITileSegmentService
     {
 
-        public NoteSegmentService(
-            NoteSegment noteSegment)
+        public TileSegmentService(
+            TileSegment tileSegment)
         {
             Remove = new Command(RemoveAction);
-            NoteSegment = noteSegment;
-            NoteSegmentState = NoteSegmentState.Config;
+            TileSegment = tileSegment;
 
             Dragged = new Command(OnDragged);
             DraggedOver = new Command(OnDraggedOver);
@@ -42,7 +35,7 @@ namespace Tile
             {
                 IsBeingDraggedOver=true;
 
-                var itemToMove = Container.NoteSegments.First(i => i.IsBeingDragged);
+                var itemToMove = Container.TileSegments.First(i => i.IsBeingDragged);
                 if (itemToMove.DraggedItem!=null)
                 {
                     DropPlaceHolderItem=itemToMove.DraggedItem;
@@ -86,17 +79,17 @@ namespace Tile
 
         private void OnDropped(object item)
         {
-            var itemToMove = Container.NoteSegments.First(i => i.IsBeingDragged);
+            var itemToMove = Container.TileSegments.First(i => i.IsBeingDragged);
 
             if (itemToMove == null ||  itemToMove == this)
                 return;
 
 
-            Container.NoteSegments.Remove(itemToMove);
+            Container.TileSegments.Remove(itemToMove);
 
-            var insertAtIndex = Container.NoteSegments.IndexOf(this);
+            var insertAtIndex = Container.TileSegments.IndexOf(this);
 
-            Container.NoteSegments.Insert(insertAtIndex, itemToMove);
+            Container.TileSegments.Insert(insertAtIndex, itemToMove);
             itemToMove.IsBeingDragged = false;
             IsBeingDraggedOver = false;
             DraggedItem=null;
@@ -105,37 +98,24 @@ namespace Tile
 
         private async void RemoveAction(object obj)
         {
-            if (Container is INoteSegmentServiceContainer)
+            if (Container is ITileSegmentServiceContainer)
             {
-                (Container as INoteSegmentServiceContainer).RemoveSegment.Execute(this);
+                (Container as ITileSegmentServiceContainer).RemoveSegment.Execute(this);
             }
         }
 
 
-        public IReadOnlyNoteSegmentServiceContainer Container { get; set; }
+        public IReadOnlyTileSegmentServiceContainer Container { get; set; }
 
 
-        private NoteSegment noteSegment;
+        private TileSegment tileSegment;
 
-        public NoteSegment NoteSegment
+        public TileSegment TileSegment
         {
-            get { return noteSegment; }
+            get { return tileSegment; }
             set
             {
-                noteSegment = value;
-                OnPropertyChanged();
-
-            }
-        }
-
-        private NoteSegmentState _isConfigState;
-
-        public NoteSegmentState NoteSegmentState
-        {
-            get { return _isConfigState; }
-            set
-            {
-                _isConfigState = value;
+                tileSegment = value;
                 OnPropertyChanged();
 
             }
@@ -166,8 +146,6 @@ namespace Tile
             }
         }
 
-        public Command Submit { get; set; }
-        public Command Create { get; set; }
         public Command Remove { get; set; }
 
 

@@ -6,70 +6,51 @@ using System.Reflection;
 namespace Tile.ViewModels
 {
 
-    public class MainPageViewModel : ObservableObject, INoteSegmentServiceContainer
+    public class MainPageViewModel : ObservableObject, ITileSegmentServiceContainer
     {
 
         public MainPageViewModel()
         {
-            CreateSegment = new Command(CreateSegmentAction);
+            CreateSegment = new Command((obj) =>
+            {
+                CreateSegmentAction(obj, "NEW TILE", "Some description here", Colors.DarkOrange);
+            });
             RemoveSegment = new Command(RemoveSegmentAction);
-            SelectAllSegment = new Command(SelectAllSegmentAction);
-            RemoveSelectedSegment = new Command(RemoveSelectedSegmentAction);
 
-            IsConfiguratingNoteSegment = false;
-            SelectedNoteSegments = new ObservableCollection<object>();
-
+            TileSegments = new ObservableCollection<ITileSegmentService>();
+            CreateSegmentAction("SmallSegment", "App1", "Some description here", Colors.DarkGoldenrod);
+            CreateSegmentAction("MediumSegment", "App2", "Some description here", Colors.DarkGreen);
+            CreateSegmentAction("LargeSegment", "App3", "Some description here", Colors.DarkKhaki);
+            CreateSegmentAction("SmallSegment", "App4", "Some description here", Colors.DarkGoldenrod);
+            CreateSegmentAction("MediumSegment", "App5", "Some description here", Colors.DarkOliveGreen);
+            CreateSegmentAction("LargeSegment", "App6", "Some description here", Colors.DarkSalmon);
         }
-
-        private void SelectAllSegmentAction(object obj)
-        {
-            foreach (var noteSegments in NoteSegments)
-            {
-                SelectedNoteSegments.Add(noteSegments);
-            }
-        }
-
-        private void RemoveSelectedSegmentAction(object obj)
-        {
-            foreach (var noteSegments in SelectedNoteSegments.ToList())
-            {
-                NoteSegments.Remove((INoteSegmentService)noteSegments);
-            }
-        }
-
-
-
-
 
 
         private void RemoveSegmentAction(object obj)
         {
-            NoteSegments.Remove(obj as INoteSegmentService);
+            TileSegments.Remove(obj as ITileSegmentService);
         }
 
-        private async void CreateSegmentAction(object obj)
+        private void CreateSegmentAction(object obj, string title, string desc, Color color)
         {
             var type = obj as string;
-            NoteSegment note = default;
-
-
-            var noteSegment = new NoteSegment()
+            var tileSegment = new TileSegment()
             {
-                Title = note.Title,
+                Title = title,
                 Type = type,
-                Desc = note.Desc,
-                Icon=note.Icon,
+                Desc = desc,
+                Icon = "dotnet_bot.svg",
+                Color = color,
             };
 
 
 
-            var newModel = new NoteSegmentService(noteSegment);
+            var newModel = new TileSegmentService(tileSegment);
             if (newModel != null)
             {
-                newModel.Create.Execute(null);
-                newModel.NoteSegmentState = IsConfiguratingNoteSegment ? NoteSegmentState.Config : NoteSegmentState.Edit;
                 newModel.Container = this;
-                NoteSegments.Add(newModel);
+                TileSegments.Add(newModel);
             }
 
         }
@@ -78,179 +59,39 @@ namespace Tile.ViewModels
 
 
 
-        private long noteId;
+        private long tileId;
 
-        public long NoteId
+        public long TileId
         {
-            get { return noteId; }
+            get { return tileId; }
             set
             {
-                if (noteId != value)
+                if (tileId != value)
                 {
-                    noteId = value;
+                    tileId = value;
                     OnPropertyChanged();
                 }
 
             }
         }
 
-        private string _title;
 
-        public string Title
+
+
+        private ObservableCollection<ITileSegmentService> _tileSegments;
+
+        public ObservableCollection<ITileSegmentService> TileSegments
         {
-            get { return _title; }
+            get { return _tileSegments; }
             set
             {
-                _title = value;
+                _tileSegments = value;
                 OnPropertyChanged();
             }
         }
-
-
-
-        private string _desc;
-
-        public string Desc
-        {
-            get { return _desc; }
-            set
-            {
-                _desc = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _icon;
-
-        public string Icon
-        {
-            get { return _icon; }
-            set
-            {
-                _icon = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _color;
-
-        public string Color
-        {
-            get { return _color; }
-            set
-            {
-                _color = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _backgroundColor;
-
-
-        public string BackgroundColor
-        {
-            get { return _backgroundColor; }
-            set
-            {
-                _backgroundColor = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        private string _preViewContent;
-
-        public string PreViewContent
-        {
-            get { return _preViewContent; }
-            set
-            {
-                _preViewContent = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isEditable;
-
-        public bool IsEditable
-        {
-            get { return _isEditable; }
-            set
-            {
-                _isEditable = value;
-                OnPropertyChanged();
-
-            }
-        }
-
-
-
-
-
-        private ObservableCollection<INoteSegmentService> _noteSegments;
-
-        public ObservableCollection<INoteSegmentService> NoteSegments
-        {
-            get { return _noteSegments; }
-            set
-            {
-                _noteSegments = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private ObservableCollection<object> _selectedNoteSegments;
-
-        public ObservableCollection<object> SelectedNoteSegments
-        {
-            get { return _selectedNoteSegments; }
-            set
-            {
-                _selectedNoteSegments = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private INoteSegmentService _selectedNoteSegment;
-
-        public INoteSegmentService SelectedNoteSegment
-        {
-            get { return _selectedNoteSegment; }
-            set
-            {
-                _selectedNoteSegment = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isConfiguratingNoteSegment;
-
-        public bool IsConfiguratingNoteSegment
-        {
-            get { return _isConfiguratingNoteSegment; }
-            set
-            {
-                _isConfiguratingNoteSegment = value;
-                OnPropertyChanged();
-
-            }
-        }
-
-
-
 
 
         public Command CreateSegment { get; set; }
-        public Command CreateSegmentFromStore { get; set; }
-        public Command Remove { get; set; }
         public Command RemoveSegment { get; set; }
-        public Command RemoveSelectedSegment { get; set; }
-        public Command SelectAllSegment { get; set; }
-
-
-        public Command SwitchState { get; set; }
-
-
-
     }
 }

@@ -2,10 +2,9 @@
 
 namespace Tile
 {
-    public interface INoteSegmentServiceContainer : IReadOnlyNoteSegmentServiceContainer
+    public interface ITileSegmentServiceContainer : IReadOnlyTileSegmentServiceContainer
     {
         Command CreateSegment { get; set; }
-        bool IsConfiguratingNoteSegment { get; set; }
         Command RemoveSegment { get; set; }
     }
 }
