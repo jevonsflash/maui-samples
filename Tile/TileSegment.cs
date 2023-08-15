@@ -10,23 +10,10 @@ namespace Tile
 {
     public class TileSegment 
     {
-        public TileSegment()
-        {
-
-        }
-
-        public long Id { get; set; }
-
         public string Title { get; set; }
         public string Type { get; set; }
-        public string Status { get; set; }
         public string Desc { get; set; }
         public string Icon { get; set; }
         public Color Color { get; set; }
-        public int Rank { get; set; }
-
-        public bool IsHidden { get; set; }
-
-        public bool IsRemovable { get; set; }
     }
 }

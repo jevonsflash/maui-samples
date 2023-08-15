@@ -13,5 +13,8 @@
 
         object DraggedItem { get; set; }
 
+        object DropPlaceHolderItem { get; set; }
+        
+
     }
 }

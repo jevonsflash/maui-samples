@@ -5,7 +5,7 @@
              x:Name="Main"
              x:Class="Tile.MainPage">
     <ContentPage.Resources>
-        <ControlTemplate x:Key="TileSegmentCardViewPhone">
+        <ControlTemplate x:Key="TileSegmentTemplate">
             <ContentView>
                 <StackLayout>
                     <StackLayout.GestureRecognizers>
@@ -61,18 +61,18 @@
 
         <DataTemplate x:Key="SmallSegment">
             <controls1:SmallSegmentView  Margin="0,5"
-                                         ControlTemplate="{StaticResource TileSegmentCardViewPhone}">
+                                         ControlTemplate="{StaticResource TileSegmentTemplate}">
             </controls1:SmallSegmentView>
         </DataTemplate>
         <DataTemplate x:Key="MediumSegment">
             <controls1:MediumSegmentView Margin="0,5"
-                                         ControlTemplate="{StaticResource TileSegmentCardViewPhone}">
+                                         ControlTemplate="{StaticResource TileSegmentTemplate}">
 
             </controls1:MediumSegmentView>
         </DataTemplate>
         <DataTemplate x:Key="LargeSegment">
             <controls1:LargeSegmentView Margin="0,5"
-                                        ControlTemplate="{StaticResource TileSegmentCardViewPhone}">
+                                        ControlTemplate="{StaticResource TileSegmentTemplate}">
 
             </controls1:LargeSegmentView>
         </DataTemplate>
@@ -85,13 +85,10 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Text="App"></Label>
+        <Label Text="Apps" FontSize="Large" FontAttributes="Bold"></Label>
         <CollectionView Grid.Row="1"
                         x:Name="MainCollectionView"
                         ItemsSource="{Binding TileSegments}"
-                        SelectedItems="{Binding SelectedTileSegments}"
-                        SelectedItem="{Binding SelectedTileSegment}"
-                        SelectionMode="{Binding SelectionMode}"
                         ItemTemplate="{StaticResource TileSegmentDataTemplateSelector}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" />
