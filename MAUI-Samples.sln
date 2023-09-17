@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CircleWidget", "CircleWidge
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tile", "Tile\Tile.csproj", "{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tile2", "Tile2\Tile2.csproj", "{DEC604E3-6E64-4E18-B64D-701AFC2248CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,12 @@ Global
 		{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D50E85A-DCB6-42B6-9126-6479DCCBAB3D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DEC604E3-6E64-4E18-B64D-701AFC2248CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEC604E3-6E64-4E18-B64D-701AFC2248CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEC604E3-6E64-4E18-B64D-701AFC2248CF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DEC604E3-6E64-4E18-B64D-701AFC2248CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEC604E3-6E64-4E18-B64D-701AFC2248CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEC604E3-6E64-4E18-B64D-701AFC2248CF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

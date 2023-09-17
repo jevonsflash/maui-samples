@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls1="clr-namespace:Tile.Controls;assembly=Tile2"
+             x:Name="Main"
+             x:Class="Tile.MainPage">
+    <Grid Padding="20, 10, 20, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Text="Apps" FontSize="Large" FontAttributes="Bold"></Label>
+        <CollectionView Grid.Row="1"
+                        x:Name="MainCollectionView"
+                        ItemsSource="{Binding TileSegments}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <StackLayout>
+                            <StackLayout.GestureRecognizers>
+                                <DropGestureRecognizer AllowDrop="True"
+                                                       DragLeaveCommand="{Binding DragLeave}"
+                                                       DragLeaveCommandParameter="{Binding}"
+                                                       DragOverCommand="{Binding DraggedOver}"
+                                                       DragOverCommandParameter="{Binding}"
+                                                       DropCommand="{Binding Dropped}"
+                                                       DropCommandParameter="{Binding}" />
+                            </StackLayout.GestureRecognizers>
+                            <Border StrokeThickness="4"
+                                    StrokeDashArray="2 2"
+                                    StrokeDashOffset="6"
+                                    Stroke="black"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding IsBeingDraggedOver}">
+                                <Grid HeightRequest="{Binding DropPlaceHolderItem.Height}"
+                                      WidthRequest="{Binding DropPlaceHolderItem.Width}">
+                                    <Label HorizontalTextAlignment="Center"
+                                           VerticalOptions="Center"
+                                           Text="松开手指将放置条目至此处"></Label>
+
+
+                                </Grid>
+                            </Border>
+
+                            <Border x:Name="ContentLayout"
+                                    Margin="0">
+                                <Grid>
+                                    <Grid.GestureRecognizers>
+                                        <DragGestureRecognizer CanDrag="True"
+                                                               DragStartingCommand="{Binding Dragged}"
+                                                               DragStartingCommandParameter="{Binding}" />
+                                    </Grid.GestureRecognizers>
+
+                                    <controls1:TileSegmentView Margin="0,5">
+                                    </controls1:TileSegmentView>
+                                    
+                                    <Button CornerRadius="100"
+                                            HeightRequest="20"
+                                            WidthRequest="20"
+                                            Padding="0"
+                                            BackgroundColor="Red"
+                                            TextColor="White"
+                                            Command="{Binding Remove}"
+                                            Text="×"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Start"></Button>
+                                </Grid>
+                            </Border>
+                        </StackLayout>
+                    </ContentView>
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.Footer>
+                <Border StrokeThickness="4"
+                        StrokeDashArray="2 2"
+                        StrokeDashOffset="6"
+                        Stroke="black">
+                    <Grid>
+                        <Button Command="{Binding CreateSegment}"
+                                Text="Create New Tile"></Button>
+
+
+                    </Grid>
+                </Border>
+            </CollectionView.Footer>
+        </CollectionView>
+
+    </Grid>
+
+
+</ContentPage>
