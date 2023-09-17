@@ -18,7 +18,10 @@
                         ItemsSource="{Binding TileSegments}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <ContentView HeightRequest="110" WidthRequest="110" HorizontalOptions="Center" VerticalOptions="Center">
+                    <ContentView HeightRequest="110"
+                                 WidthRequest="110"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
                         <StackLayout>
                             <StackLayout.GestureRecognizers>
                                 <DropGestureRecognizer AllowDrop="True"
@@ -69,19 +72,15 @@
                                  Span="3" />
             </CollectionView.ItemsLayout>
         </CollectionView>
-        <Border Grid.Row="2"
-                StrokeThickness="4"
-                StrokeDashArray="2 2"
-                StrokeDashOffset="6"
-                Stroke="black">
-            <Grid>
-                <Button Command="{Binding CreateSegment}"
-                        CommandParameter="TileSegment"
-                        Text="Create New Tile"></Button>
+        <Grid Grid.Row="2">
+
+            <Button Command="{Binding CreateSegment}"
+                    CommandParameter="TileSegment"
+                    BackgroundColor="#EEF3F6"
+                    Text="Create New Tile"></Button>
 
 
-            </Grid>
-        </Border>
+        </Grid>
     </Grid>
 
 

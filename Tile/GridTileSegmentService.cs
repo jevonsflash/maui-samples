@@ -6,13 +6,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Tile.ViewModels;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Tile
 {
 
     public class GridTileSegmentService : ObservableObject, ITileSegmentService
     {
-
+        public static object throttleLocker = new object();
+        private static IDispatcherTimer _throttleDispatcher;
         public GridTileSegmentService(
             TileSegment tileSegment)
         {
@@ -35,9 +37,46 @@ namespace Tile
                 {
                     var newIndex = Container.TileSegments.IndexOf(this);
                     var oldIndex = Container.TileSegments.IndexOf(DropPlaceHolderItem as ITileSegmentService);
-                    Debug.WriteLine(newIndex);
-                    Debug.WriteLine(oldIndex);
-                    Container.TileSegments.Move(oldIndex, newIndex);
+                    // 使用throttle
+                    Monitor.Enter(throttleLocker);
+                    bool needExit = true;
+                    try
+                    {
+
+                        if (_throttleDispatcher==null)
+                        {
+                            _throttleDispatcher = Application.Current.Dispatcher.CreateTimer();
+                            _throttleDispatcher.IsRepeating=false;
+                            _throttleDispatcher.Interval=TimeSpan.FromSeconds(3);
+                            _throttleDispatcher.Tick+=(o, e) =>
+                            {
+                                _throttleDispatcher.Stop();
+                                _throttleDispatcher=null;
+
+                            };
+                            _throttleDispatcher.Start();
+                            Monitor.Exit(throttleLocker);
+                            needExit = false;
+                            Debug.WriteLine("===========");
+                            Debug.WriteLine("o:"+oldIndex+",n:"+newIndex);
+                            Container.TileSegments.Move(oldIndex, newIndex);
+                        }
+                        else
+                        {
+                            Debug.WriteLine("===========");
+                            Debug.WriteLine("ignored");
+
+                        }
+                    }
+                    finally
+                    {
+                        if (needExit)
+                            System.Threading.Monitor.Exit(throttleLocker);
+                    }
+                    // 不使用throttle
+                    //Container.TileSegments.Move(oldIndex, newIndex);
+
+
                 }
             }
 
@@ -94,7 +133,6 @@ namespace Tile
 
         private void OnDragLeave(object item)
         {
-            Debug.Write("Leave!");
             IsBeingDraggedOver = false;
             DropPlaceHolderItem = null;
         }
@@ -154,6 +192,7 @@ namespace Tile
         }
 
         private bool _isBeingDraggedOver;
+
         public bool IsBeingDraggedOver
         {
             get { return _isBeingDraggedOver; }
@@ -161,8 +200,6 @@ namespace Tile
             {
                 if (value!=_isBeingDraggedOver)
                 {
-                    Debug.WriteLine(value);
-                    Debug.WriteLine(_isBeingDraggedOver);
                     _isBeingDraggedOver = value;
                     OnPropertyChanged();
                 }
