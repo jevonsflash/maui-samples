@@ -4,112 +4,21 @@
              xmlns:controls1="clr-namespace:Tile.Controls;assembly=Tile"
              x:Name="Main"
              x:Class="Tile.MainPage">
-    <ContentPage.Resources>
-        <ControlTemplate x:Key="TileSegmentTemplate">
-            <ContentView>
-                <StackLayout>
-                    <StackLayout.GestureRecognizers>
-                        <DropGestureRecognizer AllowDrop="True"
-                                               DragLeaveCommand="{TemplateBinding BindingContext.DragLeave}"
-                                               DragLeaveCommandParameter="{TemplateBinding}"
-                                               DragOverCommand="{TemplateBinding BindingContext.DraggedOver}"
-                                               DragOverCommandParameter="{TemplateBinding}"
-                                               DropCommand="{TemplateBinding BindingContext.Dropped}"
-                                               DropCommandParameter="{TemplateBinding}" />
-                    </StackLayout.GestureRecognizers>
-                    <Border StrokeThickness="4"
-                            StrokeDashArray="2 2"
-                            StrokeDashOffset="6"
-                            Stroke="black"
-                            HorizontalOptions="Center"
-                            IsVisible="{TemplateBinding BindingContext.IsBeingDraggedOver}">
-                        <Grid HeightRequest="{TemplateBinding BindingContext.DropPlaceHolderItem.Height}"
-                              WidthRequest="{TemplateBinding BindingContext.DropPlaceHolderItem.Width}">
-                            <Label HorizontalTextAlignment="Center"
-                                   VerticalOptions="Center"
-                                   Text="松开手指将放置条目至此处"></Label>
+    <StackLayout>
+
+        <Button Text="HorizontalTilesPage"
+                Margin="10"
+                x:Name="HorizontalTilesPage"
+                BackgroundColor="#EEF3F6"
+                Clicked="HorizontalTilesPage_Clicked"></Button>
+
+        <Button Text="GridTilesPage"
+                Margin="10"
+                x:Name="GridTilesPage"
+                BackgroundColor="#EEF3F6"
+                Clicked="GridTilesPage_Clicked"></Button>
 
 
-                        </Grid>
-                    </Border>
-
-                    <Border x:Name="ContentLayout"
-                            Margin="0">
-                        <Grid>
-                            <Grid.GestureRecognizers>
-                                <DragGestureRecognizer CanDrag="True"
-                                                       DragStartingCommand="{TemplateBinding BindingContext.Dragged}"
-                                                       DragStartingCommandParameter="{TemplateBinding}" />
-                            </Grid.GestureRecognizers>
-
-                            <ContentPresenter />
-                            <Button CornerRadius="100"
-                                    HeightRequest="20"
-                                    WidthRequest="20"
-                                    Padding="0"
-                                    BackgroundColor="Red"
-                                    TextColor="White"
-                                    Command="{TemplateBinding BindingContext.Remove}"
-                                    Text="×"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Start"></Button>
-                        </Grid>
-                    </Border>
-                </StackLayout>
-            </ContentView>
-        </ControlTemplate>
-
-        <DataTemplate x:Key="SmallSegment">
-            <controls1:SmallSegmentView  Margin="0,5"
-                                         ControlTemplate="{StaticResource TileSegmentTemplate}">
-            </controls1:SmallSegmentView>
-        </DataTemplate>
-        <DataTemplate x:Key="MediumSegment">
-            <controls1:MediumSegmentView Margin="0,5"
-                                         ControlTemplate="{StaticResource TileSegmentTemplate}">
-
-            </controls1:MediumSegmentView>
-        </DataTemplate>
-        <DataTemplate x:Key="LargeSegment">
-            <controls1:LargeSegmentView Margin="0,5"
-                                        ControlTemplate="{StaticResource TileSegmentTemplate}">
-
-            </controls1:LargeSegmentView>
-        </DataTemplate>
-        <controls1:TileSegmentDataTemplateSelector x:Key="TileSegmentDataTemplateSelector"
-                                                   ResourcesContainer="{x:Reference Main}" />
-
-    </ContentPage.Resources>
-    <Grid Padding="20, 10, 20, 0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Label Text="Apps" FontSize="Large" FontAttributes="Bold"></Label>
-        <CollectionView Grid.Row="1"
-                        x:Name="MainCollectionView"
-                        ItemsSource="{Binding TileSegments}"
-                        ItemTemplate="{StaticResource TileSegmentDataTemplateSelector}">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.Footer>
-                <Border StrokeThickness="4"
-                        StrokeDashArray="2 2"
-                        StrokeDashOffset="6"
-                        Stroke="black">
-                    <Grid>
-                        <Button Command="{Binding CreateSegment}"
-                                CommandParameter="MediumSegment"
-                                Text="Create New Tile"></Button>
-
-
-                    </Grid>
-                </Border>
-            </CollectionView.Footer>
-        </CollectionView>
-
-    </Grid>
-
+    </StackLayout>
 
 </ContentPage>

@@ -11,9 +11,9 @@ using System.Linq;
 
 namespace Tile;
 
-public partial class MainPage : ContentPage
+public partial class HorizontalTilesPage : ContentPage
 {
-    public MainPage()
+    public HorizontalTilesPage()
     {
         InitializeComponent();
         this.BindingContext=new MainPageViewModel();
@@ -21,17 +21,5 @@ public partial class MainPage : ContentPage
 
     }
 
-    private async void HorizontalTilesPage_Clicked(object sender, EventArgs e)
-    {
-
-        await App.Current.MainPage.Navigation.PushAsync(new HorizontalTilesPage());
-
-    }
-
-    private async void GridTilesPage_Clicked(object sender, EventArgs e)
-    {
-        await App.Current.MainPage.Navigation.PushAsync(new GridTilesPage());
-
-    }
 }
 

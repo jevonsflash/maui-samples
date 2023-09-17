@@ -70,8 +70,14 @@
 	  <Compile Update="Controls\MediumSegmentView.xaml.cs">
 	    <DependentUpon>MediumSegmentView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="MainPage.xaml.cs">
-	    <DependentUpon>MainPage.xaml</DependentUpon>
+	  <Compile Update="Controls\TileSegmentView.xaml.cs">
+	    <DependentUpon>%(Filename)</DependentUpon>
+	  </Compile>
+	  <Compile Update="HorizontalTilesPage.xaml.cs">
+	    <DependentUpon>HorizontalTilesPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="GridTilesPage.xaml.cs">
+	    <DependentUpon>GridTilesPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -86,6 +92,15 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Controls\MediumSegmentView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\TileSegmentView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="HorizontalTilesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="GridTilesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MainPage.xaml">
