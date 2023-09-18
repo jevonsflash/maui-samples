@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ThrottleDebounce;
 using Tile.ViewModels;
 
 namespace Tile
@@ -12,7 +13,9 @@ namespace Tile
 
     public class GridTileSegmentService : ObservableObject, ITileSegmentService
     {
+        public static object throttledLocker = new object();
 
+        public static RateLimitedAction throttledAction = Debouncer.Debounce(null, TimeSpan.FromMilliseconds(500), leading: false, trailing: true);
         public GridTileSegmentService(
             TileSegment tileSegment)
         {
@@ -33,11 +36,24 @@ namespace Tile
 
                 if (this.IsBeingDraggedOver && DropPlaceHolderItem!=null)
                 {
-                    var newIndex = Container.TileSegments.IndexOf(this);
-                    var oldIndex = Container.TileSegments.IndexOf(DropPlaceHolderItem as ITileSegmentService);
-                    Debug.WriteLine(newIndex);
-                    Debug.WriteLine(oldIndex);
-                    Container.TileSegments.Move(oldIndex, newIndex);
+                    // 使用防抖
+                    lock (throttledLocker)
+                    {
+                        var newIndex = Container.TileSegments.IndexOf(this);
+                        var oldIndex = Container.TileSegments.IndexOf(DropPlaceHolderItem as ITileSegmentService);
+
+                        var originalAction = () =>
+                        {
+                            Container.TileSegments.Move(oldIndex, newIndex);
+                        };
+                        throttledAction.Update(originalAction);
+                        throttledAction.Invoke();
+                    }
+
+                    // 无防抖
+                    //var newIndex = Container.TileSegments.IndexOf(this);
+                    //var oldIndex = Container.TileSegments.IndexOf(DropPlaceHolderItem as ITileSegmentService);
+                    //Container.TileSegments.Move(oldIndex, newIndex);
                 }
             }
 
@@ -94,7 +110,6 @@ namespace Tile
 
         private void OnDragLeave(object item)
         {
-            Debug.Write("Leave!");
             IsBeingDraggedOver = false;
             DropPlaceHolderItem = null;
         }
@@ -161,18 +176,13 @@ namespace Tile
             {
                 if (value!=_isBeingDraggedOver)
                 {
-                    Debug.WriteLine(value);
-                    Debug.WriteLine(_isBeingDraggedOver);
                     _isBeingDraggedOver = value;
                     OnPropertyChanged();
                 }
-
-
             }
         }
 
         public Command Remove { get; set; }
-
 
         public Command Dragged { get; set; }
 
