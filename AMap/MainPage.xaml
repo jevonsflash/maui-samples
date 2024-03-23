@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AMap.Views.MainPage"
+             xmlns:views="clr-namespace:AMap;assembly=AMap"
+             xmlns:mato="clr-namespace:AMap;assembly=AMap">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="0.5*" />
+        </Grid.RowDefinitions>
+        <!--标题区域-->
+
+        <StackLayout Orientation="Vertical"
+                     Grid.Row="0"
+                     Margin="0,38,0,0"
+                     VerticalOptions="CenterAndExpand">
+
+
+            <Label HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   Text="MAUI Blazor AMap Sample By Linxiao"
+                   FontSize="{StaticResource BodyFontSize}">
+            </Label>
+
+        </StackLayout>
+        <Button Clicked="Button_Clicked"
+                Grid.Row="1"
+                x:Name="SelectorButton"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="{Binding Address, TargetNullValue=请选择地点}"></Button>
+
+        <Border StrokeShape="RoundRectangle 10"
+                Grid.RowSpan="2"
+                x:Name="SelectorPopup"
+                IsVisible="False"
+                Margin="5,50"
+                MinimumHeightRequest="500">
+
+            <Grid Padding="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label FontSize="Large"
+                           Margin="10, 10, 10, 0"
+                           FontAttributes="Bold"
+                           Text="选择地点"></Label>
+                    <HorizontalStackLayout Grid.Column="1"
+                                           HorizontalOptions="End">
+                        <Button Text="删除"
+                                Margin="5,0"
+                                Command="{Binding Remove}"></Button>
+                        <Button Text="完成"
+                                Margin="5,0"
+                                Command="{Binding Done}"></Button>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <Grid Grid.Row="1"
+                      Margin="10, 10, 10, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label HorizontalTextAlignment="Center"
+                           VerticalOptions="Center"
+                           x:Name="ContentLabel"
+                           Text="{Binding Address}"></Label>
+                    <Border IsVisible="False"
+                            Grid.RowSpan="2"
+                            x:Name="ContentFrame">
+                        <Entry Text="{Binding Address, Mode=TwoWay}"
+                               Placeholder="请输入地址, 按Enter键完成"
+                               Completed="Entry_Completed"
+                               Unfocused="Entry_Unfocused"
+                               ClearButtonVisibility="WhileEditing"></Entry>
+                    </Border>
+                    <Border x:Name="ContentButton"
+                            Grid.Row="1"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontFamily="FontAwesome"
+                                          Text="&#xf044;"></Span>
+                                    <Span Text=" 修改"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+
+                        </Label>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped">
+                            </TapGestureRecognizer>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+                <BlazorWebView Grid.Row="2"
+                               Margin="-10, 0"
+                               x:Name="mainMapBlazorWebView"
+                               HostPage="wwwroot/amap_index.html">
+                    <BlazorWebView.RootComponents>
+                        <RootComponent Selector="#app"
+                                       x:Name="rootComponent"
+                                       ComponentType="{x:Type views:AMapPage}" />
+                    </BlazorWebView.RootComponents>
+                </BlazorWebView>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:service="clr-namespace:Lession1.Models;assembly=InterfacePolymorphism"
+             x:Class="Lession1.Views.PhotoBlogView">
+    <Grid>
+        <VerticalStackLayout IsVisible="{Binding State, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static service:BlogState.PreView}}">
+            <Label Text="{Binding Title}"
+                   FontAttributes="Bold">
+            </Label>
+            <StackLayout BindableLayout.ItemsSource="{Binding Images}"
+                         Orientation="Horizontal">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}"
+                               Aspect="AspectFill"
+                               WidthRequest="44"
+                               HeightRequest="44" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout IsVisible="{Binding State, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static service:BlogState.Edit}}">
+            <Label Text="编辑"
+                   FontAttributes="Bold">
+            </Label>
+            <Entry Text="{Binding Title}" 
+                   Placeholder="标题"></Entry>
+            <StackLayout BindableLayout.ItemsSource="{Binding Images}"
+                         Orientation="Horizontal">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}"
+                               Aspect="AspectFill"
+                               WidthRequest="44"
+                               HeightRequest="44" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentView>

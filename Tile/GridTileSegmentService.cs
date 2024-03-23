@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ThrottleDebounce;
 using Tile.ViewModels;
-using static System.Collections.Specialized.BitVector32;
+using MauiSample.Common.ThrottleDebounce;
 
 namespace Tile
 {

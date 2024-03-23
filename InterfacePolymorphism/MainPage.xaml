@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:Lession1.Views;assembly=InterfacePolymorphism"
+             x:Name="MainContentPage"
+             x:Class="Lession1.MainPage">
+    <ContentPage.Resources>
+        <ControlTemplate x:Key="BlogCardViewPhone">
+            <Grid>
+                <SwipeView>
+                    <SwipeView.LeftItems>
+                        <SwipeItems>
+                            <SwipeItem Text="编辑"
+                                       BackgroundColor="LightYellow" />
+                            <SwipeItem Text="分享"
+                                       BackgroundColor="Azure" />
+                            <SwipeItem Text="删除"
+                                       BackgroundColor="Red" />
+                        </SwipeItems>
+                    </SwipeView.LeftItems>
+                    <Frame  HasShadow="True"
+                            Margin="0,10,0,10"
+                            CornerRadius="5"
+                            Padding="8">
+                        <VerticalStackLayout>
+                            <ContentPresenter />
+                            <Label Text="{TemplateBinding BindingContext.PostTime}"
+                                   ></Label>
+                            <Button Text="编辑/发布"
+                                    Command="{TemplateBinding BindingContext.SwitchState}" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </SwipeView>
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="BlogCardViewDesktop">
+            <Frame HasShadow="True"
+                   Margin="0,10,0,10"
+                   CornerRadius="5"
+                   Padding="8">
+                <FlyoutBase.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="编辑" />
+                        <MenuFlyoutItem Text="分享" />
+                        <MenuFlyoutItem Text="删除" />
+                    </MenuFlyout>
+                </FlyoutBase.ContextFlyout>
+
+                <VerticalStackLayout>
+                    <ContentPresenter  />
+                    <Label Text="{TemplateBinding BindingContext.PostTime}"
+                           ></Label>
+                    <Button Text="编辑/发布"
+                            Command="{TemplateBinding BindingContext.SwitchState}" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </ControlTemplate>
+
+        <DataTemplate x:Key="PhotoBlog">
+            <view:PhotoBlogView>
+                <view:PhotoBlogView.ControlTemplate>
+                    <OnIdiom Phone="{StaticResource BlogCardViewPhone}"
+                             Tablet="{StaticResource BlogCardViewDesktop}"
+                             Desktop="{StaticResource BlogCardViewDesktop}">
+                    </OnIdiom>
+                </view:PhotoBlogView.ControlTemplate>
+            </view:PhotoBlogView>
+        </DataTemplate>
+        <DataTemplate x:Key="TextBlog">
+            <view:TextBlogView>
+                <view:TextBlogView.ControlTemplate>
+
+                    <OnIdiom Phone="{StaticResource BlogCardViewPhone}"
+                             Tablet="{StaticResource BlogCardViewDesktop}"
+                             Desktop="{StaticResource BlogCardViewDesktop}">
+                    </OnIdiom>
+
+                </view:TextBlogView.ControlTemplate>
+            </view:TextBlogView>
+        </DataTemplate>
+        <view:BlogDataTemplateSelector x:Key="BlogDataTemplateSelector"
+                                       ResourcesContainer="{x:Reference MainContentPage}" />
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="LightSkyBlue" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <!--标题区域-->
+            <Label Text="My Blog"
+                   TextColor="SlateGray"
+                   FontSize="Header"
+                   FontAttributes="Bold"></Label>
+            <CollectionView x:Name="MainCollectionView"
+                            Grid.Row="1"
+                            ItemsSource="{Binding Blogs}"
+                            ItemTemplate="{StaticResource BlogDataTemplateSelector}" />
+
+
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

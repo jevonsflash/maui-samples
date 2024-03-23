@@ -1,0 +1,66 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Lession2"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             x:Class="Lession2.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <system:Double x:Key="HeaderFontSize">57.5</system:Double>
+            <system:String x:Key="Version">1.0</system:String>
+
+
+            <system:Double x:Key="SubtitleFontSize">38</system:Double>
+            <system:Double x:Key="StandOutBodyFontSize">28</system:Double>
+            <system:Double x:Key="BodyFontSize">18</system:Double>
+            <system:String x:Key="Bound">0</system:String>
+            <Color x:Key="PhoneBackgroundBrush">#080808</Color>
+            <Color x:Key="PhoneForegroundBrush">White</Color>
+            <Color x:Key="PhoneContrastBackgroundBrush">#212121</Color>
+            <Color x:Key="PhoneWeakenBackgroundBrush">#D2D9DE</Color>
+            <Color x:Key="PhoneContrastForegroundBrush">#8E8E8E</Color>
+            <Color x:Key="PhoneAccentBrush">#63B279</Color>
+            <Color x:Key="PhoneChromeBrush">#F75855</Color>
+
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{StaticResource PhoneForegroundBrush}">
+                </Setter>
+                <Setter Property="VerticalOptions"
+                              Value="Center">
+                </Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="TextColor"
+                        Value="{StaticResource PhoneForegroundBrush}">
+                </Setter>
+                <Setter Property="BackgroundColor"
+                              Value="Transparent"></Setter>
+                <Setter Property="BorderWidth"
+                              Value="0"></Setter>
+                <Setter Property="BorderColor"
+                              Value="Transparent"></Setter>
+
+
+            </Style>
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource PhoneBackgroundBrush}">
+                </Setter>
+            </Style>
+            <Thickness x:Key="DefaultContentPadding"
+                       Left="12"
+                       Top="18"
+                       Right="12"
+                       Bottom="5" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

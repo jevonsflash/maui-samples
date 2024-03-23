@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Lession2.TouchRecognizer;assembly=CustomControlsWithHandler"
+             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             x:Name="MainContentPage"
+             x:Class="Lession2.MainPage">
+    <ContentPage.Resources>
+        <Style TargetType="controls:TouchContentView"
+               x:Key="HoldDownButtonStyle">
+            <Setter Property="HeightRequest"
+                    Value="120"></Setter>
+            <Setter Property="WidthRequest"
+                    Value="120"></Setter>
+            <Setter Property="HorizontalOptions"
+                    Value="Center"></Setter>
+            <Setter Property="VerticalOptions"
+                    Value="Center"></Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="200"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+
+                <controls:TouchContentView Style="{StaticResource HoldDownButtonStyle}"
+                                           
+                                           Grid.Column="0"
+                                           OnTouchActionInvoked="TouchContentView_OnTouchActionInvoked">
+                    <BoxView CornerRadius="10" Color="Red"></BoxView>
+
+                </controls:TouchContentView>
+
+
+                <controls:TouchContentView Style="{StaticResource HoldDownButtonStyle}"
+    
+                                           Grid.Column="1"
+                                           OnTouchActionInvoked="TouchContentView_OnTouchActionInvoked">
+                    <Image Source="./dotnet_bot.svg"></Image>
+
+                </controls:TouchContentView>
+
+
+                <controls:TouchContentView Style="{StaticResource HoldDownButtonStyle}"
+        
+                                           Grid.Column="2"
+                                           OnTouchActionInvoked="TouchContentView_OnTouchActionInvoked">
+                    <Label Text="假装我是一个按钮"></Label>
+
+                </controls:TouchContentView>
+            </Grid>
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding Source={x:Reference MainContentPage}, Path=DebugMessages}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding}" TextColor="{StaticResource PhoneForegroundBrush}"></TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

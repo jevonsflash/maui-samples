@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:service="clr-namespace:Lession1.Models;assembly=InterfacePolymorphism"
+             x:Class="Lession1.Views.TextBlogView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto "></RowDefinition>
+            <RowDefinition Height="Auto "></RowDefinition>
+        </Grid.RowDefinitions>
+        <VerticalStackLayout IsVisible="{Binding State, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static service:BlogState.PreView}}">
+            <Label Text="{Binding Title}" FontAttributes="Bold">
+            </Label>
+            <Label Text="{Binding Content}"
+                   LineBreakMode="WordWrap"
+                   ></Label>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout IsVisible="{Binding State, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static service:BlogState.Edit}}">
+            <Label Text="编辑"
+                   FontAttributes="Bold">
+            </Label>
+            <Entry Text="{Binding Title}"
+                   Placeholder="标题"></Entry>
+            <Editor Text="{Binding Content}"
+                    AutoSize="TextChanges"
+                    Placeholder="内容"></Editor>
+        </VerticalStackLayout>
+
+        <Label Grid.Row="1">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState Name="BlogPreView">
+                        <VisualState.StateTriggers>
+                            <StateTrigger
+                                          IsActive="{Binding State, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static service:BlogState.PreView}}" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Property="Text"
+                                    Value="当前为发布模式" />
+
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState Name="BlogEdit">
+                        <VisualState.StateTriggers>
+                            <StateTrigger IsActive="{Binding State, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static service:BlogState.Edit}}" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Property="Text"
+                                    Value="当前为编辑模式" />
+
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+
+        </Label>
+    </Grid>
+</ContentView>

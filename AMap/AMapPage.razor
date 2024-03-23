@@ -1,0 +1,107 @@
+﻿@using AMap.ViewModels
+@using Newtonsoft.Json
+@inject IJSRuntime JSRuntime
+<div id="container" tabindex="0"></div>
+<style>
+    .info-title {
+        font-weight: bolder;
+        color: #000;
+        font-size: 14px;
+        width: 250px;
+        line-height: 26px;
+        padding: 0 0 0 6px;
+    }
+
+    .info-content {
+        width: 250px;
+        padding: 4px;
+        color: #666666;
+        line-height: 23px;
+    }
+
+        .info-content img {
+            float: left;
+            margin: 3px;
+        }
+
+    .amap-info-combo .keyword-input {
+        height: auto;
+    }
+</style>
+
+
+
+@code {
+    [Parameter]
+    public MainPageViewModel MainPageViewModel { get; set; }
+    private DotNetObjectReference<AMapPage> objRef;
+
+
+    protected override void OnInitialized()
+    {
+        objRef = DotNetObjectReference.Create(this);
+    }
+
+    private async Task Refresh()
+    {
+
+        var d = DeviceDisplay.Current.MainDisplayInfo.Density;
+        var displayHeight = DeviceDisplay.Current.MainDisplayInfo.Height/d  - 164;
+        var displayWidth = DeviceDisplay.Current.MainDisplayInfo.Width/d;
+        await JSRuntime.InvokeVoidAsync("viewService.SetAmapContainerSize", displayWidth, displayHeight);
+
+        if (MainPageViewModel.CurrentLocation!=null)
+        {
+            var longitude = MainPageViewModel.CurrentLocation.Longitude;
+            var latitude = MainPageViewModel.CurrentLocation.Latitude;
+            await JSRuntime.InvokeVoidAsync("viewService.SetLocation", longitude, latitude);
+        }
+
+    }
+
+    [JSInvokable]
+    public async Task OnMapMoveend(dynamic location)
+    {
+        await Task.Run(() =>
+         {
+             var locationArray = JsonConvert.DeserializeObject<double[]>(location.ToString());
+             MainPageViewModel.CurrentLocation=new Location.Location()
+                 {
+                     Longitude=locationArray[0],
+                     Latitude =locationArray[1]
+                 };
+         });
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        MainPageViewModel.PropertyChanged +=  async (o, e) =>
+        {
+            if (e.PropertyName==nameof(MainPageViewModel.CurrentLocation))
+            {
+                if (MainPageViewModel.CurrentLocation!=null)
+                {
+                    var longitude = MainPageViewModel.CurrentLocation.Longitude;
+                    var latitude = MainPageViewModel.CurrentLocation.Latitude;
+                    await JSRuntime.InvokeVoidAsync("viewService.SetLocation", longitude, latitude);
+                }
+            }
+
+
+        };
+
+    }
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+        await JSRuntime.InvokeAsync<IJSObjectReference>(
+       "import", "./AMapPage.razor.js");
+        await Refresh();
+        await JSRuntime.InvokeVoidAsync("window.initObjRef", this.objRef);
+    }
+}
