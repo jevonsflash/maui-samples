@@ -3,7 +3,6 @@ window.viewService = {
     map: null,
     zoom: 13,
     amaplocation: [116.397428, 39.90923],
-    //绘制天气温度图表
     SetAmapContainerSize: function (width, height) {
         console.info("setting container size")
 

@@ -1,5 +1,5 @@
 ﻿using MatoMusic.Core.Interfaces;
-using MatoMusic.Core.Helper;
+using MauiSample.Common.Helper;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;

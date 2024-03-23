@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using MatoMusic.Common;
-using MatoMusic.Core.Helper;
+using MauiSample.Common.Helper;
 using MatoMusic.Core.Interfaces;
 using MatoMusic.ViewModels;
 using MauiSample.Common.Controls;

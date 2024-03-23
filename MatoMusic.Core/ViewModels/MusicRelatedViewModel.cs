@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using MatoMusic.Core.Helper;
+using MauiSample.Common.Helper;
 using MatoMusic.Core.Interfaces;
 using MatoMusic.Core.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -111,7 +111,7 @@ namespace MatoMusic.Core.ViewModel
             CurrentMusic.IsFavourite = !CurrentMusic.IsFavourite;
             if (CurrentMusic.IsFavourite)
             {
-                CommonHelper.ShowMsg("我最喜爱");
+                CommonHelper.Alert("我最喜爱");
 
             }
         }

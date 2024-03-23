@@ -26,6 +26,11 @@
 
 
 	<ItemGroup>
+	  <ProjectReference Include="..\MauiSample.Common\MauiSample.Common.csproj" />
+	</ItemGroup>
+
+
+	<ItemGroup>
 	  <Compile Update="Platforms\Android\MusicControlService.cs">
 	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
 	  </Compile>
