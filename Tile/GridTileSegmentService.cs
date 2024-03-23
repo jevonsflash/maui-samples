@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ThrottleDebounce;
 using Tile.ViewModels;
 using static System.Collections.Specialized.BitVector32;
 
@@ -13,8 +14,9 @@ namespace Tile
 
     public class GridTileSegmentService : ObservableObject, ITileSegmentService
     {
-        public static object throttleLocker = new object();
-        private static IDispatcherTimer _throttleDispatcher;
+        public static object throttledLocker = new object();
+
+        public static RateLimitedAction throttledAction = Debouncer.Debounce(null, TimeSpan.FromMilliseconds(500), leading: false, trailing: true);
         public GridTileSegmentService(
             TileSegment tileSegment)
         {
@@ -35,48 +37,24 @@ namespace Tile
 
                 if (this.IsBeingDraggedOver && DropPlaceHolderItem!=null)
                 {
-                    var newIndex = Container.TileSegments.IndexOf(this);
-                    var oldIndex = Container.TileSegments.IndexOf(DropPlaceHolderItem as ITileSegmentService);
-                    // 使用throttle
-                    Monitor.Enter(throttleLocker);
-                    bool needExit = true;
-                    try
+                    // 使用防抖
+                    lock (throttledLocker)
                     {
+                        var newIndex = Container.TileSegments.IndexOf(this);
+                        var oldIndex = Container.TileSegments.IndexOf(DropPlaceHolderItem as ITileSegmentService);
 
-                        if (_throttleDispatcher==null)
+                        var originalAction = () =>
                         {
-                            _throttleDispatcher = Application.Current.Dispatcher.CreateTimer();
-                            _throttleDispatcher.IsRepeating=false;
-                            _throttleDispatcher.Interval=TimeSpan.FromSeconds(3);
-                            _throttleDispatcher.Tick+=(o, e) =>
-                            {
-                                _throttleDispatcher.Stop();
-                                _throttleDispatcher=null;
-
-                            };
-                            _throttleDispatcher.Start();
-                            Monitor.Exit(throttleLocker);
-                            needExit = false;
-                            Debug.WriteLine("===========");
-                            Debug.WriteLine("o:"+oldIndex+",n:"+newIndex);
                             Container.TileSegments.Move(oldIndex, newIndex);
-                        }
-                        else
-                        {
-                            Debug.WriteLine("===========");
-                            Debug.WriteLine("ignored");
+                        };
+                        throttledAction.Update(originalAction);
+                        throttledAction.Invoke();
+                    }
 
-                        }
-                    }
-                    finally
-                    {
-                        if (needExit)
-                            System.Threading.Monitor.Exit(throttleLocker);
-                    }
-                    // 不使用throttle
+                    // 无防抖
+                    //var newIndex = Container.TileSegments.IndexOf(this);
+                    //var oldIndex = Container.TileSegments.IndexOf(DropPlaceHolderItem as ITileSegmentService);
                     //Container.TileSegments.Move(oldIndex, newIndex);
-
-
                 }
             }
 
@@ -203,13 +181,10 @@ namespace Tile
                     _isBeingDraggedOver = value;
                     OnPropertyChanged();
                 }
-
-
             }
         }
 
         public Command Remove { get; set; }
-
 
         public Command Dragged { get; set; }
 
