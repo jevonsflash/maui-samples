@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
              xmlns:controls="clr-namespace:HoldDownButtonGroup.Controls;assembly=HoldDownButtonGroup"
-             Loaded="ContentView_Loaded"
+             Loaded="ContentView_Loaded"    
              x:Class="HoldDownButtonGroup.Controls.Bubbles">
 
     <ContentView.Content>

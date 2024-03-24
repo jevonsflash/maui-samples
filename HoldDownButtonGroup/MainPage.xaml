@@ -1,40 +1,110 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls1="clr-namespace:MauiSample.Common.Controls;assembly=MauiSample.Common"
              xmlns:controls="clr-namespace:HoldDownButtonGroup.Controls;assembly=HoldDownButtonGroup"
-             BackgroundColor="{StaticResource PhoneBackgroundBrush}"
+             x:Name="MainView"
              x:Class="HoldDownButtonGroup.MainPage">
 
+    <ContentPage.Resources>
+        <Color x:Key="BrandColor">#00AEEC</Color>
+        <Color x:Key="DisabledColor">gray</Color>
+
+        <Style TargetType="controls:TouchContentView"
+               x:Key="HoldDownButtonStyle">
+            <Setter Property="HeightRequest"
+                    Value="100"></Setter>
+            <Setter Property="WidthRequest"
+                    Value="100"></Setter>
+            <Setter Property="HorizontalOptions"
+                    Value="Center"></Setter>
+            <Setter Property="VerticalOptions"
+                    Value="Center"></Setter>
+        </Style>
+
+    </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
-            <!--标题区域-->
+        <Grid VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-            <Grid x:Name="MainLayout">
+            <controls:TouchContentView Style="{StaticResource HoldDownButtonStyle}"
+                                       Grid.Column="0"
+                                       OnTouchActionInvoked="TouchContentView_OnTouchActionInvoked">
+                <Grid>
+                    <controls:Bubbles x:Name="bubbles1"
+                                      Brush="{x:StaticResource BrandColor}"></controls:Bubbles>
+                    <controls:CircleProgressBar BorderWidth="10.0"
+                                                x:Name="ProgressBar1"
+                                                ProgressColor="{x:StaticResource BrandColor}"
+                                                Maximum="100.0">
+                        <controls:CircleProgressBar.LabelContent>
+                            <Path HeightRequest="65"
+                                  WidthRequest="65"
+                                  x:Name="Icon1"
+                                  Fill="{x:StaticResource DisabledColor}"
+                                  Aspect="Uniform"
+                                  Data="M 9.77234 30.8573 V 11.7471 H 7.54573 C 5.50932 11.7471 3.85742 13.3931 3.85742 15.425 V 27.1794 C 3.85742 29.2112 5.50932 30.8573 7.54573 30.8573 H 9.77234 Z M 11.9902 30.8573 V 11.7054 C 14.9897 10.627 16.6942 7.8853 17.1055 3.33591 C 17.2666 1.55463 18.9633 0.814421 20.5803 1.59505 C 22.1847 2.36964 23.243 4.32583 23.243 6.93947 C 23.243 8.50265 23.0478 10.1054 22.6582 11.7471 H 29.7324 C 31.7739 11.7471 33.4289 13.402 33.4289 15.4435 C 33.4289 15.7416 33.3928 16.0386 33.3215 16.328 L 30.9883 25.7957 C 30.2558 28.7683 27.5894 30.8573 24.528 30.8573 H 11.9911 H 11.9902 Z"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="Center" />
+                        </controls:CircleProgressBar.LabelContent>
+                    </controls:CircleProgressBar>
+                </Grid>
+            </controls:TouchContentView>
 
-                <controls:HoldDownButton></controls:HoldDownButton>
+            <controls:TouchContentView Style="{StaticResource HoldDownButtonStyle}"
+                                       Grid.Column="1"
+                                       OnTouchActionInvoked="TouchContentView_OnTouchActionInvoked">
+                <Grid>
+                    <controls:Bubbles x:Name="bubbles2"
+                                      Brush="{x:StaticResource BrandColor}"></controls:Bubbles>
+                    <controls:CircleProgressBar BorderWidth="10.0"
+                                                x:Name="ProgressBar2"
+                                                ProgressColor="{x:StaticResource BrandColor}"
+                                                Maximum="100.0">
+                        <controls:CircleProgressBar.LabelContent>
+                            <Path HeightRequest="65"
+                                  WidthRequest="65"
+                                  x:Name="Icon2"
+                                  Fill="{x:StaticResource DisabledColor}"
+                                  Aspect="Uniform"
+                                  Data="M14.045 25.5454C7.69377 25.5454 2.54504 20.3967 2.54504 14.0454C2.54504 7.69413 7.69377 2.54541 14.045 2.54541C20.3963 2.54541 25.545 7.69413 25.545 14.0454C25.545 17.0954 24.3334 20.0205 22.1768 22.1771C20.0201 24.3338 17.095 25.5454 14.045 25.5454ZM9.66202 6.81624H18.2761C18.825 6.81624 19.27 7.22183 19.27 7.72216C19.27 8.22248 18.825 8.62807 18.2761 8.62807H14.95V10.2903C17.989 10.4444 20.3766 12.9487 20.3855 15.9916V17.1995C20.3854 17.6997 19.9799 18.1052 19.4796 18.1052C18.9793 18.1052 18.5738 17.6997 18.5737 17.1995V15.9916C18.5667 13.9478 16.9882 12.2535 14.95 12.1022V20.5574C14.95 21.0577 14.5444 21.4633 14.0441 21.4633C13.5437 21.4633 13.1382 21.0577 13.1382 20.5574V12.1022C11.1 12.2535 9.52148 13.9478 9.51448 15.9916V17.1995C9.5144 17.6997 9.10883 18.1052 8.60856 18.1052C8.1083 18.1052 7.70273 17.6997 7.70265 17.1995V15.9916C7.71158 12.9487 10.0992 10.4444 13.1382 10.2903V8.62807H9.66202C9.11309 8.62807 8.66809 8.22248 8.66809 7.72216C8.66809 7.22183 9.11309 6.81624 9.66202 6.81624Z"
+                                  VerticalOptions="Center"                                
+                                  HorizontalOptions="Center" />
+                        </controls:CircleProgressBar.LabelContent>
+                    </controls:CircleProgressBar>
+                </Grid>
+            </controls:TouchContentView>
+
+            <controls:TouchContentView Style="{StaticResource HoldDownButtonStyle}"
+                                       Grid.Column="2"
+                                       OnTouchActionInvoked="TouchContentView_OnTouchActionInvoked">
+                <Grid>
+                    <controls:Bubbles x:Name="bubbles3"
+                                      Brush="{x:StaticResource BrandColor}"></controls:Bubbles>
+                    <controls:CircleProgressBar BorderWidth="10.0"
+                                                x:Name="ProgressBar3"
+                                                ProgressColor="{x:StaticResource BrandColor}"
+                                                Maximum="100.0">
+                        <controls:CircleProgressBar.LabelContent>
+                            <Path HeightRequest="65"
+                                  WidthRequest="65"
+                                  x:Name="Icon3"
+                                  Fill="{x:StaticResource DisabledColor}"
+                                  Aspect="Uniform"
+                                  Data="M 19.8071 9.26152 C 18.7438 9.09915 17.7624 8.36846 17.3534 7.39421 L 15.4723 3.4972 C 14.8998 2.1982 13.1004 2.1982 12.4461 3.4972 L 10.6468 7.39421 C 10.1561 8.36846 9.25639 9.09915 8.19315 9.26152 L 3.94016 9.91102 C 2.63155 10.0734 2.05904 11.6972 3.04049 12.6714 L 6.23023 15.9189 C 6.96632 16.6496 7.29348 17.705 7.1299 18.7605 L 6.39381 23.307 C 6.14844 24.6872 7.62063 25.6614 8.84745 25.0119 L 12.4461 23.0634 C 13.4276 22.4951 14.6544 22.4951 15.6359 23.0634 L 19.2345 25.0119 C 20.4614 25.6614 21.8518 24.6872 21.6882 23.307 L 20.8703 18.7605 C 20.7051 17.705 21.0339 16.6496 21.77 15.9189 L 24.9597 12.6714 C 25.9412 11.6972 25.3687 10.0734 24.06 9.91102 L 19.8071 9.26152 Z"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="Center" />
+                        </controls:CircleProgressBar.LabelContent>
+                    </controls:CircleProgressBar>
+                </Grid>
+            </controls:TouchContentView>
 
 
-
-
-            </Grid>
-            <StackLayout Grid.Row="1" Orientation="Vertical">
-                <Button Text="CircleSliderSamplePage"
-                        x:Name="CircleSliderSamplePage"
-                       Clicked="CircleSliderSamplePage_Clicked_1"></Button>
-                <Button Text="CircleProgressBarSamplePage"
-                        x:Name="CircleProgressBarSamplePage"
-                        Clicked="CircleProgressBarSamplePage_Clicked_1"></Button>
-            </StackLayout>
         </Grid>
-
-
-
 
 
     </ContentPage.Content>

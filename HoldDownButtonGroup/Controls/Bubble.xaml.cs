@@ -57,7 +57,7 @@ BindableProperty.Create("BorderColor", typeof(Brush), typeof(Bubble), default(Br
         var scaleAnimation = new Animation();
 
         var scaleUpAnimation0 = new Animation(v => MainBox.Scale = v, 0, 1);
-        var scaleUpAnimation1 = new Animation(v => MainBox.Scale = v, 1, 0.1);
+        var scaleUpAnimation1 = new Animation(v => MainBox.Scale = v, 1, 0);
 
 
         scaleAnimation.Add(0, 0.2, scaleUpAnimation0);
@@ -65,7 +65,7 @@ BindableProperty.Create("BorderColor", typeof(Brush), typeof(Bubble), default(Br
 
         scaleAnimation.Finished = () =>
         {
-            this.MainBox.Scale = 1;
+            this.MainBox.Scale = 0;
         };
 
         return scaleAnimation;

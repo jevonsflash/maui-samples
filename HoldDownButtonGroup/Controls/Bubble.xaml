@@ -6,7 +6,7 @@
 
 
     <Ellipse Stroke="Red"
-             
+             Scale="0"
                Opacity="1"
         x:Name="MainBox"
         HeightRequest="{Binding Source={x:Reference MainView}, Path=Height}"

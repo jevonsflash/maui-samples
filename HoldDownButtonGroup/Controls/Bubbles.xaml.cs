@@ -1,11 +1,11 @@
 ﻿using MauiSample.Common.Controls;
+using Microsoft.Maui.Controls;
+using SkiaSharp.Views.Maui;
 
 namespace HoldDownButtonGroup.Controls;
 
 public partial class Bubbles : ContentView
 {
-    private const int bubbleSize = 20;
-    private const int bubbleCnt =60;
     private Size targetSize = new Size(80, 80);
 
     private static readonly Random rnd = new Random();
@@ -18,10 +18,46 @@ public partial class Bubbles : ContentView
 
     }
 
+    public static readonly BindableProperty BubbleSizeProperty =
+   BindableProperty.Create("BubbleSize", typeof(double), typeof(Bubbles), 20.0, propertyChanged: (bindable, oldValue, newValue) =>
+   {
+   });
 
+    public double BubbleSize
+    {
+        get { return (double)GetValue(BubbleSizeProperty); }
+        set { SetValue(BubbleSizeProperty, value); }
+    }
+
+
+    public static readonly BindableProperty BubbleCntProperty =
+   BindableProperty.Create("BubbleCnt", typeof(double), typeof(Bubbles), 60.0, propertyChanged: (bindable, oldValue, newValue) =>
+   {
+   });
+
+    public double BubbleCnt
+    {
+        get { return (double)GetValue(BubbleCntProperty); }
+        set { SetValue(BubbleCntProperty, value); }
+    }
+
+
+
+    public static readonly BindableProperty BrushProperty =
+BindableProperty.Create("Brush", typeof(Brush), typeof(Bubbles), SolidColorBrush.Red, propertyChanged: (bindable, oldValue, newValue) =>
+{
+});
+
+    public Brush Brush
+    {
+        get { return (Brush)GetValue(BrushProperty); }
+        set { SetValue(BrushProperty, value); }
+    }
 
     private Animation InitAnimation(Bubble element, Size targetSize, bool isOnTop = true)
     {
+
+
         var offsetAnimation = new Animation();
 
         if (targetSize == default)
@@ -53,13 +89,10 @@ public partial class Bubbles : ContentView
 
         offsetAnimation.Finished = () =>
         {
-            foreach (var item in this.PitContentLayout.Children)
-            {
-                if (item is Bubble)
-                {
-                    Init(item as Bubble);
-                }
-            }
+
+            element.TranslationX = originX;
+            element.TranslationY = originY;
+            element.Rotation = 0;
         };
 
         return offsetAnimation;
@@ -69,7 +102,6 @@ public partial class Bubbles : ContentView
 
     private void ContentView_SizeChanged(object sender, EventArgs e)
     {
-
         foreach (var item in this.PitContentLayout.Children)
         {
             if (item is Bubble)
@@ -81,6 +113,7 @@ public partial class Bubbles : ContentView
 
     public void StartAnimation()
     {
+
         Content.AbortAnimation("ReshapeAnimations");
         var offsetAnimationGroup = new Animation();
 
@@ -101,10 +134,8 @@ public partial class Bubbles : ContentView
 
     private void Init(VisualElement element)
     {
-        var TargetSize = element.DesiredSize;
-        var originX = (PitContentLayout.Width - TargetSize.Width) / 2;
-        var originY = (PitContentLayout.Height - TargetSize.Height) / 2;
-
+        var originX = (PitContentLayout.Width - BubbleSize) / 2;
+        var originY = (PitContentLayout.Height - BubbleSize) / 2;
         element.TranslationX = originX;
         element.TranslationY = originY;
         element.Rotation = 0;
@@ -112,17 +143,31 @@ public partial class Bubbles : ContentView
 
     private void ContentView_Loaded(object sender, EventArgs e)
     {
-        for (int i = 0; i < bubbleCnt; i++)
+        SpawnBubbles();
+    }
+
+
+    public void SpawnBubbles()
+    {
+
+
+        this.PitContentLayout.Clear();
+        for (int i = 0; i < BubbleCnt; i++)
         {
             var currentBox = new Bubble();
-            currentBox.FillColor = i % 2 == 0 ? SolidColorBrush.Red : SolidColorBrush.Transparent;
-            currentBox.BorderColor = SolidColorBrush.Red;
-            currentBox.HeightRequest = bubbleSize;
-            currentBox.WidthRequest = bubbleSize;
+            currentBox.FillColor = i % 2 == 0 ? this.Brush : SolidColorBrush.Transparent;
+            currentBox.BorderColor = this.Brush;
+            currentBox.HeightRequest = BubbleSize;
+            currentBox.WidthRequest = BubbleSize;
             currentBox.HorizontalOptions = LayoutOptions.Start;
             currentBox.VerticalOptions = LayoutOptions.Start;
+
+
+
             this.PitContentLayout.Add(currentBox);
         }
     }
+
+
 }
 
