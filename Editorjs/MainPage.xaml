@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Editorjs.Views.MainPage"
+             xmlns:views="clr-namespace:Editorjs;assembly=Editorjs"
+             xmlns:controls="clr-namespace:Editorjs.Controls;assembly=Editorjs"
+             xmlns:mato="clr-namespace:Editorjs;assembly=Editorjs">
+    <Grid BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!--标题区域-->
+
+        <StackLayout Orientation="Vertical"
+                     Grid.Row="0"
+                     Margin="0,18,0,0"
+                     VerticalOptions="CenterAndExpand">
+
+
+            <Label HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   Text="MAUI Blazor Editorjs Sample By Linxiao"
+                   FontSize="{StaticResource BodyFontSize}">
+            </Label>
+
+        </StackLayout>
+        <controls:EditNotePage Grid.Row="1"></controls:EditNotePage>
+        <HorizontalStackLayout Grid.Row="2">
+            
+        </HorizontalStackLayout>
+        <StackLayout Grid.Row="2"
+                     Padding="20, 0, 20, 0">
+            <Label Text="主题选择"></Label>
+            <StackLayout RadioButtonGroup.GroupName="Theme"
+                         RadioButtonGroup.SelectedValue="{Binding Theme}"
+                         Orientation="Horizontal">
+                <RadioButton Value="Dark"
+                             Content="黑暗">
+                  
+                </RadioButton>
+                <RadioButton Value="Light" Content="明亮">
+                   
+                </RadioButton>
+                <RadioButton Value="Auto" Content="自动">
+                    
+                </RadioButton>
+
+            </StackLayout>
+
+           
+
+
+        </StackLayout>
+
+
+    </Grid>
+</ContentPage>

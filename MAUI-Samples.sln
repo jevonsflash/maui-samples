@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InterfacePolymorphism", "In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMap", "AMap\AMap.csproj", "{96755D8B-8873-4B35-A2BE-8EEF7252902A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Editorjs", "Editorjs\Editorjs.csproj", "{17D9971D-99E5-48B1-B838-F1BB3CED5713}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,12 @@ Global
 		{96755D8B-8873-4B35-A2BE-8EEF7252902A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96755D8B-8873-4B35-A2BE-8EEF7252902A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{96755D8B-8873-4B35-A2BE-8EEF7252902A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{17D9971D-99E5-48B1-B838-F1BB3CED5713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D9971D-99E5-48B1-B838-F1BB3CED5713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D9971D-99E5-48B1-B838-F1BB3CED5713}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{17D9971D-99E5-48B1-B838-F1BB3CED5713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D9971D-99E5-48B1-B838-F1BB3CED5713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D9971D-99E5-48B1-B838-F1BB3CED5713}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

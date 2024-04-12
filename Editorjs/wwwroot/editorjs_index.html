@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>EditorjsApp</title>
+    <base href="/" />
+    <link href="css/app2.css" rel="stylesheet" />
+    <link href="lib/editorjs/css/main.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="status-bar-safe-area"></div>
+
+    <div id="app">Loading...</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.webview.js" autostart="false"></script>
+    <script src="lib/editorjs/editorjs.umd.js"></script>
+    <script src="lib/editorjs/tools/checklist@latest.js"></script>
+    <script src="lib/editorjs/tools/code@latest.js"></script>
+    <script src="lib/editorjs/tools/delimiter@latest.js"></script>
+    <script src="lib/editorjs/tools/embed@latest.js"></script>
+    <script src="lib/editorjs/tools/header@latest.js"></script>
+    <script src="lib/editorjs/tools/image@latest.js"></script>
+    <script src="lib/editorjs/tools/inline-code@latest.js"></script>
+    <script src="lib/editorjs/tools/link@latest.js"></script>
+    <!--<script src="lib/editorjs/tools/list@latest.js"></script>-->
+    <script src="lib/editorjs/tools/nested-list@latest.js"></script>
+    <script src="lib/editorjs/tools/marker@latest.js"></script>
+    <script src="lib/editorjs/tools/quote@latest.js"></script>
+    <script src="lib/editorjs/tools/table@latest.js"></script>
+</body>
+
+</html>

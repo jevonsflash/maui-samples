@@ -1,0 +1,294 @@
+:root {
+    --color-bg-main: #F0F0F0;
+    --color-border-light: #E8E8EB;
+    --color-text-main: #212121;
+    --selectionColor: #e1f2ff;
+}
+
+.dark-mode {
+    --color-border-light: rgba(255, 255, 255,.08);
+    --color-bg-main: #212121;
+    --color-text-main: #F5F5F5;
+}
+
+    .dark-mode .ce-popover {
+        --color-background: #424242;
+        --color-text-primary: #F5F5F5;
+        --color-text-secondary: #707684;
+        --color-border: #424242;
+    }
+
+    .dark-mode .ce-toolbar__settings-btn {
+        background: #2A2A2A;
+        border: 1px solid #424242;
+    }
+
+    .dark-mode .ce-toolbar__plus {
+        background: #2A2A2A;
+        border: 1px solid #424242;
+    }
+
+    .dark-mode .ce-popover-item__icon {
+        background: #2A2A2A;
+    }
+
+    .dark-mode .ce-code__textarea {
+        color: #212121;
+        background: #2A2A2A;
+    }
+
+    .dark-mode .tc-popover {
+        --color-border: #424242;
+        --color-background: #424242;
+    }
+    .dark-mode .tc-wrap {
+        --color-background: #424242;
+    }
+
+
+
+.ce-popover {
+    --border-radius: 6px;
+    --width: 200px;
+    --max-height: 270px;
+    --padding: 6px;
+    --offset-from-target: 8px;
+    --color-border: #E1E1E1;
+    --color-shadow: rgba(13,20,33,0.13);
+    --color-background: white;
+    --color-text-primary: black;
+    --color-text-secondary: #707684;
+    --color-border-icon: rgb(201 201 204 / 48%);
+    --color-border-icon-disabled: #EFF0F1;
+    --color-text-icon-active: #388AE5;
+    --color-background-icon-active: rgba(56, 138, 229, 0.1);
+    --color-background-item-focus: rgba(34, 186, 255, 0.08);
+    --color-shadow-item-focus: rgba(7, 161, 227, 0.08);
+    --color-background-item-hover: #eff2f5;
+    --color-background-item-confirm: #E24A4A;
+    --color-background-item-confirm-hover: #CE4343;
+}
+
+
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    line-height: 1.5em;
+    margin: 0;
+    background: var(--color-bg-main);
+    color: var(--color-text-main);
+}
+
+.ce-main {
+    font-size: 16.2px;
+}
+
+
+.ce-main__content {
+    max-width: 1100px;
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.thin-mode .ce-main__content {
+    max-width: 500px;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    padding: 0 15px;
+}
+
+
+.ce-main__button {
+    display: block;
+    margin: 50px auto;
+    max-width: 180px;
+    background: #4A9DF8;
+    padding: 17px 30px;
+    box-shadow: 0 22px 18px -4px rgba(137, 207, 255, 0.77);
+    transition: all 150ms ease;
+    cursor: pointer;
+    border-radius: 31px;
+    color: #fff;
+    font-family: 'PT Mono', Menlo, Monaco, Consolas, Courier New, monospace;
+    text-align: center;
+}
+
+    .ce-main__button:hover {
+        background: #3D8DE5;
+        transform: translateY(2px);
+        box-shadow: 0 20px 15px -4px rgba(137, 207, 255, 0.77);
+    }
+
+
+
+
+
+@media all and (max-width: 730px) {
+    .ce-main__content {
+        padding: 0 20px;
+    }
+}
+
+/**
+ * JSON highlighter
+ */
+.sc_attr {
+    color: rgb(148, 162, 192);
+}
+
+.sc_key {
+    color: rgb(190, 213, 255);
+}
+
+.sc_toolname {
+    color: rgb(15, 205, 251);
+}
+
+.sc_tag {
+    color: rgb(4, 131, 216);
+}
+
+.sc_bool {
+    color: rgb(247, 60, 173);
+}
+
+.ce-main .ce-block:first-of-type h1.ce-header {
+    font-size: 50px;
+}
+
+.ce-main-multiple {
+    display: grid;
+    grid-template-columns: calc(50% - 15px) calc(50% - 15px);
+    gap: 30px;
+    padding: 30px;
+}
+
+    .ce-main-multiple > div {
+        background: #fff;
+        border-radius: 7px;
+        padding: 30px;
+    }
+
+
+/**
+ * Styles for the popup example page
+ */
+.ce-main--popup {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+    .ce-main--popup .ce-main__content {
+        flex-grow: 2;
+    }
+
+.ce-main-popup__overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #00000085;
+}
+
+.ce-main-popup__popup {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 800px;
+    max-width: 100%;
+    max-height: 90vh;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+@media all and (max-width: 730px) {
+    .ce-main-popup__popup {
+        top: 10px;
+        left: 10px;
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
+        transform: none;
+        max-height: none;
+    }
+}
+
+.show-block-boundaries .ce-block {
+    box-shadow: inset 0 0 0 1px #eff2f5;
+}
+
+.show-block-boundaries .ce-block__content {
+    box-shadow: 0 0 0 1px rgba(224, 231, 241, 0.61) inset;
+}
+
+.show-block-boundaries #showBlocksBoundariesButton span,
+.thin-mode #enableThinModeButton span {
+    font-size: 0;
+    vertical-align: bottom;
+}
+
+    .show-block-boundaries #showBlocksBoundariesButton span::before,
+    .thin-mode #enableThinModeButton span::before {
+        content: attr(data-toggled-text);
+        display: inline;
+        font-size: 13px;
+    }
+
+
+
+/**
+ * Dark theme overrides
+ */
+.dark-mode img {
+    opacity: 0.5;
+}
+
+.dark-mode .cdx-simple-image__picture--with-border,
+.dark-mode .cdx-input {
+    border-color: var(--color-border-light);
+}
+
+.dark-mode .ce-main__button {
+    box-shadow: 0 24px 18px -14px rgba(4, 154, 255, 0.24);
+}
+
+.dark-mode .inline-code {
+    background-color: rgba(53, 56, 68, 0.62);
+    color: #727683;
+}
+
+.dark-mode a {
+    color: #959ba8;
+}
+
+
+.dark-mode.show-block-boundaries .ce-block,
+.dark-mode.show-block-boundaries .ce-block__content {
+    box-shadow: 0 0 0 1px rgba(128, 144, 159, 0.09) inset;
+}
+
+.dark-mode.thin-mode .ce-main__content {
+    border-color: var(--color-border-light);
+}
+
+.dark-mode .ce-block--selected .ce-block__content,
+.dark-mode ::selection {
+    background-color: rgba(57, 68, 84, 0.57);
+}
+
+.dark-mode .ce-toolbox__button,
+.dark-mode .ce-toolbar__settings-btn,
+.dark-mode .ce-toolbar__plus {
+    color: inherit;
+}
+
+.dark-mode .ce-stub {
+    opacity: 0.3;
+}

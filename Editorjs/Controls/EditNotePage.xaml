@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mato="clr-namespace:Editorjs;assembly=Editorjs"
+             xmlns:service="clr-namespace:Editorjs.ViewModels;assembly=Editorjs"
+             xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Name="MainPage"
+             x:Class="Editorjs.Controls.EditNotePage">
+    <Grid BackgroundColor="{AppThemeBinding Light={StaticResource LightPageBackgroundColor}, Dark={StaticResource DarkPageBackgroundColor}}"
+          RowDefinitions="Auto, *, Auto"
+          Padding="20, 10, 20, 0">
+        <Grid Grid.Row="0"
+              Margin="0, 0, 0, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Entry Grid.Column="1"
+                   IsReadOnly="{Binding NoteSegmentState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static service:NoteSegmentState.PreView}}"
+                   Placeholder="请输入标题"
+                   Margin="10, 0, 0, 0"
+                   VerticalOptions="Center"
+                   Text="{Binding Title}"
+>
+            </Entry>
+
+
+            <HorizontalStackLayout Grid.Column="2"
+                                   HeightRequest="60"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="End"
+                                   Margin="0, 0, 10, 0">
+                <StackLayout RadioButtonGroup.GroupName="State"
+                             RadioButtonGroup.SelectedValue="{Binding NoteSegmentState,Mode=TwoWay}"
+                             Orientation="Horizontal">
+                    <RadioButton Value="{x:Static service:NoteSegmentState.Edit}"
+                                 Content="编辑">
+
+                    </RadioButton>
+                    <RadioButton Value="{x:Static service:NoteSegmentState.PreView}"
+                                 Content="预览">
+
+                    </RadioButton>
+
+
+                </StackLayout>
+
+            </HorizontalStackLayout>
+
+
+        </Grid>
+
+        <BlazorWebView Grid.Row="1"
+                       Margin="-10, 0"
+                       x:Name="mainMapBlazorWebView"
+                       HostPage="wwwroot/editorjs_index.html">
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app"
+                               x:Name="rootComponent"
+                               ComponentType="{x:Type mato:EditorjsPage}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+
+
+        <ActivityIndicator Grid.RowSpan="4"
+                           IsRunning="{Binding Loading}"></ActivityIndicator>
+    </Grid>
+</ContentView>

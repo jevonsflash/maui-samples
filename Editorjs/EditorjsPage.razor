@@ -1,0 +1,449 @@
+﻿@using Editorjs.ViewModels
+@using Newtonsoft.Json
+@inject IJSRuntime JSRuntime
+@implements IDisposable
+<div class="ce-main">
+    <div id="editorjs"></div>
+</div>
+<script type="text/javascript">
+    window.editor = null;
+    window.viewService = {
+        LoadContent: function (content, isReadOnly = false) {
+            var obj = JSON.parse(content);
+            var createEdtor = () => {
+                window.editor = new window.EditorJS({
+                    readOnly: isReadOnly,
+                    // autofocus: true,
+                    /**
+                     * Wrapper of Editor
+                     */
+                    holder: 'editorjs',
+
+                    /**
+                     * Tools list
+                     */
+                    tools: {
+                        paragraph: {
+                            config: {
+                                placeholder: "Enter something"
+                            }
+                        },
+
+                        header: {
+                            class: Header,
+                            inlineToolbar: ['link'],
+                            config: {
+                                placeholder: 'Header'
+                            },
+                            shortcut: 'CMD+SHIFT+H'
+                        },
+
+                        /**
+                         * Or pass class directly without any configuration
+                         */
+                        image: {
+                            class: ImageTool,
+                            config: {
+                                uploader: {
+                                    uploadByFile(file) {
+                                        return new Promise((resolve, reject) => {
+                                            const result = {
+                                                success: 1,
+                                                file: {
+                                                    url: undefined,
+                                                }
+                                            };
+
+                                            const reader = new FileReader();
+
+                                            reader.readAsDataURL(file);
+                                            reader.onload = (e) => {
+                                                result.file.url = e.target.result;
+                                                resolve(result);
+                                            };
+
+                                            reader.onerror = (error) => {
+                                                reject(error);
+                                            };
+                                        });
+                                    }
+                                }
+                            }
+                        },
+
+                        list: {
+                            class: NestedList,
+                            inlineToolbar: true,
+                            shortcut: 'CMD+SHIFT+L'
+                        },
+
+                        checklist: {
+                            class: Checklist,
+                            inlineToolbar: true,
+                        },
+
+                        quote: {
+                            class: Quote,
+                            inlineToolbar: true,
+                            config: {
+                                quotePlaceholder: '输入引用内容',
+                                captionPlaceholder: '引用标题',
+                            },
+                            shortcut: 'CMD+SHIFT+O'
+                        },
+
+
+                        marker: {
+                            class: Marker,
+                            shortcut: 'CMD+SHIFT+M'
+                        },
+
+                        code: {
+                            class: CodeTool,
+                            shortcut: 'CMD+SHIFT+C'
+                        },
+
+                        delimiter: Delimiter,
+
+                        inlineCode: {
+                            class: InlineCode,
+                            shortcut: 'CMD+SHIFT+C'
+                        },
+
+                        linkTool: LinkTool,
+
+                        embed: Embed,
+
+                        table: {
+                            class: Table,
+                            inlineToolbar: true,
+                            shortcut: 'CMD+ALT+T'
+                        },
+
+                    },
+                    /**
+                     * To provide localization of the editor.js you need to provide 'i18n' option with 'messages' dictionary:
+                     *
+                     * 1. At the 'ui' section of 'messages' there are translations for the internal editor.js UI elements.
+                     *   You can create or find/download a dictionary for your language
+                     *
+                     * 2. As long as tools list is a user-specific thing (we do not know which tools you use and under which names),
+                     *    so we can't provide a ready-to-use tool names dictionary.
+                     *    There is a 'toolNames' section for that reason. Put translations for the names of your tools there.
+                     *
+                     * 3. Also, the UI of the tools you use is also invisible to editor.js core.
+                     *    To pass translations for specific tools (that supports I18n API), there are 'tools' and 'blockTunes' section.
+                     *    Pass dictionaries for specific plugins through them.
+                     */
+                    i18n: {
+                        messages: {
+                            "ui": {
+                                "blockTunes": {
+                                    "toggler": {
+                                        "Click to tune": "点击转换",
+                                        "or drag to move": "拖动调整"
+                                    },
+                                },
+                                "inlineToolbar": {
+                                    "converter": {
+                                        "Convert to": "转换成"
+                                    }
+                                },
+                                "toolbar": {
+                                    "toolbox": {
+                                        "Add": "添加",
+                                        "Filter": "过滤",
+                                        "Nothing found": "无内容"
+                                    },
+                                    "popover": {
+                                        "Filter": "过滤",
+                                        "Nothing found": "无内容"
+                                    }
+                                }
+                            },
+                            "toolNames": {
+                                "Text": "段落",
+                                "Heading": "标题",
+                                "List": "列表",
+                                "Warning": "警告",
+                                "Checklist": "清单",
+                                "Quote": "引用",
+                                "Code": "代码",
+                                "Delimiter": "分割线",
+                                "Raw HTML": "HTML片段",
+                                "Table": "表格",
+                                "Link": "链接",
+                                "Marker": "突出显示",
+                                "Bold": "加粗",
+                                "Italic": "倾斜",
+                                "InlineCode": "代码片段",
+                                "Image": "图片"
+                            },
+                            "tools": {
+                                "link": {
+                                    "Add a link": "添加链接"
+                                },
+                                "stub": {
+                                    'The block can not be displayed correctly.': '该模块不能放置在这里'
+                                },
+                                "image": {
+                                    "Caption": "图片说明",
+                                    "Select an Image": "选择图片",
+                                    "With border": "添加边框",
+                                    "Stretch image": "拉伸图像",
+                                    "With background": "添加背景",
+                                },
+                                "code": {
+                                    "Enter a code": "输入代码",
+                                },
+                                "linkTool": {
+                                    "Link": "请输入链接地址",
+                                    "Couldn't fetch the link data": "获取链接数据失败",
+                                    "Couldn't get this link data, try the other one": "该链接不能访问，请修改",
+                                    "Wrong response format from the server": "错误响应",
+                                },
+                                "header": {
+                                    "Header": "标题",
+                                    "Heading 1": "一级标题",
+                                    "Heading 2": "二级标题",
+                                    "Heading 3": "三级标题",
+                                    "Heading 4": "四级标题",
+                                    "Heading 5": "五级标题",
+                                    "Heading 6": "六级标题",
+                                },
+                                "paragraph": {
+                                    "Enter something": "请输入笔记内容",
+                                },
+                                "list": {
+                                    "Ordered": "有序列表",
+                                    "Unordered": "无序列表",
+                                },
+                                "table": {
+                                    "Heading": "标题",
+                                    "Add column to left": "在左侧插入列",
+                                    "Add column to right": "在右侧插入列",
+                                    "Delete column": "删除列",
+                                    "Add row above": "在上方插入行",
+                                    "Add row below": "在下方插入行",
+                                    "Delete row": "删除行",
+                                    "With headings": "有标题",
+                                    "Without headings": "无标题",
+                                },
+                                "quote": {
+                                    "Align Left": "左对齐",
+                                    "Align Center": "居中对齐",
+                                }
+                            },
+                            "blockTunes": {
+                                "delete": {
+                                    "Delete": "删除",
+                                    'Click to delete': "点击删除"
+                                },
+                                "moveUp": {
+                                    "Move up": "向上移"
+                                },
+                                "moveDown": {
+                                    "Move down": "向下移"
+                                },
+                                "filter": {
+                                    "Filter": "过滤"
+                                }
+                            },
+                        }
+                    },
+
+                    /**
+                     * Initial Editor data
+                     */
+                    data: obj
+                });
+
+            }
+            if (window.editor) {
+                editor.isReady.then(() => {
+                    editor.destroy();
+                    createEdtor();
+                });
+            }
+            else {
+                createEdtor();
+            }
+
+        },
+        DumpContent: async function () {
+            outputData = null;
+            if (window.editor) {
+                if (window.editor.readOnly.isEnabled) {
+                    await window.editor.readOnly.toggle();
+                }
+                var outputObj = await window.editor.save();
+                outputData = JSON.stringify(outputObj);
+            }
+            return outputData;
+        },
+        SwitchTheme: function () {
+            document.body.classList.toggle("dark-mode");
+        },
+
+        SwitchState: async function () {
+            state = null;
+            if (window.editor && window.editor.readOnly) {
+                var readOnlyState = await window.editor.readOnly.toggle();
+                state = readOnlyState;
+            }
+            return state;
+        },
+
+        Focus: async function (atEnd) {
+            if (window.editor) {
+                await window.editor.focus(atEnd);
+            }
+        },
+
+        GetState() {
+            if (window.editor && window.editor.readOnly) {
+                return window.editor.readOnly.isEnabled;
+            }
+        },
+
+
+        Destroy: function () {
+            if (window.editor) {
+                window.editor.destroy();
+            }
+        },
+
+    }
+
+    window.initObjRef = function (objRef) {
+        window.objRef = objRef;
+    }
+
+</script>
+
+
+
+@code {
+    [Parameter]
+    public IEditorViewModel EditNotePageViewModel { get; set; }
+    private DotNetObjectReference<EditorjsPage> objRef;
+
+
+
+
+
+    private async Task<string> OnSubmitting()
+    {
+        var savedContent = await JSRuntime.InvokeAsync<string>("viewService.DumpContent");
+        return savedContent;
+    }
+
+    private async void OnFocus()
+    {
+        await JSRuntime.InvokeVoidAsync("viewService.Focus");
+
+    }
+
+    private async void OnInited(string content)
+    {
+
+        bool isReadonly = false;
+        if (EditNotePageViewModel.NoteSegmentState==NoteSegmentState.PreView)
+        {
+            isReadonly = true;
+
+        }
+        else if (EditNotePageViewModel.NoteSegmentState==NoteSegmentState.Edit)
+        {
+            isReadonly = false;
+
+        }
+
+        await JSRuntime.InvokeVoidAsync("viewService.LoadContent", content, isReadonly);
+
+
+
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        objRef = DotNetObjectReference.Create(this);
+
+        Application.Current.RequestedThemeChanged += OnRequestedThemeChanged;
+
+    }
+    private async void OnRequestedThemeChanged(object sender, AppThemeChangedEventArgs args)
+    {
+        await JSRuntime.InvokeVoidAsync("viewService.SwitchTheme");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+        if (EditNotePageViewModel != null)
+        {
+            EditNotePageViewModel.PropertyChanged += EditNotePageViewModel_PropertyChanged;
+            this.EditNotePageViewModel.OnSubmitting += OnSubmitting;
+            this.EditNotePageViewModel.OnInited += OnInited;
+            this.EditNotePageViewModel.OnFocus += OnFocus;
+            var currentContent = EditNotePageViewModel.Content;
+
+
+            bool isReadonly = false;
+            if (EditNotePageViewModel.NoteSegmentState==NoteSegmentState.PreView)
+            {
+                isReadonly = true;
+
+            }
+            else if (EditNotePageViewModel.NoteSegmentState==NoteSegmentState.Edit)
+            {
+                isReadonly = false;
+
+            }
+            await JSRuntime.InvokeVoidAsync("viewService.LoadContent", currentContent, isReadonly);
+        }
+
+        await JSRuntime.InvokeVoidAsync("window.initObjRef", this.objRef);
+        if (Application.Current.UserAppTheme==AppTheme.Dark)
+        {
+            await JSRuntime.InvokeVoidAsync("viewService.SwitchTheme");
+
+        }
+
+    }
+
+    private async void EditNotePageViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(EditNotePageViewModel.NoteSegmentState))
+        {
+            if (EditNotePageViewModel.NoteSegmentState==NoteSegmentState.PreView)
+            {
+                var state = await JSRuntime.InvokeAsync<bool>("viewService.GetState");
+                if (!state)
+                {
+                    await JSRuntime.InvokeAsync<bool>("viewService.SwitchState");
+
+                }
+
+            }
+            else if (EditNotePageViewModel.NoteSegmentState==NoteSegmentState.Edit)
+            {
+                var state = await JSRuntime.InvokeAsync<bool>("viewService.GetState");
+                if (state)
+                {
+                    await JSRuntime.InvokeAsync<bool>("viewService.SwitchState");
+                }
+            }
+        }
+    }
+
+    public async void Dispose()
+    {
+        await JSRuntime.InvokeVoidAsync("viewService.Destroy");
+        this.EditNotePageViewModel.OnSubmitting -= OnSubmitting;
+        this.EditNotePageViewModel.OnInited -= OnInited;
+        this.EditNotePageViewModel.OnFocus -= OnFocus;
+        Application.Current.RequestedThemeChanged -= OnRequestedThemeChanged;
+        EditNotePageViewModel.PropertyChanged -= EditNotePageViewModel_PropertyChanged;
+    }
+}
