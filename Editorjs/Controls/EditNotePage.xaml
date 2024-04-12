@@ -18,7 +18,6 @@
             </Grid.ColumnDefinitions>
 
             <Entry Grid.Column="1"
-                   IsReadOnly="{Binding NoteSegmentState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static service:NoteSegmentState.PreView}}"
                    Placeholder="请输入标题"
                    Margin="10, 0, 0, 0"
                    VerticalOptions="Center"
