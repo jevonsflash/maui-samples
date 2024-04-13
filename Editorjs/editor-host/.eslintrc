@@ -1,0 +1,38 @@
+{
+  "extends": [
+    "codex/ts"
+  ],
+  "globals": {
+    "Node": true,
+    "Range": true,
+    "HTMLElement": true,
+    "HTMLDivElement": true,
+    "Element": true,
+    "Selection": true,
+    "SVGElement": true,
+    "Text": true,
+    "InsertPosition": true,
+    "PropertyKey": true,
+    "MouseEvent": true,
+    "TouchEvent": true,
+    "KeyboardEvent": true,
+    "ClipboardEvent": true,
+    "DragEvent": true,
+    "Event": true,
+    "EventTarget": true,
+    "Document": true,
+    "NodeList": true,
+    "File": true,
+    "FileList": true,
+    "MutationRecord": true,
+    "AddEventListenerOptions": true,
+    "DataTransfer": true,
+    "DOMRect": true,
+    "ClientRect": true,
+    "ArrayLike": true,
+    "InputEvent": true,
+    "unknown": true,
+    "requestAnimationFrame": true,
+    "navigator": true
+  }
+}
